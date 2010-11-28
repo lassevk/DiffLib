@@ -6,7 +6,7 @@ namespace DiffLib
     /// <summary>
     /// This class holds the result of calling <see cref="LongestCommonSubstring{T}.Find()"/>.
     /// </summary>
-    public class LongestCommonSubstringResult : IEquatable<LongestCommonSubstringResult>
+    public sealed class LongestCommonSubstringResult : IEquatable<LongestCommonSubstringResult>
     {
         private readonly int _Length;
         private readonly int _PositionInCollection1;

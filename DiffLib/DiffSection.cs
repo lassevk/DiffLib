@@ -7,7 +7,7 @@ namespace DiffLib
     /// This class contains a single section of diff output from the <see cref="Diff{T}.Generate"/>
     /// method.
     /// </summary>
-    public class DiffSection : IEquatable<DiffSection>
+    public sealed class DiffSection : IEquatable<DiffSection>
     {
         private readonly bool _Equal;
         private readonly int _Length1;
