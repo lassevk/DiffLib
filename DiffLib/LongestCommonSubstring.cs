@@ -13,10 +13,10 @@ namespace DiffLib
     /// </typeparam>
     public sealed class LongestCommonSubstring<T>
     {
-        private readonly Tuple<int, T>[] _Collection1;
-        private readonly Tuple<int, T>[] _Collection2;
+        private readonly Element[] _Collection1;
+        private readonly Element[] _Collection2;
         private readonly IEqualityComparer<T> _Comparer;
-        private Dictionary<int, List<int>> _LookupTable;
+        private readonly Dictionary<int, Occurance> _LookupTable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LongestCommonSubstring{T}"/> class
@@ -70,10 +70,11 @@ namespace DiffLib
             if (comparer == null)
                 throw new ArgumentNullException("comparer");
 
-            _Collection1 = collection1.Select(e => Tuple.Create(comparer.GetHashCode(e), e)).ToArray();
-            _Collection2 = collection2.Select(e => Tuple.Create(comparer.GetHashCode(e), e)).ToArray();
+            _Collection1 = collection1.Select(e => new Element(comparer.GetHashCode(e), e)).ToArray();
+            _Collection2 = collection2.Select(e => new Element(comparer.GetHashCode(e), e)).ToArray();
             _Comparer = comparer;
-            CalculateLookupTableForSecondCollection();
+            _LookupTable = new Dictionary<int, Occurance>();
+            PopulateLookupTable();
         }
 
         /// <summary>
@@ -92,11 +93,14 @@ namespace DiffLib
             int maxMatchingPosition2 = -1;
             for (int index1 = 0; index1 < _Collection1.Length; index1++)
             {
-                List<int> occurances;
-                if (_LookupTable.TryGetValue(_Collection1[index1].Item1, out occurances))
+                Occurance occurance;
+                if (_LookupTable.TryGetValue(_Collection1[index1].HashCode, out occurance))
                 {
-                    foreach (int index2 in occurances)
+                    while (occurance != null)
                     {
+                        int index2 = occurance.Position;
+                        occurance = occurance.Next;
+
                         int length = CountMatchingElements(index1, index2);
                         if (length > 0 && length > maxMatchingLength)
                         {
@@ -114,31 +118,28 @@ namespace DiffLib
             return new LongestCommonSubstringResult(maxMatchingPosition1, maxMatchingPosition2, maxMatchingLength);
         }
 
-        private void CalculateLookupTableForSecondCollection()
+        private void PopulateLookupTable()
         {
-            _LookupTable = new Dictionary<int, List<int>>();
             for (int index = 0; index < _Collection2.Length; index++)
-                AddOccuranceOfHashCodeToLookupTable(index, _Collection2[index].Item1);
+                AddOccuranceOfHashCodeToLookupTable(index, _Collection2[index].HashCode);
         }
 
         private void AddOccuranceOfHashCodeToLookupTable(int index, int hc)
         {
-            List<int> occurances;
-            if (!_LookupTable.TryGetValue(hc, out occurances))
-            {
-                occurances = new List<int>();
-                _LookupTable[hc] = occurances;
-            }
-            occurances.Add(index);
+            Occurance firstOccurance;
+            if (_LookupTable.TryGetValue(hc, out firstOccurance))
+                firstOccurance.Next = new Occurance(index, firstOccurance.Next);
+            else
+                _LookupTable[hc] = new Occurance(index, null);
         }
 
         private int CountMatchingElements(int index1, int index2)
         {
             int startIndex = index1;
             while (index1 < _Collection1.Length && index2 < _Collection2.Length &&
-                   _Collection1[index1].Item1 == _Collection2[index2].Item1)
+                   _Collection1[index1].HashCode == _Collection2[index2].HashCode)
             {
-                if (!_Comparer.Equals(_Collection1[index1].Item2, _Collection2[index2].Item2))
+                if (!_Comparer.Equals(_Collection1[index1].Item, _Collection2[index2].Item))
                     break;
 
                 index1++;
@@ -146,5 +147,37 @@ namespace DiffLib
             }
             return index1 - startIndex;
         }
+
+        #region Nested type: Element
+
+        private class Element
+        {
+            public readonly int HashCode;
+            public readonly T Item;
+
+            public Element(int hashCode, T item)
+            {
+                HashCode = hashCode;
+                Item = item;
+            }
+        }
+
+        #endregion
+
+        #region Nested type: Occurance
+
+        private class Occurance
+        {
+            public readonly int Position;
+            public Occurance Next;
+
+            public Occurance(int position, Occurance next)
+            {
+                Position = position;
+                Next = next;
+            }
+        }
+
+        #endregion
     }
 }
