@@ -39,5 +39,22 @@
   <Groups />
   <Settings />
  </Rules>
- <FxCopReport Version="10.0" />
+ <FxCopReport Version="10.0">
+  <Namespaces>
+   <Namespace Name="DiffLib">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2010-11-28 21:49:23Z">
+      <Issue>
+       <Item>DiffLib</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Rules>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
 </FxCopProject>
