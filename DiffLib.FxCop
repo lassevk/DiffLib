@@ -39,34 +39,5 @@
   <Groups />
   <Settings />
  </Rules>
- <FxCopReport Version="10.0">
-  <Targets>
-   <Target Name="$(ProjectDir)/DiffLib/bin/Debug/DiffLib.dll">
-    <Modules>
-     <Module Name="difflib.dll">
-      <Namespaces>
-       <Namespace Name="DiffLib">
-        <Types>
-         <Type Name="LongestCommonSubstring">
-          <Messages>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2010-11-28 19:07:00Z">
-            <Issue Name="CSharp2_0">
-             <Item>'LongestCommonSubstring'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-  </Targets>
-  <Rules>
-   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
-    <Resolution Name="CSharp2_0">Because type {0} contains only 'static' members, mark it as 'static' to prevent the compiler from adding a default public constructor.</Resolution>
-   </Rule>
-  </Rules>
- </FxCopReport>
+ <FxCopReport Version="10.0" />
 </FxCopProject>
