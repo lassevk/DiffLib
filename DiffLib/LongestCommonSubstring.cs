@@ -8,47 +8,41 @@ namespace DiffLib
     /// This class implements the LCS algorithm, to find the longest common substring that exists
     /// in two collections, and return the locations of those substrings.
     /// </summary>
-    public sealed class LongestCommonSubstring
+    /// <typeparam name="T">
+    /// The types of elements in the collections being compared.
+    /// </typeparam>
+    public sealed class LongestCommonSubstring<T>
     {
+        private readonly Tuple<int, T>[] _Collection1;
+        private readonly Tuple<int, T>[] _Collection2;
+        private readonly IEqualityComparer<T> _Comparer;
+        private Dictionary<int, List<int>> _LookupTable;
+
         /// <summary>
-        /// This is the public interface to the LCS algorithm. The method takes two collections, and the means to
-        /// compare elements between them, and returns a <see cref="LongestCommonSubstringResult"/> containing
-        /// information about the location, or <c>null</c> if there is no common substring between them.
-        /// This overload uses the default <see cref="EqualityComparer{T}"/> implementation
-        /// for <typeparamref name="T"/>.
+        /// Initializes a new instance of the <see cref="LongestCommonSubstring{T}"/> class
+        /// using the default <see cref="IEqualityComparer{T}"/> instance for the
+        /// <typeparamref name="T"/> type.
         /// </summary>
-        /// <typeparam name="T">
-        /// The types of elements being compared.
-        /// </typeparam>
         /// <param name="collection1">
         /// The first collection of items.
         /// </param>
         /// <param name="collection2">
         /// The second collection of items.
         /// </param>
-        /// <returns>
-        /// A <see cref="LongestCommonSubstringResult"/> containing the positions of the two substrings, one position
-        /// for each collection, both 0-based, and the length of the substring. If no common substring can be found, <c>null</c>
-        /// will be returned.
-        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="collection1"/> is <c>null</c>.</para>
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        public static LongestCommonSubstringResult Find<T>(IEnumerable<T> collection1, IEnumerable<T> collection2)
+        public LongestCommonSubstring(IEnumerable<T> collection1, IEnumerable<T> collection2)
+            : this(collection1, collection2, EqualityComparer<T>.Default)
         {
-            return Find(collection1, collection2, EqualityComparer<T>.Default);
+            // Nothing here
         }
 
         /// <summary>
-        /// This is the public interface to the LCS algorithm. The method takes two collections, and the means to
-        /// compare elements between them, and returns a <see cref="LongestCommonSubstringResult"/> containing
-        /// information about the location, or <c>null</c> if there is no common substring between them.
+        /// Initializes a new instance of the <see cref="LongestCommonSubstring{T}"/> class.
         /// </summary>
-        /// <typeparam name="T">
-        /// The types of elements being compared.
-        /// </typeparam>
         /// <param name="collection1">
         /// The first collection of items.
         /// </param>
@@ -59,11 +53,6 @@ namespace DiffLib
         /// The <see cref="IEqualityComparer{T}"/> that will be used to compare elements from
         /// <paramref name="collection1"/> with elements from <paramref name="collection2"/>.
         /// </param>
-        /// <returns>
-        /// A <see cref="LongestCommonSubstringResult"/> containing the positions of the two substrings, one position
-        /// for each collection, both 0-based, and the length of the substring. If no common substring can be found, <c>null</c>
-        /// will be returned.
-        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="collection1"/> is <c>null</c>.</para>
         /// <para>- or -</para>
@@ -71,7 +60,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="comparer"/> is <c>null</c>.</para>
         /// </exception>
-        public static LongestCommonSubstringResult Find<T>(IEnumerable<T> collection1, IEnumerable<T> collection2,
+        public LongestCommonSubstring(IEnumerable<T> collection1, IEnumerable<T> collection2,
             IEqualityComparer<T> comparer)
         {
             if (collection1 == null)
@@ -81,25 +70,34 @@ namespace DiffLib
             if (comparer == null)
                 throw new ArgumentNullException("comparer");
 
-            if (ReferenceEquals(collection1, collection2))
-                return new LongestCommonSubstringResult(0, 0, collection1.Count());
+            _Collection1 = collection1.Select(e => Tuple.Create(comparer.GetHashCode(e), e)).ToArray();
+            _Collection2 = collection2.Select(e => Tuple.Create(comparer.GetHashCode(e), e)).ToArray();
+            _Comparer = comparer;
+            CalculateLookupTableForSecondCollection();
+        }
 
-            var list1 = collection1.Select(e => Tuple.Create(comparer.GetHashCode(e), e)).ToArray();
-            var list2 = collection2.Select(e => Tuple.Create(comparer.GetHashCode(e), e)).ToArray();
-
-            Dictionary<int, List<int>> lookupTable = GetLookupTableForSecondCollection(comparer, list2);
-
+        /// <summary>
+        /// Finds the longest common substring and returns its position in the two collections, and
+        /// its length, or <c>null</c> if no such common substring can be located.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="LongestCommonSubstringResult"/> containing the positions of the two substrings, one position
+        /// for each collection, both 0-based, and the length of the substring. If no common substring can be found, <c>null</c>
+        /// will be returned.
+        /// </returns>
+        public LongestCommonSubstringResult Find()
+        {
             int maxMatchingLength = -1;
             int maxMatchingPosition1 = -1;
             int maxMatchingPosition2 = -1;
-            for (int index1 = 0; index1 < list1.Length; index1++)
+            for (int index1 = 0; index1 < _Collection1.Length; index1++)
             {
                 List<int> occurances;
-                if (lookupTable.TryGetValue(list1[index1].Item1, out occurances))
+                if (_LookupTable.TryGetValue(_Collection1[index1].Item1, out occurances))
                 {
                     foreach (int index2 in occurances)
                     {
-                        int length = CountMatchingElements(list1, index1, list2, index2, comparer);
+                        int length = CountMatchingElements(index1, index2);
                         if (length > 0 && length > maxMatchingLength)
                         {
                             maxMatchingLength = length;
@@ -116,35 +114,37 @@ namespace DiffLib
             return new LongestCommonSubstringResult(maxMatchingPosition1, maxMatchingPosition2, maxMatchingLength);
         }
 
-        private static int CountMatchingElements<T>(Tuple<int, T>[] collection1, int index1, Tuple<int, T>[] collection2, int index2, IEqualityComparer<T> comparer)
+        private void CalculateLookupTableForSecondCollection()
+        {
+            _LookupTable = new Dictionary<int, List<int>>();
+            for (int index = 0; index < _Collection2.Length; index++)
+                AddOccuranceOfHashCodeToLookupTable(index, _Collection2[index].Item1);
+        }
+
+        private void AddOccuranceOfHashCodeToLookupTable(int index, int hc)
+        {
+            List<int> occurances;
+            if (!_LookupTable.TryGetValue(hc, out occurances))
+            {
+                occurances = new List<int>();
+                _LookupTable[hc] = occurances;
+            }
+            occurances.Add(index);
+        }
+
+        private int CountMatchingElements(int index1, int index2)
         {
             int startIndex = index1;
-            while (index1 < collection1.Length && index2 < collection2.Length && collection1[index1].Item1 == collection2[index2].Item1)
+            while (index1 < _Collection1.Length && index2 < _Collection2.Length &&
+                   _Collection1[index1].Item1 == _Collection2[index2].Item1)
             {
-                if (!comparer.Equals(collection1[index1].Item2, collection2[index2].Item2))
+                if (!_Comparer.Equals(_Collection1[index1].Item2, _Collection2[index2].Item2))
                     break;
 
                 index1++;
                 index2++;
             }
             return index1 - startIndex;
-        }
-
-        private static Dictionary<int, List<int>> GetLookupTableForSecondCollection<T>(IEqualityComparer<T> comparer, Tuple<int, T>[] list2)
-        {
-            var lookupTable = new Dictionary<int, List<int>>();
-            for (int index = 0; index < list2.Length; index++)
-            {
-                List<int> occurances;
-                int hc = list2[index].Item1;
-                if (!lookupTable.TryGetValue(hc, out occurances))
-                {
-                    occurances = new List<int>();
-                    lookupTable[hc] = occurances;
-                }
-                occurances.Add(index);
-            }
-            return lookupTable;
         }
     }
 }

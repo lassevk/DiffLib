@@ -10,17 +10,11 @@ namespace DiffLib.Tests
         [Test]
         public void ToRandomAccess_OnArray_ReturnsSameInstance()
         {
-            var collection = new[] { 1, 2, 3 };
-            var randomAccess = collection.ToRandomAccess();
-
-            Assert.That(ReferenceEquals(collection, randomAccess));
-        }
-
-        [Test]
-        public void ToRandomAccess_OnList_ReturnsSameInstance()
-        {
-            var collection = new List<int>();
-            var randomAccess = collection.ToRandomAccess();
+            var collection = new[]
+                {
+                    1, 2, 3
+                };
+            IList<int> randomAccess = collection.ToRandomAccess();
 
             Assert.That(ReferenceEquals(collection, randomAccess));
         }
@@ -29,7 +23,16 @@ namespace DiffLib.Tests
         public void ToRandomAccess_OnCollection_ReturnsSameInstance()
         {
             var collection = new Collection<int>();
-            var randomAccess = collection.ToRandomAccess();
+            IList<int> randomAccess = collection.ToRandomAccess();
+
+            Assert.That(ReferenceEquals(collection, randomAccess));
+        }
+
+        [Test]
+        public void ToRandomAccess_OnList_ReturnsSameInstance()
+        {
+            var collection = new List<int>();
+            IList<int> randomAccess = collection.ToRandomAccess();
 
             Assert.That(ReferenceEquals(collection, randomAccess));
         }

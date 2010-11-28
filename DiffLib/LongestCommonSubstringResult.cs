@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace DiffLib
 {
     /// <summary>
-    /// This class holds the result of calling <see cref="LongestCommonSubstring.Find{T}(IEnumerable{T},IEnumerable{T},IEqualityComparer{T})"/>.
+    /// This class holds the result of calling <see cref="LongestCommonSubstring{T}.Find()"/>.
     /// </summary>
     public class LongestCommonSubstringResult
     {
