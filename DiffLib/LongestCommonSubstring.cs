@@ -153,6 +153,9 @@ namespace DiffLib
             int maxMatchingPosition2 = -1;
             for (int index1 = lower1; index1 < upper1; index1++)
             {
+                if (upper1 - index1 <= maxMatchingLength)
+                    break;
+
                 Occurance occurance;
                 if (_LookupTable.TryGetValue(_Collection1[index1].HashCode, out occurance))
                 {
