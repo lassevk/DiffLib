@@ -52,12 +52,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlignedDiffChange.cs" />
+    <Compile Include="ChangeType.cs" />
     <Compile Include="Diff.cs" />
     <Compile Include="DiffSection.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="ISimilarityComparer.cs" />
     <Compile Include="LongestCommonSubstring.cs" />
     <Compile Include="LongestCommonSubstringResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AlignedDiff.cs" />
+    <Compile Include="StringSimilarityComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\DiffLib.snk">

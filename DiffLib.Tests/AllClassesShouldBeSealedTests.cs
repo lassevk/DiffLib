@@ -13,6 +13,7 @@ namespace DiffLib.Tests
             return
                 from type in typeof (Diff<string>).Assembly.GetTypes()
                 where type.IsPublic
+                      && type.IsClass
                 select type;
         }
 
