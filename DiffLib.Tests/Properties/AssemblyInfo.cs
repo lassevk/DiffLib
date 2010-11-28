@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("DiffLib.Tests")]
@@ -14,4 +13,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("1dc19fcf-efd0-4fed-b77e-13fb7d6cf0ae")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: CLSCompliant(true)]

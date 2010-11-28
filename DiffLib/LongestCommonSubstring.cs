@@ -167,8 +167,7 @@ namespace DiffLib
                         if (index2 < lower2 || index2 >= upper2)
                             continue;
 
-                        int potentialLengthLimit = Math.Min(upper1 - index1, upper2 - index2);
-                        if (potentialLengthLimit <= maxMatchingLength)
+                        if (upper2 - index2 <= maxMatchingLength)
                             continue;
 
                         int length = CountMatchingElements(index1, upper1, index2, upper2);
