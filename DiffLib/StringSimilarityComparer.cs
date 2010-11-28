@@ -26,7 +26,7 @@ namespace DiffLib
         /// A value ranging from 0.0 to 1.0, where 0.0 means they're
         /// completely different and 1.0 means they have the same value.
         /// </returns>
-        public double Similarity(string x, string y)
+        public double Compare(string x, string y)
         {
             if (ReferenceEquals(x, y))
                 return 1.0;

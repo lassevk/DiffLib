@@ -24,6 +24,6 @@
         /// A value ranging from 0.0 to 1.0, where 0.0 means they're
         /// completely different and 1.0 means they have the same value.
         /// </returns>
-        double Similarity(T x, T y);
+        double Compare(T x, T y);
     }
 }

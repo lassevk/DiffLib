@@ -22,8 +22,8 @@
         Deleted,
 
         /// <summary>
-        /// The first element was replaced with the second element in the second collection.
+        /// The first element was changed/replaced with the second element in the second collection.
         /// </summary>
-        Replaced,
+        Changed,
     }
 }

@@ -13,10 +13,19 @@ namespace DiffLib
     /// </typeparam>
     public sealed class AlignedDiff<T>
     {
+        private const double MinimumScoreToUseInlineChange = 0.5;
+        private const int MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
+
+        private readonly Dictionary<Tuple<int, int>, ChangeNode> _BestAlignmentNodes =
+            new Dictionary<Tuple<int, int>, ChangeNode>();
+
         private readonly IList<T> _Collection1;
         private readonly IList<T> _Collection2;
         private readonly Diff<T> _Diff;
         private readonly ISimilarityComparer<T> _SimilarityComparer;
+
+        private int _Upper1;
+        private int _Upper2;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AlignedDiff{T}"/>.
@@ -89,18 +98,167 @@ namespace DiffLib
                 }
                 else
                 {
-                    for (int index = 0; index < section.Length1; index++)
+                    bool deletePlusAdd = true;
+                    if (section.Length1 > 0 && section.Length2 > 0)
                     {
-                        yield return new AlignedDiffChange<T>(ChangeType.Deleted, _Collection1[i1], default(T));
-                        i1++;
+                        AlignedDiffChange<T>[] alignedChanges = TryAlignChanges(section, i1, i2);
+                        if (alignedChanges.Length > 0)
+                        {
+                            deletePlusAdd = false;
+                            foreach (var change in alignedChanges)
+                                yield return change;
+                        }
+                        i1 += section.Length1;
+                        i2 += section.Length2;
                     }
-                    for (int index = 0; index < section.Length2; index++)
+
+                    if (deletePlusAdd)
                     {
-                        yield return new AlignedDiffChange<T>(ChangeType.Added, default(T), _Collection2[i2]);
-                        i2++;
+                        for (int index = 0; index < section.Length1; index++)
+                        {
+                            yield return new AlignedDiffChange<T>(ChangeType.Deleted, _Collection1[i1], default(T));
+                            i1++;
+                        }
+                        for (int index = 0; index < section.Length2; index++)
+                        {
+                            yield return new AlignedDiffChange<T>(ChangeType.Added, default(T), _Collection2[i2]);
+                            i2++;
+                        }
                     }
                 }
             }
         }
+
+        private AlignedDiffChange<T>[] TryAlignChanges(DiffSection section, int i1, int i2)
+        {
+            // "Optimization", too big input-sets will have to be dropped for now, will revisit this
+            // number in the future to see if I can bring it up, or possible that I don't need it,
+            // but since this is a recursive solution the combinations could get big fast.
+            if (section.Length1 + section.Length2 > MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
+                return new AlignedDiffChange<T>[0];
+
+            _BestAlignmentNodes.Clear();
+            _Upper1 = i1 + section.Length1;
+            _Upper2 = i2 + section.Length2;
+
+            ChangeNode alignmentNodes = CalculateAlignmentNodes(i1, i2);
+            if (alignmentNodes != null)
+            {
+                var result = new List<AlignedDiffChange<T>>();
+                while (alignmentNodes != null)
+                {
+                    switch (alignmentNodes.Type)
+                    {
+                        case ChangeType.Added:
+                            result.Add(new AlignedDiffChange<T>(ChangeType.Added, default(T), _Collection2[i2]));
+                            i2++;
+                            break;
+
+                        case ChangeType.Deleted:
+                            result.Add(new AlignedDiffChange<T>(ChangeType.Deleted, _Collection1[i1], default(T)));
+                            i1++;
+                            break;
+
+                        case ChangeType.Changed:
+                            if (alignmentNodes.AverageScore >= MinimumScoreToUseInlineChange)
+                                result.Add(new AlignedDiffChange<T>(ChangeType.Changed, _Collection1[i1],
+                                    _Collection2[i2]));
+                            else
+                            {
+                                result.Add(new AlignedDiffChange<T>(ChangeType.Deleted, _Collection1[i1], default(T)));
+                                result.Add(new AlignedDiffChange<T>(ChangeType.Added, default(T), _Collection2[i2]));
+                            }
+                            i1++;
+                            i2++;
+                            break;
+                    }
+
+                    alignmentNodes = alignmentNodes.Next;
+                }
+                return result.ToArray();
+            }
+
+            return new AlignedDiffChange<T>[0];
+        }
+
+        private ChangeNode CalculateAlignmentNodes(int i1, int i2)
+        {
+            ChangeNode result;
+            if (_BestAlignmentNodes.TryGetValue(Tuple.Create(i1, i2), out result))
+                return result;
+
+            if (i1 == _Upper1 && i2 == _Upper2)
+                result = new ChangeNode(ChangeType.Same, 0.0, 0);
+            else if (i1 == _Upper1)
+            {
+                ChangeNode restAfterAddition = CalculateAlignmentNodes(i1, i2 + 1);
+                result = new ChangeNode(ChangeType.Added, restAfterAddition.Score, restAfterAddition.NodeCount + 1,
+                    restAfterAddition);
+            }
+            else if (i2 == _Upper2)
+            {
+                ChangeNode restAfterDeletion = CalculateAlignmentNodes(i1 + 1, i2);
+                result = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score, restAfterDeletion.NodeCount + 1,
+                    restAfterDeletion);
+            }
+            else
+            {
+                ChangeNode restAfterAddition = CalculateAlignmentNodes(i1, i2 + 1);
+                var resultAdded = new ChangeNode(ChangeType.Added, restAfterAddition.Score,
+                    restAfterAddition.NodeCount + 1, restAfterAddition);
+
+                ChangeNode restAfterDeletion = CalculateAlignmentNodes(i1 + 1, i2);
+                var resultDeleted = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score,
+                    restAfterDeletion.NodeCount + 1, restAfterDeletion);
+
+                double similarity = _SimilarityComparer.Compare(_Collection1[i1], _Collection2[i2]);
+                ChangeNode restAfterChange = CalculateAlignmentNodes(i1 + 1, i2 + 1);
+                var resultChanged = new ChangeNode(ChangeType.Changed, similarity + restAfterChange.Score,
+                    restAfterChange.NodeCount + 1, restAfterChange);
+
+                if (resultChanged.AverageScore >= resultAdded.AverageScore &&
+                    resultChanged.AverageScore >= resultDeleted.AverageScore)
+                    result = resultChanged;
+                else if (resultAdded.AverageScore >= resultChanged.AverageScore &&
+                         resultAdded.AverageScore >= resultDeleted.AverageScore)
+                    result = resultAdded;
+                else
+                    result = resultDeleted;
+            }
+
+            _BestAlignmentNodes[Tuple.Create(i1, i2)] = result;
+            return result;
+        }
+
+        #region Nested type: ChangeNode
+
+        private class ChangeNode
+        {
+            public readonly ChangeNode Next;
+            public readonly int NodeCount;
+            public readonly double Score;
+            public readonly ChangeType Type;
+
+            public ChangeNode(ChangeType type, double score, int nodeCount, ChangeNode next = null)
+            {
+                Type = type;
+                Score = score;
+                Next = next;
+                NodeCount = nodeCount;
+            }
+
+            public double AverageScore
+            {
+                get
+                {
+                    if (NodeCount == 0)
+                        return 0.0;
+                    else
+                        return Score/NodeCount;
+                }
+            }
+        }
+
+        #endregion
     }
 }
