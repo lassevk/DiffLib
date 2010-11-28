@@ -50,6 +50,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumerableExtensionsTests.cs" />
+    <Compile Include="LongestCommonSubstringResultTests.cs" />
     <Compile Include="LongestCommonSubstringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
