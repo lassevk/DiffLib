@@ -52,6 +52,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diff.cs" />
+    <Compile Include="DiffSection.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="LongestCommonSubstring.cs" />
     <Compile Include="LongestCommonSubstringResult.cs" />
