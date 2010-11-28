@@ -88,10 +88,70 @@ namespace DiffLib
         /// </returns>
         public LongestCommonSubstringResult Find()
         {
+            return Find(0, _Collection1.Length, 0, _Collection2.Length);
+        }
+
+        /// <summary>
+        /// Finds the longest common substring and returns its position in the two collections, and
+        /// its length, or <c>null</c> if no such common substring can be located.
+        /// </summary>
+        /// <param name="lower1">
+        /// The starting position in the first collection, 0-based. Included in the search.
+        /// </param>
+        /// <param name="upper1">
+        /// The ending position in the first collection, 0-based. <b>Not</b> included in the search.
+        /// </param>
+        /// <param name="lower2">
+        /// The starting position in the second collection, 0-based. Included in the search.
+        /// </param>
+        /// <param name="upper2">
+        /// The ending position in the second collection, 0-based. <b>Not</b> included in the search.
+        /// </param>
+        /// <returns>
+        /// A <see cref="LongestCommonSubstringResult"/> containing the positions of the two substrings, one position
+        /// for each collection, both 0-based, and the length of the substring. If no common substring can be found, <c>null</c>
+        /// will be returned.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <para><paramref name="lower1"/> is less than 0.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="lower1"/> is greater than <paramref name="upper1"/>.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="upper1"/> is greater than the length of the first collection.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="lower2"/> is less than 0.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="lower2"/> is greater than <paramref name="upper2"/>.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="upper2"/> is greater than the length of the second collection.</para>
+        /// </exception>
+        public LongestCommonSubstringResult Find(int lower1, int upper1, int lower2, int upper2)
+        {
+            if (lower1 < 0)
+                throw new ArgumentOutOfRangeException("lower1", lower1, "lower1 must be 0 or greater");
+            if (lower1 > upper1)
+                throw new ArgumentOutOfRangeException("lower1", lower1,
+                    string.Format("lower1 must be equal to or less than upper1 ({0})", upper1));
+            if (upper1 > _Collection1.Length)
+                throw new ArgumentOutOfRangeException("upper1", upper1,
+                    "upper1 must be equal to or less than the length of the first collection");
+            if (lower2 < 0)
+                throw new ArgumentOutOfRangeException("lower2", lower2, "lower2 must be 0 or greater");
+            if (lower2 > upper2)
+                throw new ArgumentOutOfRangeException("lower2", lower2,
+                    string.Format("lower2 must be equal to or less than upper2 ({0})", upper2));
+            if (upper2 > _Collection2.Length)
+                throw new ArgumentOutOfRangeException("upper2", upper2,
+                    "upper2 must be equal to or less than the length of the first collection");
+
+            // Pathological cases
+            if (lower1 == upper1 || lower2 == upper2)
+                return null;
+
             int maxMatchingLength = -1;
             int maxMatchingPosition1 = -1;
             int maxMatchingPosition2 = -1;
-            for (int index1 = 0; index1 < _Collection1.Length; index1++)
+            for (int index1 = lower1; index1 < upper1; index1++)
             {
                 Occurance occurance;
                 if (_LookupTable.TryGetValue(_Collection1[index1].HashCode, out occurance))
@@ -101,7 +161,10 @@ namespace DiffLib
                         int index2 = occurance.Position;
                         occurance = occurance.Next;
 
-                        int length = CountMatchingElements(index1, index2);
+                        if (index2 < lower2 || index2 >= upper2)
+                            continue;
+
+                        int length = CountMatchingElements(index1, upper1, index2, upper2);
                         if (length > 0 && length > maxMatchingLength)
                         {
                             maxMatchingLength = length;
@@ -133,10 +196,10 @@ namespace DiffLib
                 _LookupTable[hc] = new Occurance(index, null);
         }
 
-        private int CountMatchingElements(int index1, int index2)
+        private int CountMatchingElements(int index1, int upper1, int index2, int upper2)
         {
             int startIndex = index1;
-            while (index1 < _Collection1.Length && index2 < _Collection2.Length &&
+            while (index1 < upper1 && index2 < upper2 &&
                    _Collection1[index1].HashCode == _Collection2[index2].HashCode)
             {
                 if (!_Comparer.Equals(_Collection1[index1].Item, _Collection2[index2].Item))
