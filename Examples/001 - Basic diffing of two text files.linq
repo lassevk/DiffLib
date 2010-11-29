@@ -1,5 +1,5 @@
 <Query Kind="Program">
-  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\dev\vs.net\difflib\DiffLib\bin\Debug\DiffLib.dll</Reference>
+  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\Dev\VS.NET\DiffLib\DiffLib\bin\Debug\DiffLib.dll</Reference>
   <Namespace>DiffLib</Namespace>
 </Query>
 
@@ -45,7 +45,7 @@ static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)
     
     foreach (var change in changes)
     {
-        switch (change.Type)
+        switch (change.Change)
         {
             case ChangeType.Same:
                 html.Append("<div>\x00a0\x00a0" + filter(change.Element1) + "</div>");
