@@ -55,7 +55,7 @@
     <Compile Include="AlignedDiffChange.cs" />
     <Compile Include="ChangeType.cs" />
     <Compile Include="Diff.cs" />
-    <Compile Include="DiffSection.cs" />
+    <Compile Include="DiffChange.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="ISimilarityComparer.cs" />
     <Compile Include="LongestCommonSubstring.cs" />

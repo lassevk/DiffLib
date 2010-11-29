@@ -12,7 +12,7 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The types of elements in the collections being compared.
     /// </typeparam>
-    public sealed class Diff<T> : IEnumerable<DiffSection>
+    public sealed class Diff<T> : IEnumerable<DiffChange>
     {
         private readonly int _Collection1Length;
         private readonly int _Collection2Length;
@@ -70,7 +70,7 @@ namespace DiffLib
             _LongestCommonSubstring = new LongestCommonSubstring<T>(randomAccess1, randomAccess2, comparer);
         }
 
-        #region IEnumerable<DiffSection> Members
+        #region IEnumerable<DiffChange> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -79,7 +79,7 @@ namespace DiffLib
         /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
         /// </returns>
         /// <filterpriority>1</filterpriority>
-        public IEnumerator<DiffSection> GetEnumerator()
+        public IEnumerator<DiffChange> GetEnumerator()
         {
             return Generate().GetEnumerator();
         }
@@ -94,47 +94,47 @@ namespace DiffLib
         /// <summary>
         /// Generates the diff between the two collections.
         /// </summary>
-        public IEnumerable<DiffSection> Generate()
+        public IEnumerable<DiffChange> Generate()
         {
             return GenerateSections(0, _Collection1Length, 0, _Collection2Length);
         }
 
-        private IEnumerable<DiffSection> GenerateSections(int lower1, int upper1, int lower2, int upper2)
+        private IEnumerable<DiffChange> GenerateSections(int lower1, int upper1, int lower2, int upper2)
         {
             if (lower1 == upper1 && lower2 == upper2)
                 yield break;
 
             if (lower1 == upper1)
             {
-                yield return new DiffSection(false, 0, upper2 - lower2);
+                yield return new DiffChange(false, 0, upper2 - lower2);
                 yield break;
             }
 
             if (lower2 == upper2)
             {
-                yield return new DiffSection(false, upper1 - lower1, 0);
+                yield return new DiffChange(false, upper1 - lower1, 0);
                 yield break;
             }
 
             LongestCommonSubstringResult lcsr = _LongestCommonSubstring.Find(lower1, upper1, lower2, upper2);
             if (lcsr == null)
             {
-                yield return new DiffSection(false, upper1 - lower1, upper2 - lower2);
+                yield return new DiffChange(false, upper1 - lower1, upper2 - lower2);
                 yield break;
             }
 
             if (lower1 < lcsr.PositionInCollection1 || lower2 < lcsr.PositionInCollection2)
             {
                 foreach (
-                    DiffSection prevSection in
+                    DiffChange prevSection in
                         GenerateSections(lower1, lcsr.PositionInCollection1, lower2, lcsr.PositionInCollection2))
                     yield return prevSection;
             }
-            yield return new DiffSection(true, lcsr.Length, lcsr.Length);
+            yield return new DiffChange(true, lcsr.Length, lcsr.Length);
             if (lcsr.PositionInCollection1 + lcsr.Length < upper1 || lcsr.PositionInCollection2 + lcsr.Length < upper2)
             {
                 foreach (
-                    DiffSection nextSection in
+                    DiffChange nextSection in
                         GenerateSections(lcsr.PositionInCollection1 + lcsr.Length, upper1,
                             lcsr.PositionInCollection2 + lcsr.Length, upper2))
                     yield return nextSection;

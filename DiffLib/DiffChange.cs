@@ -7,14 +7,14 @@ namespace DiffLib
     /// This class contains a single section of diff output from the <see cref="Diff{T}.Generate"/>
     /// method.
     /// </summary>
-    public sealed class DiffSection : IEquatable<DiffSection>
+    public sealed class DiffChange : IEquatable<DiffChange>
     {
         private readonly bool _Equal;
         private readonly int _Length1;
         private readonly int _Length2;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DiffSection"/>.
+        /// Initializes a new instance of <see cref="DiffChange"/>.
         /// </summary>
         /// <param name="equal">
         /// If <c>true</c>, then the section specifies a section from the first
@@ -40,7 +40,7 @@ namespace DiffLib
         /// <exception cref="ArgumentException">
         /// <para><paramref name="equal"/> is <c>true</c> but <paramref name="length1"/> is not equal to <paramref name="length2"/>.</para>
         /// </exception>
-        public DiffSection(bool equal, int length1, int length2)
+        public DiffChange(bool equal, int length1, int length2)
         {
             if (length1 < 0)
                 throw new ArgumentOutOfRangeException("length1", length1, "length1 must be 0 or greater");
@@ -56,7 +56,7 @@ namespace DiffLib
         }
 
         /// <summary>
-        /// Gets whether the <see cref="DiffSection"/> specifies equal sections in the two
+        /// Gets whether the <see cref="DiffChange"/> specifies equal sections in the two
         /// collections, or differing sections.
         /// </summary>
         /// <value>
@@ -95,7 +95,7 @@ namespace DiffLib
             }
         }
 
-        #region IEquatable<DiffSection> Members
+        #region IEquatable<DiffChange> Members
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -104,7 +104,7 @@ namespace DiffLib
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
         /// <param name="other">An object to compare with this object.</param>
-        public bool Equals(DiffSection other)
+        public bool Equals(DiffChange other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -124,8 +124,8 @@ namespace DiffLib
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (DiffSection)) return false;
-            return Equals((DiffSection) obj);
+            if (obj.GetType() != typeof (DiffChange)) return false;
+            return Equals((DiffChange) obj);
         }
 
         /// <summary>

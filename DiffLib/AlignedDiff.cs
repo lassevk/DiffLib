@@ -19,7 +19,7 @@ namespace DiffLib
         private const double MinimumScoreToUseInlineChange = 0.25;
 
         // If the combined lengths of the two change-sections is more than this number of
-        // elements, punt to a delete + add for the entire section. The alignment code
+        // elements, punt to a delete + add for the entire change. The alignment code
         // is a recursive piece of code that can quickly balloon out of control, so
         // too big sections will take a long time to process. I will experiment more
         // with this number to see what is feasible.
@@ -115,7 +115,7 @@ namespace DiffLib
         {
             int i1 = 0;
             int i2 = 0;
-            foreach (DiffSection section in _Diff)
+            foreach (DiffChange section in _Diff)
             {
                 if (section.Equal)
                 {
@@ -159,17 +159,17 @@ namespace DiffLib
             }
         }
 
-        private AlignedDiffChange<T>[] TryAlignChanges(DiffSection section, int i1, int i2)
+        private AlignedDiffChange<T>[] TryAlignChanges(DiffChange change, int i1, int i2)
         {
             // "Optimization", too big input-sets will have to be dropped for now, will revisit this
             // number in the future to see if I can bring it up, or possible that I don't need it,
             // but since this is a recursive solution the combinations could get big fast.
-            if (section.Length1 + section.Length2 > MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
+            if (change.Length1 + change.Length2 > MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
                 return new AlignedDiffChange<T>[0];
 
             _BestAlignmentNodes.Clear();
-            _Upper1 = i1 + section.Length1;
-            _Upper2 = i2 + section.Length2;
+            _Upper1 = i1 + change.Length1;
+            _Upper2 = i2 + change.Length2;
 
             ChangeNode alignmentNodes = CalculateAlignmentNodes(i1, i2);
             if (alignmentNodes != null)
