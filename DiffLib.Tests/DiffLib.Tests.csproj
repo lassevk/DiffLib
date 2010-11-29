@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="AlignedDiffChangeTests.cs" />
     <Compile Include="AllClassesShouldBeSealedTests.cs" />
-    <Compile Include="DiffSectionTests.cs" />
+    <Compile Include="DiffChangeTests.cs" />
     <Compile Include="DiffTests.cs" />
     <Compile Include="EnumerableExtensionsTests.cs" />
     <Compile Include="LongestCommonSubstringResultTests.cs" />
