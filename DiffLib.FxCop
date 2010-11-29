@@ -40,20 +40,80 @@
   <Settings />
  </Rules>
  <FxCopReport Version="10.0">
-  <Namespaces>
-   <Namespace Name="DiffLib">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2010-11-28 21:49:23Z">
-      <Issue>
-       <Item>DiffLib</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/DiffLib/bin/Debug/DiffLib.dll">
+    <Modules>
+     <Module Name="difflib.dll">
+      <Namespaces>
+       <Namespace Name="DiffLib">
+        <Types>
+         <Type Name="AlignedDiff`1">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2010-11-29 00:21:17Z">
+            <Issue>
+             <Item>'AlignedDiff&lt;T&gt;'</Item>
+             <Item>Collection</Item>
+            </Issue>
+            <Notes>
+             <User Name="Lasse V. Karlsen">
+              <Note Id="0" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Generate()">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Status="Excluded" Created="2010-11-29 00:21:17Z">
+              <Issue>
+               <Item>'AlignedDiff&lt;T&gt;.Generate()'</Item>
+               <Item>'IEnumerable&lt;AlignedDiffChange&lt;T&gt;&gt;'</Item>
+              </Issue>
+              <Notes>
+               <User Name="Lasse V. Karlsen">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Diff`1">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2010-11-29 00:21:17Z">
+            <Issue>
+             <Item>'Diff&lt;T&gt;'</Item>
+             <Item>Collection</Item>
+            </Issue>
+            <Notes>
+             <User Name="Lasse V. Karlsen">
+              <Note Id="1" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="Lasse V. Karlsen">
+    <Note Id="0" Modified="2010-11-29 00:27:49Z">The intended usage is through the .Generate method, the IEnumerable support is just for convenience. Will drop this suggestion.</Note>
+    <Note Id="1" Modified="2010-11-29 00:27:53Z">The intended usage is through the .Generate method, the IEnumerable support is just for convenience. Will drop this suggestion.</Note>
+    <Note Id="2" Modified="2010-11-29 00:28:17Z">Considered this, and don't see a good solution unless here.</Note>
+   </User>
+  </Notes>
   <Rules>
-   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
-    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
+    <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

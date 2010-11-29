@@ -16,7 +16,7 @@ namespace DiffLib.Tests
         public void Constructor_InitializesPropertiesCorrectly(ChangeType type, string element1, string element2)
         {
             var adc = new AlignedDiffChange<string>(type, element1, element2);
-            Assert.That(adc.Type, Is.EqualTo(type));
+            Assert.That(adc.Change, Is.EqualTo(type));
             Assert.That(adc.Element1, Is.EqualTo(element1));
             Assert.That(adc.Element2, Is.EqualTo(element2));
         }

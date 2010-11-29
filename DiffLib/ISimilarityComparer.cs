@@ -14,16 +14,16 @@
         /// similarity, a value ranging from 0.0 to 1.0, where 0.0 means they're
         /// completely different and 1.0 means they have the same value.
         /// </summary>
-        /// <param name="x">
+        /// <param name="value1">
         /// The first value to compare.
         /// </param>
-        /// <param name="y">
+        /// <param name="value2">
         /// The second value to compare.
         /// </param>
         /// <returns>
         /// A value ranging from 0.0 to 1.0, where 0.0 means they're
         /// completely different and 1.0 means they have the same value.
         /// </returns>
-        double Compare(T x, T y);
+        double Compare(T value1, T value2);
     }
 }
