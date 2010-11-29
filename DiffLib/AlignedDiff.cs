@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DiffLib
@@ -11,9 +12,17 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The types of elements in the collections being compared.
     /// </typeparam>
-    public sealed class AlignedDiff<T>
+    public sealed class AlignedDiff<T> : IEnumerable<AlignedDiffChange<T>>
     {
-        private const double MinimumScoreToUseInlineChange = 0.5;
+        // If two elements are considered at least 25% similar, they're considered as a change
+        // from one element to the other. Otherwise they're considered to be a delete + an add.
+        private const double MinimumScoreToUseInlineChange = 0.25;
+
+        // If the combined lengths of the two change-sections is more than this number of
+        // elements, punt to a delete + add for the entire section. The alignment code
+        // is a recursive piece of code that can quickly balloon out of control, so
+        // too big sections will take a long time to process. I will experiment more
+        // with this number to see what is feasible.
         private const int MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
 
         private readonly Dictionary<Tuple<int, int>, ChangeNode> _BestAlignmentNodes =
@@ -73,6 +82,27 @@ namespace DiffLib
             _SimilarityComparer = similarityComparer;
         }
 
+        #region IEnumerable<AlignedDiffChange<T>> Members
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// </returns>
+        /// <filterpriority>1</filterpriority>
+        public IEnumerator<AlignedDiffChange<T>> GetEnumerator()
+        {
+            return Generate().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
+
         /// <summary>
         /// Generates the diff, one line of output at a time.
         /// </summary>
@@ -85,7 +115,7 @@ namespace DiffLib
         {
             int i1 = 0;
             int i2 = 0;
-            foreach (DiffSection section in _Diff.Generate())
+            foreach (DiffSection section in _Diff)
             {
                 if (section.Equal)
                 {
@@ -107,9 +137,9 @@ namespace DiffLib
                             deletePlusAdd = false;
                             foreach (var change in alignedChanges)
                                 yield return change;
+                            i1 += section.Length1;
+                            i2 += section.Length2;
                         }
-                        i1 += section.Length1;
-                        i2 += section.Length2;
                     }
 
                     if (deletePlusAdd)
@@ -204,16 +234,19 @@ namespace DiffLib
             else
             {
                 ChangeNode restAfterAddition = CalculateAlignmentNodes(i1, i2 + 1);
-                var resultAdded = new ChangeNode(ChangeType.Added, restAfterAddition.Score,
+                var resultAdded = new ChangeNode(ChangeType.Added,
+                    restAfterAddition.Score,
                     restAfterAddition.NodeCount + 1, restAfterAddition);
 
                 ChangeNode restAfterDeletion = CalculateAlignmentNodes(i1 + 1, i2);
-                var resultDeleted = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score,
+                var resultDeleted = new ChangeNode(ChangeType.Deleted,
+                    restAfterDeletion.Score,
                     restAfterDeletion.NodeCount + 1, restAfterDeletion);
 
                 double similarity = _SimilarityComparer.Compare(_Collection1[i1], _Collection2[i2]);
                 ChangeNode restAfterChange = CalculateAlignmentNodes(i1 + 1, i2 + 1);
-                var resultChanged = new ChangeNode(ChangeType.Changed, similarity + restAfterChange.Score,
+                var resultChanged = new ChangeNode(ChangeType.Changed,
+                    similarity + restAfterChange.Score,
                     restAfterChange.NodeCount + 1, restAfterChange);
 
                 if (resultChanged.AverageScore >= resultAdded.AverageScore &&

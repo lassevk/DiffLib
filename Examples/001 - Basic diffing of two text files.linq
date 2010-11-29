@@ -21,17 +21,14 @@ string[] textfile2 = new[] {
     "This line has been added",
     "This is also another equal line",
     "This line was changed to this",
+    "And then this was added",
     "And this line was changed to this",
     "This is the final equal line",
 };
 
 void Main()
 {
-    textfile1 = File.ReadAllLines(@"c:\v1.txt");
-    textfile2 = File.ReadAllLines(@"c:\v2.txt");
-    
-	var diff = new AlignedDiff<string>(textfile1, textfile2, EqualityComparer<string>.Default, new StringSimilarityComparer());
-    DumpDiff(diff.Generate());
+    DumpDiff(new AlignedDiff<string>(textfile1, textfile2, EqualityComparer<string>.Default, new StringSimilarityComparer()));
 }
 
 static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)

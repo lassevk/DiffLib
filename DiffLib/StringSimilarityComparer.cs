@@ -39,8 +39,7 @@ namespace DiffLib
             if (x == String.Empty || y == String.Empty)
                 return 0.0;
 
-            DiffSection[] diff = new Diff<char>(x, y).Generate().ToArray();
-            int same = diff.Where(s => s.Equal).Sum(s => s.Length1);
+            int same = new Diff<char>(x, y).Where(s => s.Equal).Sum(s => s.Length1);
             return (same*2.0)/(x.Length + y.Length + 0.0);
         }
 

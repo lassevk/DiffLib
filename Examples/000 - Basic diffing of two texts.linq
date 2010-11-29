@@ -1,5 +1,5 @@
 <Query Kind="Program">
-  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\Dev\VS.NET\DiffLib\DiffLib\bin\Debug\DiffLib.dll</Reference>
+  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\dev\vs.net\difflib\DiffLib\bin\Debug\DiffLib.dll</Reference>
   <Namespace>DiffLib</Namespace>
 </Query>
 
@@ -8,8 +8,7 @@ const string text2 = "This is another test of the same implementation, with some
 
 void Main()
 {
-	var diff = new Diff<char>(text1, text2);
-    DumpDiff(diff.Generate());
+    DumpDiff(new Diff<char>(text1, text2));
 }
 
 static void DumpDiff(IEnumerable<DiffSection> sections)

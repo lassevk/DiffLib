@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace DiffLib
 {
@@ -12,7 +12,7 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The types of elements in the collections being compared.
     /// </typeparam>
-    public sealed class Diff<T>
+    public sealed class Diff<T> : IEnumerable<DiffSection>
     {
         private readonly int _Collection1Length;
         private readonly int _Collection2Length;
@@ -70,6 +70,27 @@ namespace DiffLib
             _LongestCommonSubstring = new LongestCommonSubstring<T>(randomAccess1, randomAccess2, comparer);
         }
 
+        #region IEnumerable<DiffSection> Members
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// </returns>
+        /// <filterpriority>1</filterpriority>
+        public IEnumerator<DiffSection> GetEnumerator()
+        {
+            return Generate().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
+
         /// <summary>
         /// Generates the diff between the two collections.
         /// </summary>
@@ -80,8 +101,8 @@ namespace DiffLib
 
         private IEnumerable<DiffSection> GenerateSections(int lower1, int upper1, int lower2, int upper2)
         {
-            Debug.Assert(lower1 < upper1 || lower2 < upper2,
-                "both (lower1==upper1) and (lower2==upper2) cannot be true at this point, internal error!");
+            if (lower1 == upper1 && lower2 == upper2)
+                yield break;
 
             if (lower1 == upper1)
             {
