@@ -9,44 +9,44 @@ namespace DiffLib
     /// </summary>
     public sealed class AlignedDiffChange<T> : IEquatable<AlignedDiffChange<T>>
     {
+        private readonly ChangeType _Change;
         private readonly T _Element1;
         private readonly T _Element2;
-        private readonly ChangeType _Type;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AlignedDiffChange{T}"/>.
         /// </summary>
-        /// <param name="type">
-        /// The <see cref="ChangeType">type</see> of change this <see cref="AlignedDiffChange{T}"/> details.
+        /// <param name="change">
+        /// The <see cref="Change">type</see> of change this <see cref="AlignedDiffChange{T}"/> details.
         /// </param>
         /// <param name="element1">
-        /// The element from the first collection. If <paramref name="type"/> is <see cref="ChangeType.Added"/>, then
+        /// The element from the first collection. If <paramref name="change"/> is <see cref="ChangeType.Added"/>, then
         /// this parameter has no meaning.
         /// </param>
         /// <param name="element2">
-        /// The element from the second collection. If <paramref name="type"/> is <see cref="ChangeType.Deleted"/>, then
+        /// The element from the second collection. If <paramref name="change"/> is <see cref="ChangeType.Deleted"/>, then
         /// this parameter has no meaning.
         /// </param>
-        public AlignedDiffChange(ChangeType type, T element1, T element2)
+        public AlignedDiffChange(ChangeType change, T element1, T element2)
         {
-            _Type = type;
+            _Change = change;
             _Element1 = element1;
             _Element2 = element2;
         }
 
         /// <summary>
-        /// The <see cref="ChangeType">type</see> of change this <see cref="AlignedDiffChange{T}"/> details.
+        /// The <see cref="Change">type</see> of change this <see cref="AlignedDiffChange{T}"/> details.
         /// </summary>
-        public ChangeType Type
+        public ChangeType Change
         {
             get
             {
-                return _Type;
+                return _Change;
             }
         }
 
         /// <summary>
-        /// The element from the first collection. If <see cref="Type"/> is <see cref="ChangeType.Added"/>, then
+        /// The element from the first collection. If <see cref="System.Type"/> is <see cref="ChangeType.Added"/>, then
         /// the value of this property has no meaning.
         /// </summary>
         public T Element1
@@ -58,7 +58,7 @@ namespace DiffLib
         }
 
         /// <summary>
-        /// The element from the second collection. If <see cref="Type"/> is <see cref="ChangeType.Deleted"/>, then
+        /// The element from the second collection. If <see cref="System.Type"/> is <see cref="ChangeType.Deleted"/>, then
         /// the value of this property has no meaning.
         /// </summary>
         public T Element2
@@ -83,7 +83,7 @@ namespace DiffLib
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Equals(other._Element1, _Element1) && Equals(other._Element2, _Element2) &&
-                   Equals(other._Type, _Type);
+                   Equals(other._Change, _Change);
         }
 
         #endregion
@@ -116,7 +116,7 @@ namespace DiffLib
             {
                 int result = _Element1.GetHashCode();
                 result = (result*397) ^ _Element2.GetHashCode();
-                result = (result*397) ^ _Type.GetHashCode();
+                result = (result*397) ^ _Change.GetHashCode();
                 return result;
             }
         }
@@ -130,7 +130,7 @@ namespace DiffLib
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            switch (Type)
+            switch (Change)
             {
                 case ChangeType.Same:
                     return "  " + _Element1;
@@ -145,7 +145,7 @@ namespace DiffLib
                     return "* " + _Element1 + " --> " + _Element2;
 
                 default:
-                    return _Type + ": " + _Element1 + " --> " + _Element2;
+                    return _Change + ": " + _Element1 + " --> " + _Element2;
             }
         }
     }
