@@ -11,23 +11,23 @@ void Main()
     DumpDiff(new Diff<char>(text1, text2));
 }
 
-static void DumpDiff(IEnumerable<DiffSection> sections)
+static void DumpDiff(IEnumerable<DiffChange> changes)
 {
     var html = new StringBuilder();
     int i1 = 0;
     int i2 = 0;
-    foreach (var section in sections)
+    foreach (var change in changes)
     {
-        if (section.Equal)
-            html.Append(text1.Substring(i1, section.Length1));
+        if (change.Equal)
+            html.Append(text1.Substring(i1, change.Length1));
         else
         {
-            html.Append("<span style='background-color: #ffcccc; text-decoration: line-through;'>" + text1.Substring(i1, section.Length1) + "</span>");
-            html.Append("<span style='background-color: #ccffcc;'>" + text2.Substring(i2, section.Length2) + "</span>");
+            html.Append("<span style='background-color: #ffcccc; text-decoration: line-through;'>" + text1.Substring(i1, change.Length1) + "</span>");
+            html.Append("<span style='background-color: #ccffcc;'>" + text2.Substring(i2, change.Length2) + "</span>");
         }
         
-        i1 += section.Length1;
-        i2 += section.Length2;
+        i1 += change.Length1;
+        i2 += change.Length2;
     }
     Util.RawHtml(html.ToString()).Dump();
 }
