@@ -1,0 +1,24 @@
+<project ServerProjectName="">
+  <watches/>
+  <collapsedNodes>{437E4C45-489A-4DE2-AAB9-DD02F269E56B},{6B2D88B4-1E30-445E-ACC7-84CA8BB0AAE3},{6B93B90F-8F23-4319-9E36-24B946631C13},{8A2AAD31-F010-4FFB-AE97-17DE101208A8},{993A06D0-1DA6-4CBE-87E8-8C45BEA5602A},{A2D0AEE7-DDB6-4B11-AC40-E91115173713}</collapsedNodes>
+  <breakpoints></breakpoints>
+  <actions/>
+  <propertysets/>
+  <variables>
+    <ASSEMBLY_VERSION_NUMBER>
+      <![CDATA[0.1.0.0]]>
+    </ASSEMBLY_VERSION_NUMBER>
+    <ASSEMBLYFILE_VERSION_NUMBER>
+      <![CDATA[0.1.0.0]]>
+    </ASSEMBLYFILE_VERSION_NUMBER>
+  </variables>
+  <properties>
+    <Author></Author>
+    <Notes>
+      <![CDATA[]]>
+    </Notes>
+    <LastBuildRun>00:00:06</LastBuildRun>
+    <LastBuildStart>30.11.2010 11:49:09</LastBuildStart>
+    <LastBuildState>True</LastBuildState>
+  </properties>
+</project>
