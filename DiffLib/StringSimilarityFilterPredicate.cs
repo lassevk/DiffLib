@@ -3,7 +3,7 @@
 namespace DiffLib
 {
     /// <summary>
-    /// This delegate is used by <see cref="StringSimilarityFilter"/> to
+    /// This delegate is used by <see cref="StringAlignmentFilter"/> to
     /// determine if the two strings are similar enough to report them
     /// as a change, instead of as a delete plus and add.
     /// </summary>

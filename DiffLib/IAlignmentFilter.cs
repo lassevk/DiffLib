@@ -9,7 +9,7 @@
     /// <typeparam name="T">
     /// The type of elements being compared.
     /// </typeparam>
-    public interface ISimilarityFilter<in T>
+    public interface IAlignmentFilter<in T>
     {
         /// <summary>
         /// Determines if the two values are similar enough to align them
@@ -27,6 +27,6 @@
         /// them as a change; false if the two values aren't similar enough
         /// but needs to be reported as a delete plus an add.
         /// </returns>
-        bool IsSimilarEnough(T value1, T value2);
+        bool CanAlign(T value1, T value2);
     }
 }

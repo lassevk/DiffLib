@@ -46,7 +46,7 @@ static void DumpTextDiff(DateTime? dt1, string body1, DateTime? dt2, string body
         SplitLines(body2),
         EqualityComparer<string>.Default,
         new StringSimilarityComparer(),
-        new StringSimilarityFilter());
+        new StringAlignmentFilter());
     var caption = string.Format("Diff from " + dt1 + " to " + dt2 + " of post " + PostId);
     DumpDiff(diff, caption);
 }

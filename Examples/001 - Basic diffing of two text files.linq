@@ -28,7 +28,7 @@ string[] textfile2 = new[] {
 
 void Main()
 {
-    DumpDiff(new AlignedDiff<string>(textfile1, textfile2, EqualityComparer<string>.Default, new StringSimilarityComparer(), new StringSimilarityFilter()));
+    DumpDiff(new AlignedDiff<string>(textfile1, textfile2, EqualityComparer<string>.Default, new StringSimilarityComparer(), new StringAlignmentFilter()));
 }
 
 static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)
