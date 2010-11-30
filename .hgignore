@@ -7,3 +7,4 @@ glob:*.bak
 glob:Binaries/
 glob:*.fbl7
 glob:*.fb7lck
+glob:*.orig
