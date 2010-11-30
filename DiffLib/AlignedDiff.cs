@@ -14,10 +14,6 @@ namespace DiffLib
     /// </typeparam>
     public sealed class AlignedDiff<T> : IEnumerable<AlignedDiffChange<T>>
     {
-        // If two elements are considered at least 25% similar, they're considered as a change
-        // from one element to the other. Otherwise they're considered to be a delete + an add.
-        private const double MinimumScoreToUseInlineChange = 0.25;
-
         // If the combined lengths of the two change-sections is more than this number of
         // elements, punt to a delete + add for the entire change. The alignment code
         // is a recursive piece of code that can quickly balloon out of control, so
@@ -32,6 +28,7 @@ namespace DiffLib
         private readonly IList<T> _Collection2;
         private readonly Diff<T> _Diff;
         private readonly ISimilarityComparer<T> _SimilarityComparer;
+        private readonly ISimilarityFilter<T> _SimilarityFilter;
 
         private int _Upper1;
         private int _Upper2;
@@ -54,6 +51,12 @@ namespace DiffLib
         /// inside blocks that consists of elements from the first collection being replaced
         /// with elements from the second collection.
         /// </param>
+        /// <param name="similarityFilter">
+        /// The <see cref="ISimilarityComparer{T}"/> that will be used to determine if
+        /// two aligned elements are similar enough to be report them as a change from
+        /// one to another, or to report them as one being deleted and the other added in
+        /// its place.
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="collection1"/> is <c>null</c>.</para>
         /// <para>- or -</para>
@@ -61,10 +64,10 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="equalityComparer"/> is <c>null</c>.</para>
         /// <para>- or -</para>
-        /// <para><paramref name="similarityComparer"/> is <c>null</c>.</para>
+        /// <para><paramref name="similarityFilter"/> is <c>null</c>.</para>
         /// </exception>
         public AlignedDiff(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer,
-            ISimilarityComparer<T> similarityComparer)
+            ISimilarityComparer<T> similarityComparer, ISimilarityFilter<T> similarityFilter)
         {
             if (collection1 == null)
                 throw new ArgumentNullException("collection1");
@@ -74,12 +77,15 @@ namespace DiffLib
                 throw new ArgumentNullException("equalityComparer");
             if (similarityComparer == null)
                 throw new ArgumentNullException("similarityComparer");
+            if (similarityFilter == null)
+                throw new ArgumentNullException("similarityFilter");
 
             _Collection1 = collection1.ToRandomAccess();
             _Collection2 = collection2.ToRandomAccess();
 
             _Diff = new Diff<T>(_Collection1, _Collection2, equalityComparer);
             _SimilarityComparer = similarityComparer;
+            _SimilarityFilter = similarityFilter;
         }
 
         #region IEnumerable<AlignedDiffChange<T>> Members
@@ -190,7 +196,7 @@ namespace DiffLib
                             break;
 
                         case ChangeType.Changed:
-                            if (alignmentNodes.AverageScore >= MinimumScoreToUseInlineChange)
+                            if (_SimilarityFilter.IsSimilarEnough(_Collection1[i1], _Collection2[i2]))
                                 result.Add(new AlignedDiffChange<T>(ChangeType.Changed, _Collection1[i1],
                                     _Collection2[i2]));
                             else
