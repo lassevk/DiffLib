@@ -1,37 +1,57 @@
 <Query Kind="Program">
+  <Connection>
+    <ID>9f392ba2-0c9a-4727-9538-5646bfcbbce3</ID>
+    <Persist>true</Persist>
+    <Driver>AstoriaAuto</Driver>
+    <Server>https://odata.sqlazurelabs.com/OData.svc/v0.1/rp1uiewita/StackOverflow</Server>
+  </Connection>
   <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\dev\VS.NET\DiffLib\DiffLib\bin\Debug\DiffLib.dll</Reference>
   <Namespace>DiffLib</Namespace>
 </Query>
 
-string[] textfile1 = new[] {
-    "This line is the same",
-    "This line is also the same",
-    "This line has been deleted",
-    "This line is yet another equal line",
-    "This is also another equal line",
-    "This line is changed",
-    "This line is also changed",
-    "This is the final equal line",
-};
-
-string[] textfile2 = new[] {
-    "This line is the same",
-    "This line is also the same",
-    "This line is yet another equal line",
-    "This line has been added",
-    "This is also another equal line",
-    "This line was changed to this",
-    "And then this was added",
-    "And this line was changed to this",
-    "This is the final equal line",
-};
+const int PostId = 424220;
 
 void Main()
 {
-    DumpDiff(new AlignedDiff<string>(textfile1, textfile2, EqualityComparer<string>.Default, new StringSimilarityComparer(), new StringSimilarityFilter()));
+	var history =
+        (from ph in PostHistories
+         where ph.PostId == PostId
+            && (ph.PostHistoryTypeId == 2 || ph.PostHistoryTypeId == 5)
+         orderby ph.CreationDate
+         select ph).ToArray();
+    for (int index = 0; index < history.Length - 1; index++)
+    {
+        DumpTextDiff(
+            history[index].CreationDate, history[index].Text,
+            history[index + 1].CreationDate, history[index + 1].Text);
+    }
 }
 
-static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)
+static string[] SplitLines(string text)
+{
+    var lines = new List<string>();
+    using (var reader = new StringReader(text))
+    {
+        string line;
+        while ((line = reader.ReadLine()) != null)
+            lines.Add(line);
+    }
+    return lines.ToArray();
+}
+
+static void DumpTextDiff(DateTime? dt1, string body1, DateTime? dt2, string body2)
+{
+    var diff = new AlignedDiff<string>(
+        SplitLines(body1),
+        SplitLines(body2),
+        EqualityComparer<string>.Default,
+        new StringSimilarityComparer(),
+        new StringSimilarityFilter());
+    var caption = string.Format("Diff from " + dt1 + " to " + dt2 + " of post " + PostId);
+    DumpDiff(diff, caption);
+}
+
+static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes, string caption)
 {
     var html = new StringBuilder();
     html.Append("<div style='font-family: courier;'>");
@@ -82,5 +102,5 @@ static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)
         }
     }
     html.Append("</div>");
-    Util.RawHtml(html.ToString()).Dump();
+    Util.RawHtml(html.ToString()).Dump(caption);
 }
