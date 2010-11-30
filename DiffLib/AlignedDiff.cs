@@ -25,8 +25,8 @@ namespace DiffLib
         // with this number to see what is feasible.
         private const int MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
 
-        private readonly Dictionary<Tuple<int, int>, ChangeNode> _BestAlignmentNodes =
-            new Dictionary<Tuple<int, int>, ChangeNode>();
+        private readonly Dictionary<AlignmentKey, ChangeNode> _BestAlignmentNodes =
+            new Dictionary<AlignmentKey, ChangeNode>();
 
         private readonly IList<T> _Collection1;
         private readonly IList<T> _Collection2;
@@ -214,7 +214,7 @@ namespace DiffLib
         private ChangeNode CalculateAlignmentNodes(int i1, int i2)
         {
             ChangeNode result;
-            if (_BestAlignmentNodes.TryGetValue(Tuple.Create(i1, i2), out result))
+            if (_BestAlignmentNodes.TryGetValue(new AlignmentKey(i1, i2), out result))
                 return result;
 
             if (i1 == _Upper1 && i2 == _Upper2)
@@ -259,9 +259,49 @@ namespace DiffLib
                     result = resultDeleted;
             }
 
-            _BestAlignmentNodes[Tuple.Create(i1, i2)] = result;
+            _BestAlignmentNodes[new AlignmentKey(i1, i2)] = result;
             return result;
         }
+
+        #region Nested type: AlignmentKey
+
+        private struct AlignmentKey : IEquatable<AlignmentKey>
+        {
+            private readonly int _Position1;
+            private readonly int _Position2;
+
+            public AlignmentKey(int position1, int position2)
+            {
+                _Position1 = position1;
+                _Position2 = position2;
+            }
+
+            #region IEquatable<AlignedDiff<T>.AlignmentKey> Members
+
+            public bool Equals(AlignmentKey other)
+            {
+                return other._Position1 == _Position1 && other._Position2 == _Position2;
+            }
+
+            #endregion
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (obj.GetType() != typeof (AlignmentKey)) return false;
+                return Equals((AlignmentKey) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (_Position1*397) ^ _Position2;
+                }
+            }
+        }
+
+        #endregion
 
         #region Nested type: ChangeNode
 
