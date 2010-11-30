@@ -13,7 +13,7 @@ and do a full rebuild for the Debug target before testing any
 of the examples. They rely on the binary produced as part of the
 build output.
 
-  [1]: https://bitbucket.org/lassevk/difflib
+  [1]: http://difflib.codeplex.com/
   [2]: http://www.linqpad.net/
   [3]: http://www.albahari.com/nutshell/
   [4]: http://oreilly.com/
