@@ -3,8 +3,8 @@ two collections of any type and outputting the differences between
 the two, including an attempt to align up differences, specifically
 in text files.
 
-Repository and project location: [bitbucket repository][1]  
+Repository and project location: [CodePlex][1]  
 Maintainer: [Lasse V. Karlsen][2]
 
-  [1]: https://bitbucket.org/lassevk/difflib
+  [1]: http://difflib.codeplex.com
   [2]: mailto:lasse@vkarlsen.no
