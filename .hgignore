@@ -3,3 +3,7 @@ glob:bin/
 glob:obj/
 glob:*.suo
 glob:_ReSharper.*/
+glob:*.bak
+glob:Binaries/
+glob:*.fbl7
+glob:*.fb7lck
