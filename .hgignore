@@ -9,3 +9,4 @@ glob:*.fbl7
 glob:*.fb7lck
 glob:*.orig
 glob:Help/
+glob:NuGet/
