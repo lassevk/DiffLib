@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
         <id>difflib</id>
-        <version>1.0.0</version>
+        <version>%ASSEMBLY_VERSION_NUMBER%</version>
         <authors>Lasse Vågsæther Karlsen</authors>
         <owners>Lasse Vågsæther Karlsen</owners>
         <description>A diff implementation class library for .NET 3.5 written in C#.</description>
