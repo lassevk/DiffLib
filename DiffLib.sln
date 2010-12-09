@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffLib.Tests", "DiffLib.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{37D01333-8058-4DB9-B8D6-855F42914728}"
 	ProjectSection(SolutionItems) = preProject
+		DiffLib.nuspec = DiffLib.nuspec
 		EXAMPLES.markdown = EXAMPLES.markdown
 		LICENSE.markdown = LICENSE.markdown
 		README.markdown = README.markdown

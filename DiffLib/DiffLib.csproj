@@ -84,6 +84,17 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not "$(ConfigurationName)" == "ReleaseBinaries" exit /B 0
+
+cd "$(SolutionDir)"
+if not exist NuGet md NuGet
+cd "$(SolutionDir)\NuGet"
+if not exist lib md lib
+copy "$(SolutionDir)\DiffLib\bin\$(ConfigurationName)\DiffLib.*" "$(SolutionDir)\NuGet\lib
+copy "$(SolutionDir)\DiffLib.nuspec" "$(SolutionDir)\NuGet"
+"$(SolutionDir)\tools\NuGet.exe" pack DiffLib.nuspec</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

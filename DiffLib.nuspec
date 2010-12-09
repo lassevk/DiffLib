@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+        <id>difflib</id>
+        <version>1.0.0</version>
+        <authors>Lasse Vågsæther Karlsen</authors>
+        <owners>Lasse Vågsæther Karlsen</owners>
+        <description>A diff implementation class library for .NET 3.5 written in C#.</description>
+        <language>en-US</language>
+        <licenseUrl>http://difflib.codeplex.com/license</licenseUrl>
+        <projectUrl>http://difflib.codeplex.com</projectUrl>
+        <summary>This class library for.NET 3.5 does collection-based diff generation.</summary>
+    </metadata>
+</package>
