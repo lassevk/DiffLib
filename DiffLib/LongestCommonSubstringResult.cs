@@ -142,8 +142,8 @@ namespace DiffLib
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture,
-                "Length: {0}, PositionInCollection1: {1}, PositionInCollection2: {2}", _Length,
-                _PositionInCollection1, _PositionInCollection2);
+                "Length: {0}, PositionInCollection1: {1}, PositionInCollection2: {2}", _Length, _PositionInCollection1,
+                _PositionInCollection2);
         }
     }
 }

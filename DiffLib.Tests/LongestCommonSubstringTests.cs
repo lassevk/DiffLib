@@ -7,15 +7,9 @@ namespace DiffLib.Tests
     [TestFixture]
     public class LongestCommonSubstringTests
     {
-        [TestCase(
-            "This is a[ test of Longest Common Substring]",
-            "This is another[ test of Longest Common Substring]")]
-        [TestCase(
-            "xxxx[YYYYYYYYYYYYYYYYYYYYYY]xxxxxxxx",
-            "aaaaaaaa[YYYYYYYYYYYYYYYYYYYYYY]bbbb")]
-        [TestCase(
-            "[xxxxYYYYYYYYYYYYYYYYYYYYYYxxxx]xxxx",
-            "xxxx[xxxxYYYYYYYYYYYYYYYYYYYYYYxxxx]")]
+        [TestCase("This is a[ test of Longest Common Substring]", "This is another[ test of Longest Common Substring]")]
+        [TestCase("xxxx[YYYYYYYYYYYYYYYYYYYYYY]xxxxxxxx", "aaaaaaaa[YYYYYYYYYYYYYYYYYYYYYY]bbbb")]
+        [TestCase("[xxxxYYYYYYYYYYYYYYYYYYYYYYxxxx]xxxx", "xxxx[xxxxYYYYYYYYYYYYYYYYYYYYYYxxxx]")]
         public void Find_SomeSimplePatterns_ReturnsCorrectLocations(string input1, string input2)
         {
             int index1 = input1.IndexOf('[');

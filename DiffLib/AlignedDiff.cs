@@ -240,19 +240,16 @@ namespace DiffLib
             else
             {
                 ChangeNode restAfterAddition = CalculateAlignmentNodes(i1, i2 + 1);
-                var resultAdded = new ChangeNode(ChangeType.Added,
-                    restAfterAddition.Score,
+                var resultAdded = new ChangeNode(ChangeType.Added, restAfterAddition.Score,
                     restAfterAddition.NodeCount + 1, restAfterAddition);
 
                 ChangeNode restAfterDeletion = CalculateAlignmentNodes(i1 + 1, i2);
-                var resultDeleted = new ChangeNode(ChangeType.Deleted,
-                    restAfterDeletion.Score,
+                var resultDeleted = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score,
                     restAfterDeletion.NodeCount + 1, restAfterDeletion);
 
                 double similarity = _SimilarityComparer.Compare(_Collection1[i1], _Collection2[i2]);
                 ChangeNode restAfterChange = CalculateAlignmentNodes(i1 + 1, i2 + 1);
-                var resultChanged = new ChangeNode(ChangeType.Changed,
-                    similarity + restAfterChange.Score,
+                var resultChanged = new ChangeNode(ChangeType.Changed, similarity + restAfterChange.Score,
                     restAfterChange.NodeCount + 1, restAfterChange);
 
                 if (resultChanged.AverageScore >= resultAdded.AverageScore &&
