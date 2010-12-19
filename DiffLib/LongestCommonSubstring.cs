@@ -208,8 +208,7 @@ namespace DiffLib
         private int CountMatchingElements(int index1, int upper1, int index2, int upper2)
         {
             int startIndex = index1;
-            while (index1 < upper1 && index2 < upper2 &&
-                   _Collection1[index1].HashCode == _Collection2[index2].HashCode)
+            while (index1 < upper1 && index2 < upper2 && _Collection1[index1].HashCode == _Collection2[index2].HashCode)
             {
                 if (!_Comparer.Equals(_Collection1[index1].Item, _Collection2[index2].Item))
                     break;

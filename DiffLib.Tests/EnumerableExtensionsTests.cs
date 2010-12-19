@@ -10,10 +10,7 @@ namespace DiffLib.Tests
         [Test]
         public void ToRandomAccess_OnArray_ReturnsSameInstance()
         {
-            var collection = new[]
-                {
-                    1, 2, 3
-                };
+            var collection = new[] { 1, 2, 3 };
             IList<int> randomAccess = collection.ToRandomAccess();
 
             Assert.That(ReferenceEquals(collection, randomAccess));

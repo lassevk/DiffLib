@@ -125,18 +125,16 @@ namespace DiffLib
 
             if (lower1 < lcsr.PositionInCollection1 || lower2 < lcsr.PositionInCollection2)
             {
-                foreach (
-                    DiffChange prevSection in
-                        GenerateSections(lower1, lcsr.PositionInCollection1, lower2, lcsr.PositionInCollection2))
+                foreach (DiffChange prevSection in
+                    GenerateSections(lower1, lcsr.PositionInCollection1, lower2, lcsr.PositionInCollection2))
                     yield return prevSection;
             }
             yield return new DiffChange(true, lcsr.Length, lcsr.Length);
             if (lcsr.PositionInCollection1 + lcsr.Length < upper1 || lcsr.PositionInCollection2 + lcsr.Length < upper2)
             {
-                foreach (
-                    DiffChange nextSection in
-                        GenerateSections(lcsr.PositionInCollection1 + lcsr.Length, upper1,
-                            lcsr.PositionInCollection2 + lcsr.Length, upper2))
+                foreach (DiffChange nextSection in
+                    GenerateSections(lcsr.PositionInCollection1 + lcsr.Length, upper1,
+                        lcsr.PositionInCollection2 + lcsr.Length, upper2))
                     yield return nextSection;
             }
         }
