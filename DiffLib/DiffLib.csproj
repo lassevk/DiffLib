@@ -21,7 +21,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\DiffLib.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Lasse V. Karlsen.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -79,8 +79,8 @@
     <Compile Include="StringSimilarityFilterPredicate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\DiffLib.snk">
-      <Link>DiffLib.snk</Link>
+    <None Include="..\Lasse V. Karlsen.snk">
+      <Link>Lasse V. Karlsen.snk</Link>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
