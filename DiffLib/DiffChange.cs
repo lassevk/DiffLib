@@ -47,8 +47,7 @@ namespace DiffLib
             if (length2 < 0)
                 throw new ArgumentOutOfRangeException("length2", length2, "length2 must be 0 or greater");
             if (equal && length1 != length2)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    "length1 ({0}) must be equal to length2 ({1}) when the equal parameter is true", length1, length2));
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "length1 ({0}) must be equal to length2 ({1}) when the equal parameter is true", length1, length2));
 
             _Equal = equal;
             _Length1 = length1;
@@ -106,8 +105,10 @@ namespace DiffLib
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(DiffChange other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
             return other._Equal.Equals(_Equal) && other._Length1 == _Length1 && other._Length2 == _Length2;
         }
 
@@ -122,9 +123,12 @@ namespace DiffLib
         /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (DiffChange)) return false;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != typeof (DiffChange))
+                return false;
             return Equals((DiffChange) obj);
         }
 

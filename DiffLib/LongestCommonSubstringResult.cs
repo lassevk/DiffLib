@@ -34,11 +34,9 @@ namespace DiffLib
         public LongestCommonSubstringResult(int positionInCollection1, int positionInCollection2, int length)
         {
             if (positionInCollection1 < 0)
-                throw new ArgumentOutOfRangeException("positionInCollection1", positionInCollection1,
-                    "positionInCollection1 must be zero or greater");
+                throw new ArgumentOutOfRangeException("positionInCollection1", positionInCollection1, "positionInCollection1 must be zero or greater");
             if (positionInCollection2 < 0)
-                throw new ArgumentOutOfRangeException("positionInCollection2", positionInCollection2,
-                    "positionInCollection2 must be zero or greater");
+                throw new ArgumentOutOfRangeException("positionInCollection2", positionInCollection2, "positionInCollection2 must be zero or greater");
             if (length <= 0)
                 throw new ArgumentOutOfRangeException("length", length, "length must be greater than zero");
 
@@ -91,10 +89,11 @@ namespace DiffLib
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(LongestCommonSubstringResult other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return other._Length == _Length && other._PositionInCollection1 == _PositionInCollection1 &&
-                   other._PositionInCollection2 == _PositionInCollection2;
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
+            return other._Length == _Length && other._PositionInCollection1 == _PositionInCollection1 && other._PositionInCollection2 == _PositionInCollection2;
         }
 
         #endregion
@@ -108,9 +107,12 @@ namespace DiffLib
         /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (LongestCommonSubstringResult)) return false;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != typeof (LongestCommonSubstringResult))
+                return false;
             return Equals((LongestCommonSubstringResult) obj);
         }
 
@@ -141,9 +143,7 @@ namespace DiffLib
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                "Length: {0}, PositionInCollection1: {1}, PositionInCollection2: {2}", _Length, _PositionInCollection1,
-                _PositionInCollection2);
+            return string.Format(CultureInfo.InvariantCulture, "Length: {0}, PositionInCollection1: {1}, PositionInCollection2: {2}", _Length, _PositionInCollection1, _PositionInCollection2);
         }
     }
 }

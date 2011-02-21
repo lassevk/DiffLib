@@ -80,10 +80,11 @@ namespace DiffLib
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(AlignedDiffChange<T> other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other._Element1, _Element1) && Equals(other._Element2, _Element2) &&
-                   Equals(other._Change, _Change);
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
+            return Equals(other._Element1, _Element1) && Equals(other._Element2, _Element2) && Equals(other._Change, _Change);
         }
 
         #endregion
@@ -97,9 +98,12 @@ namespace DiffLib
         /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (AlignedDiffChange<T>)) return false;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != typeof (AlignedDiffChange<T>))
+                return false;
             return Equals((AlignedDiffChange<T>) obj);
         }
 

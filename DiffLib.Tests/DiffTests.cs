@@ -47,17 +47,17 @@ namespace DiffLib.Tests
             DiffChange[] diff = new Diff<char>(text1, text2).ToArray();
 
             CollectionAssert.AreEqual(diff, new[]
-                {
-                    new DiffChange(true, 9, 9), // same        "This is a"
-                    new DiffChange(false, 0, 6), // add        "nother"
-                    new DiffChange(true, 13, 13), // same      " test of the "
-                    new DiffChange(false, 4, 4), // replace    "same" with "diff"
-                    new DiffChange(true, 27, 27), // same      " implementation, with some "
-                    new DiffChange(false, 0, 5), // add        "more "
-                    new DiffChange(true, 4, 4), // same        "text"
-                    new DiffChange(false, 16, 0), // delete    " that is deleted"
-                    new DiffChange(true, 1, 1), // same        "."
-                });
+            {
+                new DiffChange(true, 9, 9), // same        "This is a"
+                new DiffChange(false, 0, 6), // add        "nother"
+                new DiffChange(true, 13, 13), // same      " test of the "
+                new DiffChange(false, 4, 4), // replace    "same" with "diff"
+                new DiffChange(true, 27, 27), // same      " implementation, with some "
+                new DiffChange(false, 0, 5), // add        "more "
+                new DiffChange(true, 4, 4), // same        "text"
+                new DiffChange(false, 16, 0), // delete    " that is deleted"
+                new DiffChange(true, 1, 1), // same        "."
+            });
         }
     }
 }
