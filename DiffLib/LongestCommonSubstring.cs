@@ -131,21 +131,15 @@ namespace DiffLib
             if (lower1 < 0)
                 throw new ArgumentOutOfRangeException("lower1", lower1, "lower1 must be 0 or greater");
             if (lower1 > upper1)
-                throw new ArgumentOutOfRangeException("lower1", lower1,
-                    string.Format(CultureInfo.InvariantCulture, "lower1 must be equal to or less than upper1 ({0})",
-                        upper1));
+                throw new ArgumentOutOfRangeException("lower1", lower1, string.Format(CultureInfo.InvariantCulture, "lower1 must be equal to or less than upper1 ({0})", upper1));
             if (upper1 > _Collection1.Length)
-                throw new ArgumentOutOfRangeException("upper1", upper1,
-                    "upper1 must be equal to or less than the length of the first collection");
+                throw new ArgumentOutOfRangeException("upper1", upper1, "upper1 must be equal to or less than the length of the first collection");
             if (lower2 < 0)
                 throw new ArgumentOutOfRangeException("lower2", lower2, "lower2 must be 0 or greater");
             if (lower2 > upper2)
-                throw new ArgumentOutOfRangeException("lower2", lower2,
-                    string.Format(CultureInfo.InvariantCulture, "lower2 must be equal to or less than upper2 ({0})",
-                        upper2));
+                throw new ArgumentOutOfRangeException("lower2", lower2, string.Format(CultureInfo.InvariantCulture, "lower2 must be equal to or less than upper2 ({0})", upper2));
             if (upper2 > _Collection2.Length)
-                throw new ArgumentOutOfRangeException("upper2", upper2,
-                    "upper2 must be equal to or less than the length of the first collection");
+                throw new ArgumentOutOfRangeException("upper2", upper2, "upper2 must be equal to or less than the length of the first collection");
 
             // Pathological cases
             if (lower1 == upper1 || lower2 == upper2)

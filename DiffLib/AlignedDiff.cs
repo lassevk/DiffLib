@@ -22,8 +22,7 @@ namespace DiffLib
         private const int MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
         private readonly IAlignmentFilter<T> _AlignmentFilter;
 
-        private readonly Dictionary<AlignmentKey, ChangeNode> _BestAlignmentNodes =
-            new Dictionary<AlignmentKey, ChangeNode>();
+        private readonly Dictionary<AlignmentKey, ChangeNode> _BestAlignmentNodes = new Dictionary<AlignmentKey, ChangeNode>();
 
         private readonly IList<T> _Collection1;
         private readonly IList<T> _Collection2;
@@ -228,35 +227,29 @@ namespace DiffLib
             else if (i1 == _Upper1)
             {
                 ChangeNode restAfterAddition = CalculateAlignmentNodes(i1, i2 + 1);
-                result = new ChangeNode(ChangeType.Added, restAfterAddition.Score, restAfterAddition.NodeCount + 1,
-                    restAfterAddition);
+                result = new ChangeNode(ChangeType.Added, restAfterAddition.Score, restAfterAddition.NodeCount + 1, restAfterAddition);
             }
             else if (i2 == _Upper2)
             {
                 ChangeNode restAfterDeletion = CalculateAlignmentNodes(i1 + 1, i2);
-                result = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score, restAfterDeletion.NodeCount + 1,
-                    restAfterDeletion);
+                result = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score, restAfterDeletion.NodeCount + 1, restAfterDeletion);
             }
             else
             {
                 ChangeNode restAfterAddition = CalculateAlignmentNodes(i1, i2 + 1);
-                var resultAdded = new ChangeNode(ChangeType.Added, restAfterAddition.Score,
-                    restAfterAddition.NodeCount + 1, restAfterAddition);
+                var resultAdded = new ChangeNode(ChangeType.Added, restAfterAddition.Score, restAfterAddition.NodeCount + 1, restAfterAddition);
 
                 ChangeNode restAfterDeletion = CalculateAlignmentNodes(i1 + 1, i2);
-                var resultDeleted = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score,
-                    restAfterDeletion.NodeCount + 1, restAfterDeletion);
+                var resultDeleted = new ChangeNode(ChangeType.Deleted, restAfterDeletion.Score, restAfterDeletion.NodeCount + 1, restAfterDeletion);
 
                 double similarity = _SimilarityComparer.Compare(_Collection1[i1], _Collection2[i2]);
                 ChangeNode restAfterChange = CalculateAlignmentNodes(i1 + 1, i2 + 1);
                 var resultChanged = new ChangeNode(ChangeType.Changed, similarity + restAfterChange.Score,
                     restAfterChange.NodeCount + 1, restAfterChange);
 
-                if (resultChanged.AverageScore >= resultAdded.AverageScore &&
-                    resultChanged.AverageScore >= resultDeleted.AverageScore)
+                if (resultChanged.AverageScore >= resultAdded.AverageScore && resultChanged.AverageScore >= resultDeleted.AverageScore)
                     result = resultChanged;
-                else if (resultAdded.AverageScore >= resultChanged.AverageScore &&
-                         resultAdded.AverageScore >= resultDeleted.AverageScore)
+                else if (resultAdded.AverageScore >= resultChanged.AverageScore && resultAdded.AverageScore >= resultDeleted.AverageScore)
                     result = resultAdded;
                 else
                     result = resultDeleted;
@@ -290,8 +283,10 @@ namespace DiffLib
 
             public override bool Equals(object obj)
             {
-                if (ReferenceEquals(null, obj)) return false;
-                if (obj.GetType() != typeof (AlignmentKey)) return false;
+                if (ReferenceEquals(null, obj))
+                    return false;
+                if (obj.GetType() != typeof (AlignmentKey))
+                    return false;
                 return Equals((AlignmentKey) obj);
             }
 
@@ -329,8 +324,8 @@ namespace DiffLib
                 {
                     if (NodeCount == 0)
                         return 0.0;
-                    else
-                        return Score/NodeCount;
+                    
+                    return Score/NodeCount;
                 }
             }
         }
