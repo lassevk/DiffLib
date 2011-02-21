@@ -73,7 +73,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DiffLib\DiffLib.csproj">
       <Project>{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}</Project>
-      <Name>DiffLib</Name>
+      <Name>DiffLib %28DiffLib\DiffLib%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
