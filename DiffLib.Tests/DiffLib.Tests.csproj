@@ -71,16 +71,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DiffLib\DiffLib.csproj">
-      <Project>{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}</Project>
-      <Name>DiffLib %28DiffLib\DiffLib%29</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\DiffLib.snk">
       <Link>DiffLib.snk</Link>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DiffLib\DiffLib.csproj">
+      <Project>{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}</Project>
+      <Name>DiffLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
