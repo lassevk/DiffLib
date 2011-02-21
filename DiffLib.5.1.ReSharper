@@ -6,13 +6,14 @@
     <CSharp>
       <FormatSettings>
         <ALIGN_MULTILINE_ARGUMENT>False</ALIGN_MULTILINE_ARGUMENT>
+        <ALIGN_MULTILINE_ARRAY_AND_OBJECT_INITIALIZER>False</ALIGN_MULTILINE_ARRAY_AND_OBJECT_INITIALIZER>
         <ALIGN_MULTILINE_PARAMETER>False</ALIGN_MULTILINE_PARAMETER>
         <ANONYMOUS_METHOD_DECLARATION_BRACES>NEXT_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
         <INDENT_ANONYMOUS_METHOD_BLOCK>False</INDENT_ANONYMOUS_METHOD_BLOCK>
         <INDENT_EMBRACED_INITIALIZER_BLOCK>False</INDENT_EMBRACED_INITIALIZER_BLOCK>
+        <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
         <KEEP_BLANK_LINES_IN_CODE>1</KEEP_BLANK_LINES_IN_CODE>
         <KEEP_BLANK_LINES_IN_DECLARATIONS>1</KEEP_BLANK_LINES_IN_DECLARATIONS>
-        <KEEP_USER_LINEBREAKS>False</KEEP_USER_LINEBREAKS>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -36,10 +37,31 @@
         <PLACE_SIMPLE_ANONYMOUSMETHOD_ON_SINGLE_LINE>False</PLACE_SIMPLE_ANONYMOUSMETHOD_ON_SINGLE_LINE>
         <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
         <PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>False</PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>
+        <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
+        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+        <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
+        <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
         <SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>True</SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>
         <STICK_COMMENT>False</STICK_COMMENT>
+        <WRAP_AFTER_DECLARATION_LPAR>True</WRAP_AFTER_DECLARATION_LPAR>
+        <WRAP_AFTER_INVOCATION_LPAR>True</WRAP_AFTER_INVOCATION_LPAR>
+        <WRAP_LIMIT>160</WRAP_LIMIT>
+        <WRAP_LINES>False</WRAP_LINES>
       </FormatSettings>
-      <UsingsSettings />
+      <UsingsSettings>
+        <KeepImports IsNull="False">
+          <Item>System</Item>
+          <Item>System.Diagnostics</Item>
+          <Item>System.Collections.Generic</Item>
+          <Item>System.Linq</Item>
+        </KeepImports>
+        <MandatoryImports IsNull="False">
+          <Item>System</Item>
+          <Item>System.Diagnostics</Item>
+          <Item>System.Collections.Generic</Item>
+          <Item>System.Linq</Item>
+        </MandatoryImports>
+      </UsingsSettings>
       <Naming2>
         <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
         <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
@@ -60,6 +82,12 @@
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
       </Naming2>
+      <CustomMemberReorderingPatterns><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+
+<Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns">
+  
+</Patterns>
+]]></CustomMemberReorderingPatterns>
     </CSharp>
     <VB>
       <FormatSettings />
@@ -107,4 +135,28 @@
       <Abbreviation Text="XHTML" />
     </Naming2>
   </CodeStyleSettings>
+  <SharedSolutionTemplateManager>
+    <LiveTemplates>
+      <Template uid="b19d89c6-b31f-41ba-a121-b45e7f977942" shortcut="nex" description="Throw an ArgumentNullException if the given argument is null." text="if ($param$ == null)&#xD;&#xA;    throw new System.ArgumentNullException(&quot;$param$&quot;);" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Statement" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="param" expression="parameterOfType(&quot;System.Object&quot;)" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="3eaf4fe4-9efd-4ae6-a05a-090b00ecd30c" shortcut="nsex" description="Throw an ArgumentNullException if the given parameter is null, string.Empty, or only contains whitespace." text="if (StringEx.IsNullOrWhiteSpace($param$))&#xD;&#xA;    throw new System.ArgumentNullException(&quot;$param$&quot;);" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="param" expression="parameterOfType(&quot;System.String&quot;)" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+    </LiveTemplates>
+  </SharedSolutionTemplateManager>
 </Configuration>
