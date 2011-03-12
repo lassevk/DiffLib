@@ -150,7 +150,7 @@ namespace DiffLib
             int maxMatchingPosition2 = -1;
             for (int index1 = lower1; index1 < upper1; index1++)
             {
-                if (upper1 - index1 <= maxMatchingLength)
+                if (upper1 - index1 <= maxMatchingLength + 1)
                     break;
 
                 Occurance occurance;
@@ -164,7 +164,11 @@ namespace DiffLib
                         if (index2 < lower2 || index2 >= upper2)
                             continue;
 
-                        if (upper2 - index2 <= maxMatchingLength)
+                        if (upper2 - index2 <= maxMatchingLength + 1)
+                            continue;
+
+                        // optimization, check the first entry after the current max length to ensure we can find a longer match
+                        if (maxMatchingLength > 0 && !_Comparer.Equals(_Collection1[index1 + maxMatchingLength].Item, _Collection2[index2 + maxMatchingLength].Item))
                             continue;
 
                         int length = CountMatchingElements(index1, upper1, index2, upper2);
@@ -174,6 +178,10 @@ namespace DiffLib
                             maxMatchingPosition1 = index1;
                             maxMatchingPosition2 = index2;
                         }
+
+                        // exit if we can't find a longer match
+                        if (upper1 - index1 <= maxMatchingLength + 1)
+                            break;
                     }
                 }
             }
