@@ -4,12 +4,14 @@ using System.Globalization;
 namespace DiffLib
 {
     /// <summary>
-    /// This class contains a single section of diff output from the <see cref="Diff{T}.Generate"/>
+    /// This class contains a single section of diff output from the <see cref="Diff{T}"/>
     /// method.
     /// </summary>
     public sealed class DiffChange : IEquatable<DiffChange>
     {
         private readonly bool _Equal;
+        private readonly int _Position1;
+        private readonly int _Position2;
         private readonly int _Length1;
         private readonly int _Length2;
 
@@ -21,6 +23,12 @@ namespace DiffLib
         /// collection that is equal to a section from the second collection;
         /// otherwise, if <c>false</c>, then the section from the first
         /// collection was replaced with the section from the second collection.
+        /// </param>
+        /// <param name="position1">
+        /// The position in the first collection.
+        /// </param>
+        /// <param name="position2">
+        /// The position in the second collection.
         /// </param>
         /// <param name="length1">
         /// The length of the section in the first collection. Can be 0 if
@@ -40,7 +48,7 @@ namespace DiffLib
         /// <exception cref="ArgumentException">
         /// <para><paramref name="equal"/> is <c>true</c> but <paramref name="length1"/> is not equal to <paramref name="length2"/>.</para>
         /// </exception>
-        public DiffChange(bool equal, int length1, int length2)
+        public DiffChange(bool equal, int position1, int position2, int length1, int length2)
         {
             if (length1 < 0)
                 throw new ArgumentOutOfRangeException("length1", length1, "length1 must be 0 or greater");
@@ -50,6 +58,8 @@ namespace DiffLib
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "length1 ({0}) must be equal to length2 ({1}) when the equal parameter is true", length1, length2));
 
             _Equal = equal;
+            _Position1 = position1;
+            _Position2 = position2;
             _Length1 = length1;
             _Length2 = length2;
         }
@@ -69,6 +79,28 @@ namespace DiffLib
             get
             {
                 return _Equal;
+            }
+        }
+
+        /// <summary>
+        /// Gets the position in the first collection.
+        /// </summary>
+        public int Position1
+        {
+            get
+            {
+                return _Position1;
+            }
+        }
+
+        /// <summary>
+        /// Gets the position in the second collection.
+        /// </summary>
+        public int Position2
+        {
+            get
+            {
+                return _Position2;
             }
         }
 
