@@ -106,20 +106,20 @@ namespace DiffLib
 
             if (lower1 == upper1)
             {
-                yield return new DiffChange(false, 0, upper2 - lower2);
+                yield return new DiffChange(false, lower1, lower2, 0, upper2 - lower2);
                 yield break;
             }
 
             if (lower2 == upper2)
             {
-                yield return new DiffChange(false, upper1 - lower1, 0);
+                yield return new DiffChange(false, lower1, lower2, upper1 - lower1, 0);
                 yield break;
             }
 
             LongestCommonSubstringResult lcsr = _LongestCommonSubstring.Find(lower1, upper1, lower2, upper2);
             if (lcsr == null)
             {
-                yield return new DiffChange(false, upper1 - lower1, upper2 - lower2);
+                yield return new DiffChange(false, lower1, lower2, upper1 - lower1, upper2 - lower2);
                 yield break;
             }
 
@@ -127,7 +127,7 @@ namespace DiffLib
             {
                 foreach (DiffChange prevSection in GenerateSections(lower1, lcsr.PositionInCollection1, lower2, lcsr.PositionInCollection2)) yield return prevSection;
             }
-            yield return new DiffChange(true, lcsr.Length, lcsr.Length);
+            yield return new DiffChange(true, lower1, lower2, lcsr.Length, lcsr.Length);
             if (lcsr.PositionInCollection1 + lcsr.Length < upper1 || lcsr.PositionInCollection2 + lcsr.Length < upper2)
             {
                 foreach (DiffChange nextSection in GenerateSections(lcsr.PositionInCollection1 + lcsr.Length, upper1, lcsr.PositionInCollection2 + lcsr.Length, upper2))
