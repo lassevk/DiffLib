@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -10,6 +11,7 @@ namespace DiffLib
     /// </summary>
     public sealed class StringAlignmentFilter : IAlignmentFilter<string>
     {
+        [NotNull]
         private readonly StringSimilarityFilterPredicate _DiffPredicate;
 
         /// <summary>
@@ -19,7 +21,10 @@ namespace DiffLib
         {
             _DiffPredicate = delegate(string value1, string value2, IEnumerable<DiffChange> diff)
             {
-                int same = diff.Where(s => s.Equal).Sum(s => s.Length1);
+                Assume.That(diff != null);
+                int same = diff.Where(s => s != null && s.Equal).Sum(s => s.Length1);
+
+                Assume.That(value1 != null && value2 != null);
                 return ((same*2.0)/(value1.Length + value2.Length + 0.0)) >= 0.1;
             };
         }
@@ -32,10 +37,10 @@ namespace DiffLib
         /// similar enough (see <see cref="StringSimilarityFilterPredicate"/> for details.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="diffPredicate" /> is <c>null</c>.</exception>
-        public StringAlignmentFilter(StringSimilarityFilterPredicate diffPredicate)
+        public StringAlignmentFilter([NotNull] StringSimilarityFilterPredicate diffPredicate)
         {
             if (diffPredicate == null)
-                throw new ArgumentNullException("diffPredicate");
+                throw new ArgumentNullException(nameof(diffPredicate));
 
             _DiffPredicate = diffPredicate;
         }

@@ -34,11 +34,11 @@ namespace DiffLib
         public LongestCommonSubstringResult(int positionInCollection1, int positionInCollection2, int length)
         {
             if (positionInCollection1 < 0)
-                throw new ArgumentOutOfRangeException("positionInCollection1", positionInCollection1, "positionInCollection1 must be zero or greater");
+                throw new ArgumentOutOfRangeException(nameof(positionInCollection1), positionInCollection1, "positionInCollection1 must be zero or greater");
             if (positionInCollection2 < 0)
-                throw new ArgumentOutOfRangeException("positionInCollection2", positionInCollection2, "positionInCollection2 must be zero or greater");
+                throw new ArgumentOutOfRangeException(nameof(positionInCollection2), positionInCollection2, "positionInCollection2 must be zero or greater");
             if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", length, "length must be greater than zero");
+                throw new ArgumentOutOfRangeException(nameof(length), length, "length must be greater than zero");
 
             _PositionInCollection1 = positionInCollection1;
             _PositionInCollection2 = positionInCollection2;
@@ -48,35 +48,17 @@ namespace DiffLib
         /// <summary>
         /// The position in the first collection, 0-based.
         /// </summary>
-        public int PositionInCollection1
-        {
-            get
-            {
-                return _PositionInCollection1;
-            }
-        }
+        public int PositionInCollection1 => _PositionInCollection1;
 
         /// <summary>
         /// The position in the second collection, 0-based.
         /// </summary>
-        public int PositionInCollection2
-        {
-            get
-            {
-                return _PositionInCollection2;
-            }
-        }
+        public int PositionInCollection2 => _PositionInCollection2;
 
         /// <summary>
         /// The length of the common substring.
         /// </summary>
-        public int Length
-        {
-            get
-            {
-                return _Length;
-            }
-        }
+        public int Length => _Length;
 
         #region IEquatable<LongestCommonSubstringResult> Members
 

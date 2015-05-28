@@ -15,10 +15,10 @@ namespace DiffLib
     /// </typeparam>
     public sealed class LongestCommonSubstring<T>
     {
-        [NotNull]
+        [NotNull, ItemNotNull]
         private readonly Element[] _Collection1;
 
-        [NotNull]
+        [NotNull, ItemNotNull]
         private readonly Element[] _Collection2;
 
         [NotNull]
@@ -209,7 +209,10 @@ namespace DiffLib
         {
             Occurance firstOccurance;
             if (_LookupTable.TryGetValue(hc, out firstOccurance))
+            {
+                Assume.That(firstOccurance != null);
                 firstOccurance.Next = new Occurance(index, firstOccurance.Next);
+            }
             else
                 _LookupTable[hc] = new Occurance(index, null);
         }
