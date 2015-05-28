@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -16,6 +17,8 @@ namespace DiffLib
     {
         private readonly int _Collection1Length;
         private readonly int _Collection2Length;
+
+        [NotNull]
         private readonly LongestCommonSubstring<T> _LongestCommonSubstring;
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        public Diff(IEnumerable<T> collection1, IEnumerable<T> collection2)
+        public Diff([NotNull] IEnumerable<T> collection1, [NotNull] IEnumerable<T> collection2)
             : this(collection1, collection2, EqualityComparer<T>.Default)
         {
             // Nothing here
@@ -60,8 +63,15 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="comparer"/> is <c>null</c>.</para>
         /// </exception>
-        public Diff(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> comparer)
+        public Diff([NotNull] IEnumerable<T> collection1, [NotNull] IEnumerable<T> collection2, [NotNull] IEqualityComparer<T> comparer)
         {
+            if (collection1 == null)
+                throw new ArgumentNullException(nameof(collection1));
+            if (collection2 == null)
+                throw new ArgumentNullException(nameof(collection2));
+            if (comparer == null)
+                throw new ArgumentNullException(nameof(comparer));
+
             IList<T> randomAccess1 = collection1.ToRandomAccess();
             IList<T> randomAccess2 = collection2.ToRandomAccess();
 
@@ -79,6 +89,7 @@ namespace DiffLib
         /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
         /// </returns>
         /// <filterpriority>1</filterpriority>
+        [ItemNotNull]
         public IEnumerator<DiffChange> GetEnumerator()
         {
             return Generate().GetEnumerator();
@@ -94,11 +105,13 @@ namespace DiffLib
         /// <summary>
         /// Generates the diff between the two collections.
         /// </summary>
+        [NotNull, ItemNotNull]
         public IEnumerable<DiffChange> Generate()
         {
             return GenerateSections(0, _Collection1Length, 0, _Collection2Length);
         }
 
+        [NotNull, ItemNotNull]
         private IEnumerable<DiffChange> GenerateSections(int lower1, int upper1, int lower2, int upper2)
         {
             if (lower1 == upper1 && lower2 == upper2)

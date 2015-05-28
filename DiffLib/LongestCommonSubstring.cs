@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -14,9 +15,16 @@ namespace DiffLib
     /// </typeparam>
     public sealed class LongestCommonSubstring<T>
     {
+        [NotNull]
         private readonly Element[] _Collection1;
+
+        [NotNull]
         private readonly Element[] _Collection2;
+
+        [NotNull]
         private readonly IEqualityComparer<T> _Comparer;
+
+        [NotNull]
         private readonly Dictionary<int, Occurance> _LookupTable;
 
         /// <summary>
@@ -35,7 +43,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        public LongestCommonSubstring(IEnumerable<T> collection1, IEnumerable<T> collection2)
+        public LongestCommonSubstring([NotNull] IEnumerable<T> collection1, [NotNull] IEnumerable<T> collection2)
             : this(collection1, collection2, EqualityComparer<T>.Default)
         {
             // Nothing here
@@ -61,15 +69,14 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="comparer"/> is <c>null</c>.</para>
         /// </exception>
-        public LongestCommonSubstring(IEnumerable<T> collection1, IEnumerable<T> collection2,
-            IEqualityComparer<T> comparer)
+        public LongestCommonSubstring([NotNull] IEnumerable<T> collection1, [NotNull] IEnumerable<T> collection2, [NotNull] IEqualityComparer<T> comparer)
         {
             if (collection1 == null)
-                throw new ArgumentNullException("collection1");
+                throw new ArgumentNullException(nameof(collection1));
             if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+                throw new ArgumentNullException(nameof(collection2));
             if (comparer == null)
-                throw new ArgumentNullException("comparer");
+                throw new ArgumentNullException(nameof(comparer));
 
             _Collection1 = collection1.Select(e => new Element(comparer.GetHashCode(e), e)).ToArray();
             _Collection2 = collection2.Select(e => new Element(comparer.GetHashCode(e), e)).ToArray();
@@ -129,17 +136,17 @@ namespace DiffLib
         public LongestCommonSubstringResult Find(int lower1, int upper1, int lower2, int upper2)
         {
             if (lower1 < 0)
-                throw new ArgumentOutOfRangeException("lower1", lower1, "lower1 must be 0 or greater");
+                throw new ArgumentOutOfRangeException(nameof(lower1), lower1, "lower1 must be 0 or greater");
             if (lower1 > upper1)
-                throw new ArgumentOutOfRangeException("lower1", lower1, string.Format(CultureInfo.InvariantCulture, "lower1 must be equal to or less than upper1 ({0})", upper1));
+                throw new ArgumentOutOfRangeException(nameof(lower1), lower1, string.Format(CultureInfo.InvariantCulture, "lower1 must be equal to or less than upper1 ({0})", upper1));
             if (upper1 > _Collection1.Length)
-                throw new ArgumentOutOfRangeException("upper1", upper1, "upper1 must be equal to or less than the length of the first collection");
+                throw new ArgumentOutOfRangeException(nameof(upper1), upper1, "upper1 must be equal to or less than the length of the first collection");
             if (lower2 < 0)
-                throw new ArgumentOutOfRangeException("lower2", lower2, "lower2 must be 0 or greater");
+                throw new ArgumentOutOfRangeException(nameof(lower2), lower2, "lower2 must be 0 or greater");
             if (lower2 > upper2)
-                throw new ArgumentOutOfRangeException("lower2", lower2, string.Format(CultureInfo.InvariantCulture, "lower2 must be equal to or less than upper2 ({0})", upper2));
+                throw new ArgumentOutOfRangeException(nameof(lower2), lower2, string.Format(CultureInfo.InvariantCulture, "lower2 must be equal to or less than upper2 ({0})", upper2));
             if (upper2 > _Collection2.Length)
-                throw new ArgumentOutOfRangeException("upper2", upper2, "upper2 must be equal to or less than the length of the first collection");
+                throw new ArgumentOutOfRangeException(nameof(upper2), upper2, "upper2 must be equal to or less than the length of the first collection");
 
             // Pathological cases
             if (lower1 == upper1 || lower2 == upper2)
