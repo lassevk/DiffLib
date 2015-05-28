@@ -39,7 +39,7 @@ namespace DiffLib
             if (value1.Length == 0 || value2.Length == 0)
                 return 0.0;
 
-            int same = new Diff<char>(value1, value2).Where(s => s.Equal).Sum(s => s.Length1);
+            int same = new Diff<char>(value1, value2).Where(s => s != null && s.Equal).Sum(s => s.Length1);
             return (same*2.0)/(value1.Length + value2.Length + 0.0);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -19,14 +20,24 @@ namespace DiffLib
         // is a recursive piece of code that can quickly balloon out of control, so
         // too big sections will take a long time to process. I will experiment more
         // with this number to see what is feasible.
-        private const int MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
+        private const int _MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
+
+        [NotNull]
         private readonly IAlignmentFilter<T> _AlignmentFilter;
 
+        [NotNull]
         private readonly Dictionary<AlignmentKey, ChangeNode> _BestAlignmentNodes = new Dictionary<AlignmentKey, ChangeNode>();
 
+        [NotNull]
         private readonly IList<T> _Collection1;
+
+        [NotNull]
         private readonly IList<T> _Collection2;
+
+        [NotNull, ItemNotNull]
         private readonly Diff<T> _Diff;
+
+        [NotNull]
         private readonly ISimilarityComparer<T> _SimilarityComparer;
 
         private int _Upper1;
@@ -65,19 +76,18 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="alignmentFilter"/> is <c>null</c>.</para>
         /// </exception>
-        public AlignedDiff(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer,
-            ISimilarityComparer<T> similarityComparer, IAlignmentFilter<T> alignmentFilter)
+        public AlignedDiff([NotNull] IEnumerable<T> collection1, [NotNull] IEnumerable<T> collection2, [NotNull] IEqualityComparer<T> equalityComparer, [NotNull] ISimilarityComparer<T> similarityComparer, [NotNull] IAlignmentFilter<T> alignmentFilter)
         {
             if (collection1 == null)
-                throw new ArgumentNullException("collection1");
+                throw new ArgumentNullException(nameof(collection1));
             if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+                throw new ArgumentNullException(nameof(collection2));
             if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+                throw new ArgumentNullException(nameof(equalityComparer));
             if (similarityComparer == null)
-                throw new ArgumentNullException("similarityComparer");
+                throw new ArgumentNullException(nameof(similarityComparer));
             if (alignmentFilter == null)
-                throw new ArgumentNullException("alignmentFilter");
+                throw new ArgumentNullException(nameof(alignmentFilter));
 
             _Collection1 = collection1.ToRandomAccess();
             _Collection2 = collection2.ToRandomAccess();
@@ -96,6 +106,7 @@ namespace DiffLib
         /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
         /// </returns>
         /// <filterpriority>1</filterpriority>
+        [ItemNotNull]
         public IEnumerator<AlignedDiffChange<T>> GetEnumerator()
         {
             return Generate().GetEnumerator();
@@ -116,6 +127,7 @@ namespace DiffLib
         /// each line in the first or second collection (sometimes one instance for a line
         /// from both, when lines are equal or similar.)
         /// </returns>
+        [NotNull, ItemNotNull]
         public IEnumerable<AlignedDiffChange<T>> Generate()
         {
             int i1 = 0;
@@ -164,12 +176,13 @@ namespace DiffLib
             }
         }
 
+        [NotNull, ItemNotNull]
         private AlignedDiffChange<T>[] TryAlignChanges(DiffChange change, int i1, int i2)
         {
             // "Optimization", too big input-sets will have to be dropped for now, will revisit this
             // number in the future to see if I can bring it up, or possible that I don't need it,
             // but since this is a recursive solution the combinations could get big fast.
-            if (change.Length1 + change.Length2 > MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
+            if (change.Length1 + change.Length2 > _MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
                 return new AlignedDiffChange<T>[0];
 
             _BestAlignmentNodes.Clear();
@@ -216,6 +229,7 @@ namespace DiffLib
             return new AlignedDiffChange<T>[0];
         }
 
+        [NotNull]
         private ChangeNode CalculateAlignmentNodes(int i1, int i2)
         {
             ChangeNode result;

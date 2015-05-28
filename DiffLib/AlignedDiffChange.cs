@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DiffLib
 {
@@ -37,37 +38,19 @@ namespace DiffLib
         /// <summary>
         /// The <see cref="Change">type</see> of change this <see cref="AlignedDiffChange{T}"/> details.
         /// </summary>
-        public ChangeType Change
-        {
-            get
-            {
-                return _Change;
-            }
-        }
+        public ChangeType Change => _Change;
 
         /// <summary>
         /// The element from the first collection. If <see cref="System.Type"/> is <see cref="ChangeType.Added"/>, then
         /// the value of this property has no meaning.
         /// </summary>
-        public T Element1
-        {
-            get
-            {
-                return _Element1;
-            }
-        }
+        public T Element1 => _Element1;
 
         /// <summary>
         /// The element from the second collection. If <see cref="System.Type"/> is <see cref="ChangeType.Deleted"/>, then
         /// the value of this property has no meaning.
         /// </summary>
-        public T Element2
-        {
-            get
-            {
-                return _Element2;
-            }
-        }
+        public T Element2 => _Element2;
 
         #region IEquatable<AlignedDiffChange<T>> Members
 
@@ -84,7 +67,7 @@ namespace DiffLib
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return Equals(other._Element1, _Element1) && Equals(other._Element2, _Element2) && Equals(other._Change, _Change);
+            return _Change == other._Change && EqualityComparer<T>.Default.Equals(_Element1, other._Element1) && EqualityComparer<T>.Default.Equals(_Element2, other._Element2);
         }
 
         #endregion
@@ -102,9 +85,7 @@ namespace DiffLib
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != typeof (AlignedDiffChange<T>))
-                return false;
-            return Equals((AlignedDiffChange<T>) obj);
+            return obj is AlignedDiffChange<T> && Equals((AlignedDiffChange<T>)obj);
         }
 
         /// <summary>
@@ -118,10 +99,10 @@ namespace DiffLib
         {
             unchecked
             {
-                int result = _Element1.GetHashCode();
-                result = (result*397) ^ _Element2.GetHashCode();
-                result = (result*397) ^ _Change.GetHashCode();
-                return result;
+                var hashCode = (int)_Change;
+                hashCode = (hashCode * 397) ^ EqualityComparer<T>.Default.GetHashCode(_Element1);
+                hashCode = (hashCode * 397) ^ EqualityComparer<T>.Default.GetHashCode(_Element2);
+                return hashCode;
             }
         }
 

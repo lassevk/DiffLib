@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlignedDiffChange.cs" />
+    <Compile Include="Assume.cs" />
     <Compile Include="ChangeType.cs" />
     <Compile Include="Diff.cs" />
     <Compile Include="DiffChange.cs" />
