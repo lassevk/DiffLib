@@ -10,8 +10,6 @@ namespace DiffLib
     public sealed class DiffChange : IEquatable<DiffChange>
     {
         private readonly bool _Equal;
-        private readonly int _Position1;
-        private readonly int _Position2;
         private readonly int _Length1;
         private readonly int _Length2;
 
@@ -51,15 +49,15 @@ namespace DiffLib
         public DiffChange(bool equal, int position1, int position2, int length1, int length2)
         {
             if (length1 < 0)
-                throw new ArgumentOutOfRangeException("length1", length1, "length1 must be 0 or greater");
+                throw new ArgumentOutOfRangeException(nameof(length1), length1, "length1 must be 0 or greater");
             if (length2 < 0)
-                throw new ArgumentOutOfRangeException("length2", length2, "length2 must be 0 or greater");
+                throw new ArgumentOutOfRangeException(nameof(length2), length2, "length2 must be 0 or greater");
             if (equal && length1 != length2)
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "length1 ({0}) must be equal to length2 ({1}) when the equal parameter is true", length1, length2));
 
             _Equal = equal;
-            _Position1 = position1;
-            _Position2 = position2;
+            Position1 = position1;
+            Position2 = position2;
             _Length1 = length1;
             _Length2 = length2;
         }
@@ -74,23 +72,14 @@ namespace DiffLib
         /// otherwise, if <c>false</c>, then the section from the first
         /// collection was replaced with the section from the second collection.
         /// </value>
-        public bool Equal
-        {
-            get
-            {
-                return _Equal;
-            }
-        }
+        public bool Equal => _Equal;
 
         /// <summary>
         /// Gets the position in the first collection.
         /// </summary>
         public int Position1
         {
-            get
-            {
-                return _Position1;
-            }
+            get;
         }
 
         /// <summary>
@@ -98,33 +87,18 @@ namespace DiffLib
         /// </summary>
         public int Position2
         {
-            get
-            {
-                return _Position2;
-            }
+            get;
         }
 
         /// <summary>
         /// The length of the section in the first collection.
         /// </summary>
-        public int Length1
-        {
-            get
-            {
-                return _Length1;
-            }
-        }
+        public int Length1 => _Length1;
 
         /// <summary>
         /// The length of the section in the second collection.
         /// </summary>
-        public int Length2
-        {
-            get
-            {
-                return _Length2;
-            }
-        }
+        public int Length2 => _Length2;
 
         #region IEquatable<DiffChange> Members
 

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace DiffLib
 {
     internal static class EnumerableExtensions
     {
-        internal static IList<T> ToRandomAccess<T>(this IEnumerable<T> collection)
+        [NotNull]
+        internal static IList<T> ToRandomAccess<T>([NotNull] this IEnumerable<T> collection)
         {
             var result = collection as IList<T>;
             if (result != null)
