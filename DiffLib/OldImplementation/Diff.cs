@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     /// <summary>
     /// This class implements the basic diff algorithm by recursively applying the Longest Common Substring

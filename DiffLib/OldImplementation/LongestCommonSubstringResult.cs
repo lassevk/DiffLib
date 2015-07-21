@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     /// <summary>
     /// This class holds the result of calling <see cref="LongestCommonSubstring{T}.Find()"/>.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     /// <summary>
     /// This class implements <see cref="ISimilarityComparer{T}"/> for strings, doing a very basic "diff" between the two,

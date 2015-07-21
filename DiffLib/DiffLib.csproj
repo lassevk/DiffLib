@@ -68,21 +68,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlignedDiffChange.cs" />
-    <Compile Include="Assume.cs" />
-    <Compile Include="ChangeType.cs" />
-    <Compile Include="Diff.cs" />
-    <Compile Include="DiffChange.cs" />
-    <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="IAlignmentFilter.cs" />
-    <Compile Include="ISimilarityComparer.cs" />
-    <Compile Include="LongestCommonSubstring.cs" />
-    <Compile Include="LongestCommonSubstringResult.cs" />
+    <Compile Include="OldImplementation\AlignedDiffChange.cs" />
+    <Compile Include="OldImplementation\Assume.cs" />
+    <Compile Include="OldImplementation\ChangeType.cs" />
+    <Compile Include="OldImplementation\Diff.cs" />
+    <Compile Include="OldImplementation\DiffChange.cs" />
+    <Compile Include="OldImplementation\EnumerableExtensions.cs" />
+    <Compile Include="OldImplementation\IAlignmentFilter.cs" />
+    <Compile Include="OldImplementation\ISimilarityComparer.cs" />
+    <Compile Include="OldImplementation\LongestCommonSubstring.cs" />
+    <Compile Include="OldImplementation\LongestCommonSubstringResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AlignedDiff.cs" />
-    <Compile Include="StringSimilarityComparer.cs" />
-    <Compile Include="StringAlignmentFilter.cs" />
-    <Compile Include="StringSimilarityFilterPredicate.cs" />
+    <Compile Include="OldImplementation\AlignedDiff.cs" />
+    <Compile Include="OldImplementation\StringSimilarityComparer.cs" />
+    <Compile Include="OldImplementation\StringAlignmentFilter.cs" />
+    <Compile Include="OldImplementation\StringSimilarityFilterPredicate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Lasse V. Karlsen.snk">
@@ -90,6 +90,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
