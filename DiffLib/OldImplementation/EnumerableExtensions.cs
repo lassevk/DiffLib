@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     internal static class EnumerableExtensions
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DiffLib.OldImplementation;
 using NUnit.Framework;
 
 namespace DiffLib.Tests

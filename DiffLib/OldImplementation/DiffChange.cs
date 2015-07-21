@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     /// <summary>
     /// This class contains a single section of diff output from the <see cref="Diff{T}"/>

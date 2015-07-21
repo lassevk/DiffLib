@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     internal static class Assume
     {

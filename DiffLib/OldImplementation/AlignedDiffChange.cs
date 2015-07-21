@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     /// <summary>
     /// This class holds a single collection from either the first or the second, or both,

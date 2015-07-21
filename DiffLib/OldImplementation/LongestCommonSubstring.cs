@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace DiffLib
+namespace DiffLib.OldImplementation
 {
     /// <summary>
     /// This class implements the LCS algorithm, to find the longest common substring that exists
