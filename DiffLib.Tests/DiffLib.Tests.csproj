@@ -51,7 +51,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AlignedDiffChangeTests.cs" />
-    <Compile Include="AllClassesShouldBeSealedTests.cs" />
     <Compile Include="DiffChangeTests.cs" />
     <Compile Include="DiffTests.cs" />
     <Compile Include="EnumerableExtensionsTests.cs" />
@@ -80,6 +79,7 @@
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

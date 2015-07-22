@@ -30,6 +30,26 @@ namespace DiffLib
             get;
         }
 
+        public Slice<T> ConstrainFromStart(int count)
+        {
+            return new Slice<T>(Collection, LowerBounds, LowerBounds + count);
+        }
+
+        public Slice<T> ConstrainFromEnd(int count)
+        {
+            return new Slice<T>(Collection, UpperBounds - count, UpperBounds);
+        }
+
+        public Slice<T> ConstrainAbsolute(int position, int length)
+        {
+            return new Slice<T>(Collection, LowerBounds + position, LowerBounds + position + length);
+        }
+
+        public Slice<T> ConstrainFrom(int position)
+        {
+            return new Slice<T>(Collection, LowerBounds + position, UpperBounds);
+        }
+
         public Slice<T> Constrain(int removeStart, int removeEnd)
         {
             int lower = LowerBounds + removeStart;
