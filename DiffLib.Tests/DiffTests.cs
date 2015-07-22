@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DiffLib.OldImplementation;
+using DiffLib;
 using NUnit.Framework;
 
 namespace DiffLib.Tests
@@ -30,35 +30,24 @@ namespace DiffLib.Tests
         }
 
         [Test]
-        public void Constructor_NullComparer_ThrowsArgumentNullException()
-        {
-            var collection1 = new List<string>();
-            var collection2 = new List<string>();
-            EqualityComparer<string> comparer = null;
-
-            Assert.Throws<ArgumentNullException>(() => new Diff<string>(collection1, collection2, comparer));
-        }
-
-        [Test]
         public void SimpleDiff_ProducesCorrectResults()
         {
-            const string text1 = "This is a test of the diff implementation, with some text that is deleted.";
-            const string text2 = "This is another test of the same implementation, with some more text.";
+            const string text1 = "  123  ";
+            const string text2 = "  1x2  ";
 
-            DiffChange[] diff = new DiffLib.OldImplementation.Diff<char>(text1, text2).ToArray();
+            DiffElement<char>[] diff = Diff.Calculate(text1, text2).ToArray();
 
-            CollectionAssert.AreEqual(diff, new[]
+            CollectionAssert.AreEqual(new[]
             {
-                new DiffChange(true, 0, 0, 9, 9), // same        "This is a"
-                new DiffChange(false, 0, 0, 0, 6), // add        "nother"
-                new DiffChange(true, 0, 0, 13, 13), // same      " test of the "
-                new DiffChange(false, 0, 0, 4, 4), // replace    "same" with "diff"
-                new DiffChange(true, 0, 0, 27, 27), // same      " implementation, with some "
-                new DiffChange(false, 0, 0, 0, 5), // add        "more "
-                new DiffChange(true, 0, 0, 4, 4), // same        "text"
-                new DiffChange(false, 0, 0, 16, 0), // delete    " that is deleted"
-                new DiffChange(true, 0, 0, 1, 1), // same        "."
-            });
+                new DiffElement<char>(' ', ' ', DiffOperation.None),
+                new DiffElement<char>(' ', ' ', DiffOperation.None),
+                new DiffElement<char>('1', '1', DiffOperation.None),
+                new DiffElement<char>(Option<char>.None, 'x', DiffOperation.Insert),
+                new DiffElement<char>('2', '2', DiffOperation.None),
+                new DiffElement<char>('3', Option<char>.None, DiffOperation.Delete),
+                new DiffElement<char>(' ', ' ', DiffOperation.None),
+                new DiffElement<char>(' ', ' ', DiffOperation.None),
+            }, diff);
         }
     }
 }
