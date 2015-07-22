@@ -45,7 +45,7 @@ namespace DiffLib.Tests
             const string text1 = "This is a test of the diff implementation, with some text that is deleted.";
             const string text2 = "This is another test of the same implementation, with some more text.";
 
-            DiffChange[] diff = new Diff<char>(text1, text2).ToArray();
+            DiffChange[] diff = new DiffLib.OldImplementation.Diff<char>(text1, text2).ToArray();
 
             CollectionAssert.AreEqual(diff, new[]
             {
