@@ -51,5 +51,57 @@ namespace DiffLib.Tests
                 new DiffSection(true, 1, 1), // same        "."
             });
         }
+
+        [Test]
+        public void Diff_WithNullElements()
+        {
+            var collection1 = new[]
+            {
+                "Line 1", "Line 2", null, "Line 3", "Line 4",
+            };
+
+            var collection2 = new[]
+            {
+                "Line 1", null, "Line 2", "Line 4",
+            };
+
+            DiffSection[] sections = Diff.CalculateSections(collection1, collection2).ToArray();
+
+            CollectionAssert.AreEqual(sections, new[]
+            {
+                new DiffSection(true, 1, 1),
+                new DiffSection(false, 0, 1),
+                new DiffSection(true, 1, 1),
+                new DiffSection(false, 2, 0),
+                new DiffSection(true, 1, 1),
+            });
+        }
+
+        [Test]
+        public void Align_WithNullElements()
+        {
+            var collection1 = new[]
+            {
+                "Line 1", "Line 2", null, "Line 3", "Line 4",
+            };
+
+            var collection2 = new[]
+            {
+                "Line 1", null, "Line 2", "Line 4",
+            };
+
+            DiffSection[] sections = Diff.CalculateSections(collection1, collection2).ToArray();
+            var elements = Diff.AlignElements(collection1, collection2, sections, new StringSimilarityDiffElementAligner());
+
+            CollectionAssert.AreEqual(new[]
+            {
+                new DiffElement<string>("Line 1", "Line 1", DiffOperation.Match),
+                new DiffElement<string>(Option<string>.None, null, DiffOperation.Insert),
+                new DiffElement<string>("Line 2", "Line 2", DiffOperation.Match),
+                new DiffElement<string>(null, Option<string>.None, DiffOperation.Delete),
+                new DiffElement<string>("Line 3", Option<string>.None, DiffOperation.Delete),
+                new DiffElement<string>("Line 4", "Line 4", DiffOperation.Match),
+            }, elements);
+        }
     }
 }
