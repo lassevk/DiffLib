@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 
 namespace DiffLib
 {
-    public interface IDiffMatchAligner<T>
+    public interface IDiffElementAligner<T>
     {
         [NotNull]
-        IEnumerable<DiffElement<T>> Align(Slice<T> slice1, Slice<T> slice2);
+        IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2);
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DiffLib
+﻿namespace DiffLib
 {
     public struct DiffElement<T>
     {

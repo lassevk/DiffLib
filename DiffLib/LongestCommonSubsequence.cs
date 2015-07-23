@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using DiffLib.OldImplementation;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using static System.Math;
 
 namespace DiffLib
 {
@@ -14,7 +13,7 @@ namespace DiffLib
         private readonly IList<T> _Collection2;
 
         [NotNull]
-        private IEqualityComparer<T> _Comparer;
+        private readonly IEqualityComparer<T> _Comparer;
 
         [NotNull]
         private readonly int[] _HashCodes1;
@@ -43,59 +42,58 @@ namespace DiffLib
             _Comparer = comparer;
         }
 
-        public bool Find(Slice<T> slice1, Slice<T> slice2, out int position1, out int position2, out int length)
+        public bool Find(int lower1, int upper1, int lower2, int upper2, out int position1, out int position2, out int length)
         {
             position1 = 0;
             position2 = 0;
             length = 0;
 
-            EnsureHashCodes1(position1, position1 + length);
-            EnsureHashCodes2(position2, position2 + length);
+            EnsureHashCodes1(lower1, upper1);
+            EnsureHashCodes2(lower2, upper2);
 
-            for (int index = 0; index < slice1.Count; index++)
+            int maxLengthPossible = Min(upper1 - lower1, upper2 - lower2);
+
+            for (int index1 = lower1; index1 < upper1; index1++)
             {
-                var hashcode = _HashCodes1[slice1.LowerBounds + index];
+                var hashcode = _HashCodes1[index1];
 
                 List<int> positions;
                 if (!_HashCodes2.TryGetValue(hashcode, out positions))
                     continue;
 
-                foreach (var originalCollection2Index in positions)
+                Assume.That(positions != null);
+                foreach (var index2 in positions)
                 {
-                    if (originalCollection2Index < slice2.LowerBounds || originalCollection2Index >= slice2.UpperBounds)
+                    if (index2 < lower2 || index2 >= upper2)
                         continue;
 
-                    int index2 = originalCollection2Index - slice2.LowerBounds;
-                    int matchLength = CountSimilarElements(slice1, index, slice2, index2);
+                    int matchLength = CountSimilarElements(index1, upper1, index2, upper2);
                     if (matchLength > length)
                     {
-                        position1 = index;
+                        position1 = index1;
                         position2 = index2;
                         length = matchLength;
                     }
 
                     // Break early if there is no way we can find a better match
-                    if (length >= slice2.Count)
+                    if (length >= maxLengthPossible)
                         break;
                 }
 
                 // Break early if there is no way we can find a better match
-                if (length >= slice2.Count)
+                if (length >= maxLengthPossible)
                     break;
             }
 
             return length > 0;
         }
 
-        private int CountSimilarElements(Slice<T> slice1, int index1, Slice<T> slice2, int index2)
+        private int CountSimilarElements(int index1, int upper1, int index2, int upper2)
         {
             int count = 0;
 
-            while (index1 < slice1.Count && index2 < slice2.Count)
+            while (index1 < upper1 && index2 < upper2 && _Comparer.Equals(_Collection1[index1], _Collection2[index2]))
             {
-                if (!_Comparer.Equals(slice1[index1], slice2[index2]))
-                    break;
-
                 count++;
                 index1++;
                 index2++;

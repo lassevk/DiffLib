@@ -50,12 +50,7 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AlignedDiffChangeTests.cs" />
-    <Compile Include="DiffChangeTests.cs" />
     <Compile Include="DiffTests.cs" />
-    <Compile Include="EnumerableExtensionsTests.cs" />
-    <Compile Include="LongestCommonSubstringResultTests.cs" />
-    <Compile Include="LongestCommonSubstringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
