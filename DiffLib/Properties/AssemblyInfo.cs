@@ -4,11 +4,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("DiffLib")]
-[assembly: AssemblyDescription("A Diff implementation in C# for .NET 4.0.")]
+[assembly: AssemblyDescription("A Diff implementation in C# for .NET 3.5 and above.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DiffLib")]
-[assembly: AssemblyCopyright("Copyright (C) Lasse V. Karlsen 2010, All rights reserved")]
+[assembly: AssemblyCopyright("Copyright (C) Lasse V. Karlsen 2015, All rights reserved")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
