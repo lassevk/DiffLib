@@ -1,5 +1,5 @@
 <Query Kind="Program">
-  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\dev\vs.net\difflib\DiffLib\bin\Debug\DiffLib.dll</Reference>
+  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\dev\VS.NET\DiffLib\DiffLib\bin\Debug\DiffLib.dll</Reference>
   <Namespace>DiffLib</Namespace>
 </Query>
 
@@ -8,26 +8,26 @@ const string text2 = "This is another test of the same implementation, with some
 
 void Main()
 {
-    DumpDiff(new Diff<char>(text1, text2));
+    DumpDiff(Diff.CalculateSections(text1.ToCharArray(), text2.ToCharArray()));
 }
 
-static void DumpDiff(IEnumerable<DiffChange> changes)
+static void DumpDiff(IEnumerable<DiffSection> sections)
 {
     var html = new StringBuilder();
     int i1 = 0;
     int i2 = 0;
-    foreach (var change in changes)
+    foreach (var section in sections)
     {
-        if (change.Equal)
-            html.Append(text1.Substring(i1, change.Length1));
+        if (section.IsMatch)
+            html.Append(text1.Substring(i1, section.LengthInCollection1));
         else
         {
-            html.Append("<span style='background-color: #ffcccc; text-decoration: line-through;'>" + text1.Substring(i1, change.Length1) + "</span>");
-            html.Append("<span style='background-color: #ccffcc;'>" + text2.Substring(i2, change.Length2) + "</span>");
+            html.Append("<span style='background-color: #ffcccc; text-decoration: line-through;'>" + text1.Substring(i1, section.LengthInCollection1) + "</span>");
+            html.Append("<span style='background-color: #ccffcc;'>" + text2.Substring(i2, section.LengthInCollection2) + "</span>");
         }
         
-        i1 += change.Length1;
-        i2 += change.Length2;
+        i1 += section.LengthInCollection1;
+        i2 += section.LengthInCollection2;
     }
     Util.RawHtml(html.ToString()).Dump();
 }
