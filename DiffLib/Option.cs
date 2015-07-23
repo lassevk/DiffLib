@@ -51,21 +51,45 @@ namespace DiffLib
             get;
         }
 
+        /// <summary>
+        /// Implements equality operator.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static implicit operator Option<T>(T value)
         {
             return new Option<T>(value);
         }
 
+        /// <summary>
+        /// Implements inequality operator.
+        /// </summary>
+        /// <param name="option"></param>
+        /// <returns></returns>
         public static explicit operator T(Option<T> option)
         {
             return option.Value;
         }
 
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+        /// </returns>
+        /// <param name="other">An object to compare with this object.</param>
         public bool Equals(Option<T> other)
         {
             return EqualityComparer<T>.Default.Equals(_Value, other._Value) && HasValue == other.HasValue;
         }
 
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+        /// </returns>
+        /// <param name="other">An object to compare with this object.</param>
         public bool Equals(T other)
         {
             if (!HasValue)
@@ -74,6 +98,13 @@ namespace DiffLib
             return EqualityComparer<T>.Default.Equals(_Value, other);
         }
 
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <returns>
+        /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+        /// </returns>
+        /// <param name="obj">Another object to compare to. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -81,16 +112,35 @@ namespace DiffLib
             return obj is Option<T> && Equals((Option<T>)obj);
         }
 
+        /// <summary>
+        /// Implements equality operator.
+        /// </summary>
+        /// <param name="option"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public static bool operator ==(Option<T> option, Option<T> other)
         {
             return option.Equals(other);
         }
 
+        /// <summary>
+        /// Implements inequality operator.
+        /// </summary>
+        /// <param name="option"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public static bool operator !=(Option<T> option, Option<T> other)
         {
             return !option.Equals(other);
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A 32-bit signed integer that is the hash code for this instance.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         [PublicAPI]
         public override int GetHashCode()
         {
@@ -100,6 +150,13 @@ namespace DiffLib
             }
         }
 
+        /// <summary>
+        /// Returns the fully qualified type name of this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.String"/> containing a fully qualified type name.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         [PublicAPI, NotNull]
         public override string ToString()
         {
@@ -109,6 +166,9 @@ namespace DiffLib
             return _Value?.ToString() ?? "<null>";
         }
 
+        /// <summary>
+        /// Returns an <see cref="Option{T}"/> that has no value.
+        /// </summary>
         [PublicAPI]
         public static Option<T> None => new Option<T>();
     }

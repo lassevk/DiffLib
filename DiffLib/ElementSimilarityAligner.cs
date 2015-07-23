@@ -5,6 +5,14 @@ using JetBrains.Annotations;
 
 namespace DiffLib
 {
+    /// <summary>
+    /// This class implements a <see cref="IDiffElementAligner{T}"/> strategy that will try
+    /// to work out the best way to align two portions, depending on individual element
+    /// similarity.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of elements in the two collections to align.
+    /// </typeparam>
     [PublicAPI]
     public class ElementSimilarityDiffElementAligner<T> : IDiffElementAligner<T>
     {
@@ -18,21 +26,64 @@ namespace DiffLib
         [NotNull]
         private readonly ElementSimilarity<T> _SimilarityFunc;
 
-        private readonly double _AlignmentThreshold;
+        private readonly double _ModificationThreshold;
 
         [NotNull]
         private readonly IDiffElementAligner<T> _BasicAligner = new BasicInsertDeleteDiffElementAligner<T>();
 
+        /// <summary>
+        /// Constructs a new <see cref="ElementSimilarityDiffElementAligner{T}"/>.
+        /// </summary>
+        /// <param name="similarityFunc">
+        /// A <see cref="ElementSimilarity{T}"/> delegate that is used to work out how similar two elements are.
+        /// </param>
+        /// <param name="modificationThreshold">
+        /// A threshold value used to determine if aligned elements are considered replacements or modifications. If
+        /// two items are more similar than the threshold specifies (similarity > threshold), then it results in
+        /// a <see cref="DiffOperation.Modify"/>, otherwise it results in a <see cref="DiffOperation.Replace"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <para><paramref name="similarityFunc"/> is <c>null</c>.</para>
+        /// </exception>
         [PublicAPI]
-        public ElementSimilarityDiffElementAligner([NotNull] ElementSimilarity<T> similarityFunc, double alignmentThreshold = 0.3333)
+        public ElementSimilarityDiffElementAligner([NotNull] ElementSimilarity<T> similarityFunc, double modificationThreshold = 0.3333)
         {
             if (similarityFunc == null)
                 throw new ArgumentNullException(nameof(similarityFunc));
 
             _SimilarityFunc = similarityFunc;
-            _AlignmentThreshold = alignmentThreshold;
+            _ModificationThreshold = modificationThreshold;
         }
 
+        /// <summary>
+        /// Align the specified portions of the two collections and output element-by-element operations for the aligned elements.
+        /// </summary>
+        /// <param name="collection1">
+        /// The first collection.
+        /// </param>
+        /// <param name="start1">
+        /// The start of the portion to look at in the first collection, <paramref name="collection1"/>.
+        /// </param>
+        /// <param name="length1">
+        /// The length of the portion to look at in the first collection, <paramref name="collection1"/>.
+        /// </param>
+        /// <param name="collection2">
+        /// The second collection.
+        /// </param>
+        /// <param name="start2">
+        /// The start of the portion to look at in the second collection, <paramref name="collection2"/>.
+        /// </param>
+        /// <param name="length2">
+        /// The length of the portion to look at in the second collection, <paramref name="collection2"/>.
+        /// </param>
+        /// <returns>
+        /// A collection of <see cref="DiffElement{T}"/> values, one for each aligned element.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <para><paramref name="collection1"/> is <c>null</c>.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="collection2"/> is <c>null</c>.</para>
+        /// </exception>
         [PublicAPI, NotNull]
         public IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
         {
@@ -65,7 +116,7 @@ namespace DiffLib
                 {
                     switch (bestNode.Operation)
                     {
-                        case DiffOperation.None:
+                        case DiffOperation.Match:
                         case DiffOperation.Replace:
                         case DiffOperation.Modify:
                             result.Add(new DiffElement<T>(collection1[start1], collection2[start2], bestNode.Operation));
@@ -104,7 +155,7 @@ namespace DiffLib
             }
 
             if (lower1 == upper1 && lower2 == upper2)
-                result = new AlignmentNode(DiffOperation.None, 0.0, 0, null);
+                result = new AlignmentNode(DiffOperation.Match, 0.0, 0, null);
             else if (lower1 == upper1)
             {
                 var restAfterInsert = CalculateBestAlignment(nodes, collection1, lower1, upper1, collection2, lower2 + 1, upper2);
@@ -129,7 +180,7 @@ namespace DiffLib
                 var restAfterChange = CalculateBestAlignment(nodes, collection1, lower1 + 1, upper1, collection2, lower2 + 1, upper2);
                 double similarity = _SimilarityFunc(collection1[lower2], collection2[lower2]);
                 AlignmentNode resultChange = null;
-                if (similarity >= _AlignmentThreshold)
+                if (similarity >= _ModificationThreshold)
                     resultChange = new AlignmentNode(DiffOperation.Modify, similarity, restAfterChange.NodeCount + 1, restAfterChange);
 
                 // Then pick the operation that resulted in the best average similarity
