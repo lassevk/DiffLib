@@ -28,10 +28,12 @@ string[] textfile2 = new[] {
 
 void Main()
 {
-    DumpDiff(new AlignedDiff<string>(textfile1, textfile2, EqualityComparer<string>.Default, new StringSimilarityComparer(), new StringAlignmentFilter()));
+    var sections = Diff.CalculateSections(textfile1, textfile2);
+    var elements = Diff.AlignElements(textfile1, textfile2, sections, new StringSimilarityDiffElementAligner());
+    DumpDiff(elements);
 }
 
-static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)
+static void DumpDiff(IEnumerable<DiffElement<string>> elements)
 {
     var html = new StringBuilder();
     html.Append("<div style='font-family: courier;'>");
@@ -43,39 +45,40 @@ static void DumpDiff(IEnumerable<AlignedDiffChange<string>> changes)
         return input.Replace(" ", "\x00a0").Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
     };
     
-    foreach (var change in changes)
+    foreach (var element in elements)
     {
-        switch (change.Change)
+        switch (element.Operation)
         {
-            case ChangeType.Same:
-                html.Append("<div>\x00a0\x00a0" + filter(change.Element1) + "</div>");
+            case DiffOperation.Match:
+                html.Append("<div>\x00a0\x00a0" + filter(element.ElementFromCollection1.Value) + "</div>");
                 break;
                 
-            case ChangeType.Added:
-                html.Append("<div style='background-color: #ccffcc;'>+\x00a0" + filter(change.Element2) + "</div>");
+            case DiffOperation.Insert:
+                html.Append("<div style='background-color: #ccffcc;'>+\x00a0" + filter(element.ElementFromCollection2.Value) + "</div>");
                 break;
 
-            case ChangeType.Deleted:
-                html.Append("<div style='background-color: #ffcccc;'>-\x00a0" + filter(change.Element1) + "</div>");
+            case DiffOperation.Delete:
+                html.Append("<div style='background-color: #ffcccc;'>-\x00a0" + filter(element.ElementFromCollection1.Value) + "</div>");
                 break;
 
-            case ChangeType.Changed:
-                var diff = new Diff<char>(change.Element1, change.Element2).Generate().ToArray();
+			case DiffOperation.Replace:
+			case DiffOperation.Modify:
+				var sections = Diff.CalculateSections(element.ElementFromCollection1.Value.ToCharArray(), element.ElementFromCollection2.Value.ToCharArray()).ToArray();
                 int ii1 = 0;
                 int ii2 = 0;
                 html.Append("<div>*\x00a0");
-                foreach (var section in diff)
+                foreach (var section in sections)
                 {
-                    if (section.Equal)
-                        html.Append(filter(change.Element1.Substring(ii1, section.Length1)));
+                    if (section.IsMatch)
+                        html.Append(filter(element.ElementFromCollection1.Value.Substring(ii1, section.LengthInCollection1)));
                     else
                     {
-                        html.Append("<span style='background-color: #ff8080;'>" + filter(change.Element1.Substring(ii1, section.Length1)) + "</span>");
-                        html.Append("<span style='background-color: #ccffcc;'>" + filter(change.Element2.Substring(ii2, section.Length2)) + "</span>");
+                        html.Append("<span style='background-color: #ff8080;'>" + filter(element.ElementFromCollection1.Value.Substring(ii1, section.LengthInCollection1)) + "</span>");
+                        html.Append("<span style='background-color: #ccffcc;'>" + filter(element.ElementFromCollection2.Value.Substring(ii2, section.LengthInCollection2)) + "</span>");
                     }
                     
-                    ii1 += section.Length1;
-                    ii2 += section.Length2;
+                    ii1 += section.LengthInCollection1;
+                    ii2 += section.LengthInCollection2;
                 }
                 html.Append("</div>");
                 break;

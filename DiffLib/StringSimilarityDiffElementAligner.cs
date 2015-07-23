@@ -43,8 +43,6 @@ namespace DiffLib
             if (ReferenceEquals(element1, element2))
                 return 1.0;
 
-            Debug.WriteLine($"Comparing '{element1}' with '{element2}'");
-
             if (element1.Length == 0 && element2.Length == 0)
                 return 1.0;
             if (element1.Length == 0 || element2.Length == 0)

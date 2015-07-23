@@ -184,9 +184,6 @@ namespace DiffLib
                     resultChange = new AlignmentNode(DiffOperation.Modify, similarity, restAfterChange.NodeCount + 1, restAfterChange);
 
                 // Then pick the operation that resulted in the best average similarity
-                Debug.WriteLine("insert: " + resultInsert.AverageSimilarity);
-                Debug.WriteLine("delete: " + resultDelete.AverageSimilarity);
-                Debug.WriteLine("change: " + resultChange?.AverageSimilarity);
                 result = resultInsert;
                 if (resultDelete.AverageSimilarity > result.AverageSimilarity)
                     result = resultDelete;
