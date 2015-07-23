@@ -5,7 +5,7 @@ in text files.
 
 Details:
 
-* Language: C# 5.0
+* Language: C# 6.0
 * Runtime: .NET 3.5 Client Profile
 
 Repository and project location: [GitHub][1]  
