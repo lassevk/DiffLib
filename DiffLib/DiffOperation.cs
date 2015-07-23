@@ -6,6 +6,6 @@
         Insert,
         Delete,
         Replace,
-        Modify,
+        Modify
     }
 }
