@@ -44,8 +44,6 @@ namespace DiffLib
                     break;
 
                 var hashcode = _Collection1[index1]?.GetHashCode() ?? 0;
-                if (hashcode == 0)
-                    continue;
 
                 HashcodeOccurance occurance;
                 if (!_HashCodes2.TryGetValue(hashcode, out occurance))
