@@ -50,6 +50,7 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AlignmentKeyTests.cs" />
     <Compile Include="DiffTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
