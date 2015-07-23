@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DiffLib")]
-[assembly: AssemblyCopyright("Copyright (C) Lasse V. Karlsen 2010, All rights reversed")]
+[assembly: AssemblyCopyright("Copyright (C) Lasse V. Karlsen 2015, All rights reversed")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

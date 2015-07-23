@@ -8,9 +8,9 @@ at the moment means you must download the [beta version][5], as
 the scripts here rely on new features related to dumping out
 raw html to the output window.
 
-Ensure that you load up the solution file in Visual Studio 2010,
-and do a full rebuild for the Debug target before testing any
-of the examples. They rely on the binary produced as part of the
+Ensure that you load up the solution file in Visual Studio 2010
+or above and do a full rebuild for the Debug target before testing
+any of the examples. They rely on the binary produced as part of the
 build output.
 
   [1]: https://github.com/lassevk/DiffLib
