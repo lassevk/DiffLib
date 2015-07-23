@@ -9,17 +9,19 @@ namespace DiffLib
     /// and is used for situations where you may or may not have a value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [PublicAPI]
     public struct Option<T> : IEquatable<Option<T>>, IEquatable<T>
     {
         private readonly T _Value;
-        
+
         /// <summary>
         /// Constructs a new instance of <see cref="Option{T}"/> with the specified value.
         /// </summary>
         /// <param name="value">
         /// The value of this <see cref="Option{T}"/>.
         /// </param>
-        public Option(T value)
+        [PublicAPI]
+        public Option([CanBeNull] T value)
         {
             _Value = value;
             HasValue = true;
@@ -28,6 +30,7 @@ namespace DiffLib
         /// <summary>
         /// Gets the value of this <see cref="Option{T}"/>.
         /// </summary>
+        [PublicAPI, CanBeNull]
         public T Value
         {
             get
@@ -42,6 +45,7 @@ namespace DiffLib
         /// <summary>
         /// Gets whether this <see cref="Option{T}"/> has a value.
         /// </summary>
+        [PublicAPI]
         public bool HasValue
         {
             get;
@@ -87,6 +91,7 @@ namespace DiffLib
             return !option.Equals(other);
         }
 
+        [PublicAPI]
         public override int GetHashCode()
         {
             unchecked
@@ -95,7 +100,7 @@ namespace DiffLib
             }
         }
 
-        [NotNull]
+        [PublicAPI, NotNull]
         public override string ToString()
         {
             if (!HasValue)
@@ -104,6 +109,7 @@ namespace DiffLib
             return _Value?.ToString() ?? "<null>";
         }
 
+        [PublicAPI]
         public static Option<T> None => new Option<T>();
     }
 }

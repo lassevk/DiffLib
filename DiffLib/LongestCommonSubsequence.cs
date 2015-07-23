@@ -4,7 +4,7 @@ using static System.Math;
 
 namespace DiffLib
 {
-    public class LongestCommonSubsequence<T>
+    internal class LongestCommonSubsequence<T>
     {
         [NotNull]
         private readonly IList<T> _Collection1;

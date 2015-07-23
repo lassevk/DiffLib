@@ -1,7 +1,11 @@
-﻿namespace DiffLib
+﻿using JetBrains.Annotations;
+
+namespace DiffLib
 {
+    [PublicAPI]
     public struct DiffElement<T>
     {
+        [PublicAPI]
         public DiffElement(Option<T> elementFromCollection1, Option<T> elementFromCollection2, DiffOperation operation)
         {
             ElementFromCollection1 = elementFromCollection1;
@@ -9,27 +13,32 @@
             Operation = operation;
         }
 
+        [PublicAPI]
         public Option<T> ElementFromCollection1
         {
             get;
         }
 
+        [PublicAPI]
         public Option<T> ElementFromCollection2
         {
             get;
         }
 
+        [PublicAPI]
         public DiffOperation Operation
         {
             get;
         }
 
+        [PublicAPI]
         public bool Equals(DiffElement<T> other)
         {
             return ElementFromCollection1.Equals(other.ElementFromCollection1) && ElementFromCollection2.Equals(other.ElementFromCollection2) && Operation == other.Operation;
         }
 
-        public override bool Equals(object obj)
+        [PublicAPI]
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
                 return false;
@@ -46,6 +55,7 @@
             return !element.Equals(other);
         }
 
+        [PublicAPI]
         public override int GetHashCode()
         {
             unchecked
@@ -57,6 +67,7 @@
             }
         }
 
+        [PublicAPI, NotNull]
         public override string ToString()
         {
             switch (Operation)

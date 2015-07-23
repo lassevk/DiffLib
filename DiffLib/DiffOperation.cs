@@ -1,5 +1,8 @@
-﻿namespace DiffLib
+﻿using JetBrains.Annotations;
+
+namespace DiffLib
 {
+    [PublicAPI]
     public enum DiffOperation
     {
         None,

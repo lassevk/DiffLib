@@ -4,9 +4,15 @@ using static System.Math;
 
 namespace DiffLib
 {
+    [PublicAPI]
     public class BasicReplaceInsertDeleteDiffElementAligner<T> : BasicInsertDeleteDiffElementAligner<T>
     {
-        [NotNull]
+        [PublicAPI]
+        public BasicReplaceInsertDeleteDiffElementAligner()
+        {
+        }
+
+        [PublicAPI, NotNull]
         public override IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
         {
             int replaceCount = Min(length1, length2);

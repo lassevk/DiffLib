@@ -4,9 +4,10 @@ using JetBrains.Annotations;
 
 namespace DiffLib
 {
+    [PublicAPI]
     public static class Diff
     {
-        [NotNull]
+        [PublicAPI, NotNull]
         public static IEnumerable<DiffSection> CalculateSections<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer = null)
         {
             if (collection1 == null)
@@ -17,7 +18,7 @@ namespace DiffLib
             return LongestCommonSubsectionDiff.Calculate(collection1, collection2, comparer ?? EqualityComparer<T>.Default);
         }
 
-        [NotNull]
+        [PublicAPI, NotNull]
         public static IEnumerable<DiffElement<T>> AlignElements<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] IEnumerable<DiffSection> diffSections, [NotNull] IDiffElementAligner<T> aligner)
         {
             if (collection1 == null)

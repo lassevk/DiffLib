@@ -1,4 +1,7 @@
+using JetBrains.Annotations;
+
 namespace DiffLib
 {
-    public delegate double ElementSimilarity<in T>(T element1, T element2);
+    [PublicAPI]
+    public delegate double ElementSimilarity<in T>([CanBeNull] T element1, [CanBeNull] T element2);
 }
