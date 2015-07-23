@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using static System.Math;
 
 namespace DiffLib
 {
@@ -16,14 +15,9 @@ namespace DiffLib
         private readonly IEqualityComparer<T> _Comparer;
 
         [NotNull]
-        private readonly int[] _HashCodes1;
+        private readonly Dictionary<int, HashcodeOccurance> _HashCodes2 = new Dictionary<int, HashcodeOccurance>();
 
-        [NotNull]
-        private readonly Dictionary<int, List<int>> _HashCodes2 = new Dictionary<int, List<int>>(); 
-
-        private int _HashCodes1Lower;
-        private int _HashCodes1Upper;
-
+        private bool _FirstHashCodes2 = true;
         private int _HashCodes2Lower;
         private int _HashCodes2Upper;
 
@@ -31,13 +25,6 @@ namespace DiffLib
         {
             _Collection1 = collection1;
             _Collection2 = collection2;
-            _HashCodes1 = new int[collection1.Count];
-
-            _HashCodes1Lower = collection1.Count;
-            _HashCodes1Upper = 0;
-
-            _HashCodes2Lower = collection2.Count;
-            _HashCodes2Upper = 0;
 
             _Comparer = comparer;
         }
@@ -48,23 +35,33 @@ namespace DiffLib
             position2 = 0;
             length = 0;
 
-            EnsureHashCodes1(lower1, upper1);
             EnsureHashCodes2(lower2, upper2);
-
-            int maxLengthPossible = Min(upper1 - lower1, upper2 - lower2);
 
             for (int index1 = lower1; index1 < upper1; index1++)
             {
-                var hashcode = _HashCodes1[index1];
+                // Break early if there is no way we can find a better match
+                if (index1 + length >= upper1)
+                    break;
 
-                List<int> positions;
-                if (!_HashCodes2.TryGetValue(hashcode, out positions))
+                var hashcode = _Collection1[index1]?.GetHashCode() ?? 0;
+                if (hashcode == 0)
                     continue;
 
-                Assume.That(positions != null);
-                foreach (var index2 in positions)
+                HashcodeOccurance occurance;
+                if (!_HashCodes2.TryGetValue(hashcode, out occurance))
+                    continue;
+
+                Assume.That(occurance != null);
+                while (occurance != null)
                 {
-                    if (index2 < lower2 || index2 >= upper2)
+                    int index2 = occurance.Position;
+                    occurance = occurance.Next;
+
+                    if (index2 < lower2 || index2 + length >= upper2)
+                        continue;
+
+                    // Don't bother with this if it doesn't match at the Nth element
+                    if (!_Comparer.Equals(_Collection1[index1 + length], _Collection2[index2 + length]))
                         continue;
 
                     int matchLength = CountSimilarElements(index1, upper1, index2, upper2);
@@ -74,15 +71,7 @@ namespace DiffLib
                         position2 = index2;
                         length = matchLength;
                     }
-
-                    // Break early if there is no way we can find a better match
-                    if (length >= maxLengthPossible)
-                        break;
                 }
-
-                // Break early if there is no way we can find a better match
-                if (length >= maxLengthPossible)
-                    break;
             }
 
             return length > 0;
@@ -102,50 +91,45 @@ namespace DiffLib
             return count;
         }
 
-        private void EnsureHashCodes1(int lower, int upper)
-        {
-            while (_HashCodes1Lower > lower)
-            {
-                _HashCodes1Lower--;
-                _HashCodes1[_HashCodes1Lower] = _Collection1[_HashCodes1Lower]?.GetHashCode() ?? 0;
-            }
-
-            while (_HashCodes1Upper < upper)
-            {
-                _HashCodes1[_HashCodes1Upper] = _Collection1[_HashCodes1Upper]?.GetHashCode() ?? 0;
-                _HashCodes1Upper++;
-            }
-        }
-
         private void EnsureHashCodes2(int lower, int upper)
         {
+            if (_FirstHashCodes2)
+            {
+                _FirstHashCodes2 = false;
+                _HashCodes2Lower = lower;
+                _HashCodes2Upper = upper;
+
+                for (int index = lower; index < upper; index++)
+                    AddHashCode2(index, _Collection2[index]?.GetHashCode() ?? 0);
+
+                return;
+            }
+
             while (_HashCodes2Lower > lower)
             {
                 _HashCodes2Lower--;
-                var hashcode = _Collection2[_HashCodes2Lower]?.GetHashCode() ?? 0;
-                AddHashCode2(_HashCodes2Lower, hashcode);
+                AddHashCode2(_HashCodes2Lower, _Collection2[_HashCodes2Lower]?.GetHashCode() ?? 0);
             }
 
             while (_HashCodes2Upper < upper)
             {
-                var hashcode = _Collection2[_HashCodes2Upper]?.GetHashCode() ?? 0;
-                AddHashCode2(_HashCodes2Upper, hashcode);
+                AddHashCode2(_HashCodes2Upper, _Collection2[_HashCodes2Upper]?.GetHashCode() ?? 0);
                 _HashCodes2Upper++;
             }
         }
 
         private void AddHashCode2(int position, int hashcode)
         {
-            List<int> positions;
-            if (_HashCodes2.TryGetValue(hashcode, out positions))
-                Assume.That(positions != null);
+            HashcodeOccurance occurance;
+            if (_HashCodes2.TryGetValue(hashcode, out occurance))
+            {
+                Assume.That(occurance != null);
+                occurance.Next = new HashcodeOccurance(position, occurance.Next);
+            }
             else
             {
-                positions = new List<int>();
-                _HashCodes2[hashcode] = positions;
+                _HashCodes2[hashcode] = new HashcodeOccurance(position, null);
             }
-
-            positions.Add(position);
         }
     }
 }

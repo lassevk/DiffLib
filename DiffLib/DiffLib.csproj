@@ -39,7 +39,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\DiffLib.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
@@ -74,6 +75,7 @@
     <Compile Include="BasicInsertDeleteDiffElementAligner.cs" />
     <Compile Include="BasicReplaceInsertDeleteDiffElementAligner.cs" />
     <Compile Include="CollectionExtensions.cs" />
+    <Compile Include="HashcodeOccurance.cs" />
     <Compile Include="LongestCommonSubsectionDiff.cs" />
     <Compile Include="Diff.Static.cs" />
     <Compile Include="DiffElement.cs" />
