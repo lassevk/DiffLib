@@ -6,17 +6,19 @@ using JetBrains.Annotations;
 
 namespace DiffLib
 {
+    [PublicAPI]
     public class StringSimilarityDiffElementAligner : IDiffElementAligner<string>
     {
         [NotNull]
         private readonly IDiffElementAligner<string> _Aligner;
 
+        [PublicAPI]
         public StringSimilarityDiffElementAligner(double modificationThreshold = 0.3333)
         {
             _Aligner = new ElementSimilarityDiffElementAligner<string>(StringSimilarity, modificationThreshold);
         }
 
-        private static double StringSimilarity(string element1, string element2)
+        private static double StringSimilarity([CanBeNull] string element1, [CanBeNull] string element2)
         {
             element1 = (element1 ?? String.Empty);
             element2 = (element2 ?? String.Empty);
@@ -36,7 +38,8 @@ namespace DiffLib
             return (matchLength * 2.0) / (element1.Length + element2.Length + 0.0);
         }
 
-        public IEnumerable<DiffElement<string>> Align(IList<string> collection1, int start1, int length1, IList<string> collection2, int start2, int length2)
+        [PublicAPI, NotNull]
+        public IEnumerable<DiffElement<string>> Align([NotNull] IList<string> collection1, int start1, int length1, [NotNull] IList<string> collection2, int start2, int length2)
         {
             return _Aligner.Align(collection1, start1, length1, collection2, start2, length2);
         }

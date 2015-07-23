@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;RESHARPER_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -51,8 +51,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AlignmentKeyTests.cs" />
+    <Compile Include="BasicInsertDeleteDiffElementAlignerTests.cs" />
+    <Compile Include="CodeQuality\PublicApiTests.cs" />
     <Compile Include="DiffTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CodeQuality\QaTestBase.cs" />
+    <Compile Include="CodeQuality\ReferenceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Lasse V. Karlsen.snk">

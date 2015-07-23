@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 namespace DiffLib
 {
+    [PublicAPI]
     public class ElementSimilarityDiffElementAligner<T> : IDiffElementAligner<T>
     {
         // If the combined lengths of the two change-sections is more than this number of
@@ -20,8 +21,9 @@ namespace DiffLib
         private readonly double _AlignmentThreshold;
 
         [NotNull]
-        private readonly IDiffElementAligner<T> _BasicAligner = new BasicInsertDeleteDiffElementAligner<T>(); 
+        private readonly IDiffElementAligner<T> _BasicAligner = new BasicInsertDeleteDiffElementAligner<T>();
 
+        [PublicAPI]
         public ElementSimilarityDiffElementAligner([NotNull] ElementSimilarity<T> similarityFunc, double alignmentThreshold = 0.3333)
         {
             if (similarityFunc == null)
@@ -31,6 +33,7 @@ namespace DiffLib
             _AlignmentThreshold = alignmentThreshold;
         }
 
+        [PublicAPI, NotNull]
         public IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
         {
             if (length1 > 0 && length2 > 0)

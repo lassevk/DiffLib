@@ -26,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;RESHARPER_ANNOTATIONS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;JETBRAINS_ANNOTATIONS</DefineConstants>
     <DocumentationFile>
     </DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

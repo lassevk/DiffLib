@@ -1,9 +1,12 @@
 using System;
+using JetBrains.Annotations;
 
 namespace DiffLib
 {
+    [PublicAPI]
     public struct DiffSection : IEquatable<DiffSection>
     {
+        [PublicAPI]
         public DiffSection(bool isMatch, int lengthInCollection1, int lengthInCollection2)
         {
             IsMatch = isMatch;
@@ -11,33 +14,39 @@ namespace DiffLib
             LengthInCollection2 = lengthInCollection2;
         }
 
+        [PublicAPI]
         public bool IsMatch
         {
             get;
         }
 
+        [PublicAPI]
         public int LengthInCollection1
         {
             get;
         }
 
+        [PublicAPI]
         public int LengthInCollection2
         {
             get;
         }
 
+        [PublicAPI]
         public bool Equals(DiffSection other)
         {
             return IsMatch == other.IsMatch && LengthInCollection1 == other.LengthInCollection1 && LengthInCollection2 == other.LengthInCollection2;
         }
 
-        public override bool Equals(object obj)
+        [PublicAPI]
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
                 return false;
             return obj is DiffSection && Equals((DiffSection)obj);
         }
 
+        [PublicAPI]
         public override int GetHashCode()
         {
             unchecked
@@ -59,6 +68,7 @@ namespace DiffLib
             return !section1.Equals(section2);
         }
 
+        [PublicAPI, NotNull]
         public override string ToString()
         {
             if (IsMatch)
