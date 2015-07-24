@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("DiffLib")]
-[assembly: AssemblyDescription("A Diff implementation in C# for .NET 3.5 and above.")]
+[assembly: AssemblyDescription("A Diff implementation in C# for .NET 4.0 and above, implemented as a portable class library.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DiffLib")]

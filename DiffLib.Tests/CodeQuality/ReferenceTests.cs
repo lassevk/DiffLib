@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace DiffLib.Tests.CodeQuality
 {
-    [TestFixture]
+    [TestFixture(Category = "QA")]
     public class ReferenceTests : QaTestBase
     {
         public override IEnumerable<Assembly> AllAssemblies()
