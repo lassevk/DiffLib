@@ -88,6 +88,12 @@ namespace DiffLib
             if (aligner == null)
                 throw new ArgumentNullException(nameof(aligner));
 
+            return AlignElementsImplementation(collection1, collection2, diffSections, aligner);
+        }
+
+        [NotNull]
+        private static IEnumerable<DiffElement<T>> AlignElementsImplementation<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] IEnumerable<DiffSection> diffSections, [NotNull] IDiffElementAligner<T> aligner)
+        {
             int start1 = 0;
             int start2 = 0;
 
