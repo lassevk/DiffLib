@@ -161,9 +161,9 @@ namespace DiffLib
         public override string ToString()
         {
             if (!HasValue)
-                return "<no value>";
+                return string.Empty;
 
-            return _Value?.ToString() ?? "<null>";
+            return _Value?.ToString() ?? string.Empty;
         }
 
         /// <summary>
