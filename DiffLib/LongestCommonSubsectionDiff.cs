@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace DiffLib
@@ -9,11 +8,6 @@ namespace DiffLib
         [NotNull]
         public static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException(nameof(collection1));
-            if (collection2 == null)
-                throw new ArgumentNullException(nameof(collection2));
-
             comparer = comparer ?? EqualityComparer<T>.Default;
             return Calculate(collection1, 0, collection1.Count, collection2, 0, collection2.Count, comparer, new LongestCommonSubsequence<T>(collection1, collection2, comparer));
         }
