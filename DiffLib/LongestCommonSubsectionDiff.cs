@@ -74,30 +74,34 @@ namespace DiffLib
                 yield return new DiffSection(true, matchEnd, matchEnd);
         }
 
-        private static int MatchStart<T>([NotNull] IList<T> collection1, int lower1, int upper1, [NotNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
+        private static int MatchStart<T>([NotNull, ItemCanBeNull] IList<T> collection1, int lower1, int upper1, [NotNull, ItemCanBeNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
         {
             int count = 0;
 
+            // ReSharper disable AssignNullToNotNullAttribute
             while (lower1 < upper1 && lower2 < upper2 && comparer.Equals(collection1[lower1], collection2[lower2]))
             {
                 count++;
                 lower1++;
                 lower2++;
             }
+            // ReSharper restore AssignNullToNotNullAttribute
 
             return count;
         }
 
-        private static int MatchEnd<T>([NotNull] IList<T> collection1, int lower1, int upper1, [NotNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
+        private static int MatchEnd<T>([NotNull, ItemCanBeNull] IList<T> collection1, int lower1, int upper1, [NotNull, ItemCanBeNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
         {
             int count = 0;
 
+            // ReSharper disable AssignNullToNotNullAttribute
             while (upper1 > lower1 && upper2 > lower2 && comparer.Equals(collection1[upper1 - 1], collection2[upper2 - 1]))
             {
                 count++;
                 upper1--;
                 upper2--;
             }
+            // ReSharper restore AssignNullToNotNullAttribute
 
             return count;
         }

@@ -8,21 +8,21 @@ using JetBrains.Annotations;
 
 namespace DiffLib.Tests.CodeQuality
 {
-    [PublicAPI]
     public abstract class QaTestBase
     {
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public abstract IEnumerable<Assembly> AllAssemblies();
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<Type> AllTypes()
         {
             return from assembly in AllAssemblies()
                    from type in assembly.GetTypes()
+                   where !type.Namespace.StartsWith("JetBrains.")
                    select type;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<Type> AllPublicTypes()
         {
             return from type in AllTypes()
@@ -31,7 +31,7 @@ namespace DiffLib.Tests.CodeQuality
                    select type;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<Type> AllPublicClasses()
         {
             return from type in AllPublicTypes()
@@ -40,7 +40,7 @@ namespace DiffLib.Tests.CodeQuality
                    select type;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<PropertyInfo> AllPublicProperties()
         {
             return from type in AllPublicClasses()
@@ -52,7 +52,7 @@ namespace DiffLib.Tests.CodeQuality
                    select property;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<MethodInfo> AllPublicMethods()
         {
             return from type in AllPublicClasses()
@@ -65,7 +65,7 @@ namespace DiffLib.Tests.CodeQuality
                    select method;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<ConstructorInfo> AllPublicConstructors()
         {
             return from type in AllPublicClasses()
@@ -73,7 +73,7 @@ namespace DiffLib.Tests.CodeQuality
                    select ctor;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<ParameterInfo> AllPublicParametersOfMethods()
         {
             return from method in AllPublicMethods()
@@ -81,7 +81,7 @@ namespace DiffLib.Tests.CodeQuality
                    select parameter;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<ParameterInfo> AllPublicParametersOfConstructors()
         {
             return from ctor in AllPublicConstructors()
@@ -89,7 +89,7 @@ namespace DiffLib.Tests.CodeQuality
                    select parameter;
         }
 
-        [PublicAPI, NotNull, ItemNotNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<ParameterInfo> AllPublicParameters()
         {
             return AllPublicParametersOfMethods().Concat(AllPublicParametersOfConstructors());

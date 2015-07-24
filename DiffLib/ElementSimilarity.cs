@@ -20,6 +20,5 @@ namespace DiffLib
     /// not similar at all, and 1.0 means the equivalent of equality. Values below zero or above one
     /// will result in undefined behavior.
     /// </returns>
-    [PublicAPI]
     public delegate double ElementSimilarity<in T>([CanBeNull] T element1, [CanBeNull] T element2);
 }

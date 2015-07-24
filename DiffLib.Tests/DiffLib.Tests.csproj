@@ -10,9 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DiffLib.Tests</RootNamespace>
     <AssemblyName>DiffLib.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -52,7 +53,6 @@
   <ItemGroup>
     <Compile Include="AlignmentKeyTests.cs" />
     <Compile Include="BasicInsertDeleteDiffElementAlignerTests.cs" />
-    <Compile Include="CodeQuality\PublicApiTests.cs" />
     <Compile Include="AlignmentTestCases.cs" />
     <Compile Include="DiffTests.cs" />
     <Compile Include="ElementSimilarityDiffElementAlignerTests.cs" />
@@ -69,21 +69,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DiffLib\DiffLib.csproj">
-      <Project>{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}</Project>
-      <Name>DiffLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="JetBrains.Annotations, Version=9.1.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.9.1.1\lib\net20\JetBrains.Annotations.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DiffLib\DiffLib.csproj">
+      <Project>{59577db1-d790-4925-abb0-9f2b6dc24dfd}</Project>
+      <Name>DiffLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
