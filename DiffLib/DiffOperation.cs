@@ -1,12 +1,9 @@
-﻿using JetBrains.Annotations;
-
-namespace DiffLib
+﻿namespace DiffLib
 {
     /// <summary>
     /// This enum is returned as part of <see cref="DiffElement{T}"/>, specifying how
     /// elements from the two collections were aligned.
     /// </summary>
-    [PublicAPI]
     public enum DiffOperation
     {
         /// <summary>

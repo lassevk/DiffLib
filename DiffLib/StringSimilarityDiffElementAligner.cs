@@ -14,7 +14,6 @@ namespace DiffLib
     /// String similarity will apply a diff between the two strings and count how much of
     /// the two strings were considered matching, in relation to the two strings in total.
     /// </remarks>
-    [PublicAPI]
     public class StringSimilarityDiffElementAligner : IDiffElementAligner<string>
     {
         [NotNull]
@@ -28,7 +27,6 @@ namespace DiffLib
         /// two items are more similar than the threshold specifies (similarity > threshold), then it results in
         /// a <see cref="DiffOperation.Modify"/>, otherwise it results in a <see cref="DiffOperation.Replace"/>.
         /// </param>
-        [PublicAPI]
         public StringSimilarityDiffElementAligner(double modificationThreshold = 0.3333)
         {
             _Aligner = new ElementSimilarityDiffElementAligner<string>(StringSimilarity, modificationThreshold);
@@ -81,7 +79,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI, NotNull]
+        [NotNull]
         public IEnumerable<DiffElement<string>> Align([NotNull] IList<string> collection1, int start1, int length1, [NotNull] IList<string> collection2, int start2, int length2)
         {
             return _Aligner.Align(collection1, start1, length1, collection2, start2, length2);

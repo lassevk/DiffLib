@@ -10,7 +10,6 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The type of elements in the two collections to align portions of.
     /// </typeparam>
-    [PublicAPI]
     public interface IDiffElementAligner<T>
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI, NotNull]
+        [NotNull]
         IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2);
     }
 }

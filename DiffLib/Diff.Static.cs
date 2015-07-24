@@ -7,7 +7,6 @@ namespace DiffLib
     /// <summary>
     /// Static API class for DiffLib.
     /// </summary>
-    [PublicAPI]
     public static class Diff
     {
         /// <summary>
@@ -34,7 +33,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI, NotNull]
+        [NotNull]
         public static IEnumerable<DiffSection> CalculateSections<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer = null)
         {
             if (collection1 == null)
@@ -76,7 +75,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="aligner"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI, NotNull]
+        [NotNull]
         public static IEnumerable<DiffElement<T>> AlignElements<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] IEnumerable<DiffSection> diffSections, [NotNull] IDiffElementAligner<T> aligner)
         {
             if (collection1 == null)

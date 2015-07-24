@@ -9,7 +9,6 @@ namespace DiffLib
     /// and is used for situations where you may or may not have a value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [PublicAPI]
     public struct Option<T> : IEquatable<Option<T>>, IEquatable<T>
     {
         private readonly T _Value;
@@ -20,7 +19,6 @@ namespace DiffLib
         /// <param name="value">
         /// The value of this <see cref="Option{T}"/>.
         /// </param>
-        [PublicAPI]
         public Option([CanBeNull] T value)
         {
             _Value = value;
@@ -30,7 +28,7 @@ namespace DiffLib
         /// <summary>
         /// Gets the value of this <see cref="Option{T}"/>.
         /// </summary>
-        [PublicAPI, CanBeNull]
+        [CanBeNull]
         public T Value
         {
             get
@@ -45,7 +43,6 @@ namespace DiffLib
         /// <summary>
         /// Gets whether this <see cref="Option{T}"/> has a value.
         /// </summary>
-        [PublicAPI]
         public bool HasValue
         {
             get;
@@ -141,7 +138,6 @@ namespace DiffLib
         /// A 32-bit signed integer that is the hash code for this instance.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        [PublicAPI]
         public override int GetHashCode()
         {
             unchecked
@@ -157,7 +153,7 @@ namespace DiffLib
         /// A <see cref="T:System.String"/> containing a fully qualified type name.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        [PublicAPI, NotNull]
+        [NotNull]
         public override string ToString()
         {
             if (!HasValue)
@@ -169,7 +165,6 @@ namespace DiffLib
         /// <summary>
         /// Returns an <see cref="Option{T}"/> that has no value.
         /// </summary>
-        [PublicAPI]
         public static Option<T> None => new Option<T>();
     }
 }

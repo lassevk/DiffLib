@@ -12,7 +12,6 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The type of elements in the two collections to align.
     /// </typeparam>
-    [PublicAPI]
     public class ElementSimilarityDiffElementAligner<T> : IDiffElementAligner<T>
     {
         // If the combined lengths of the two change-sections is more than this number of
@@ -44,7 +43,6 @@ namespace DiffLib
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="similarityFunc"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI]
         public ElementSimilarityDiffElementAligner([NotNull] ElementSimilarity<T> similarityFunc, double modificationThreshold = 0.3333)
         {
             if (similarityFunc == null)
@@ -83,7 +81,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI, NotNull]
+        [NotNull]
         public IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
         {
             if (collection1 == null)

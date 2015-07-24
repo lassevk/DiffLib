@@ -11,17 +11,8 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The type of elements in the two collections.
     /// </typeparam>
-    [PublicAPI]
     public class BasicInsertDeleteDiffElementAligner<T> : IDiffElementAligner<T>
     {
-        /// <summary>
-        /// Constructs a new instance of <see cref="BasicInsertDeleteDiffElementAligner{T}"/>.
-        /// </summary>
-        [PublicAPI]
-        public BasicInsertDeleteDiffElementAligner()
-        {
-        }
-
         /// <summary>
         /// Align the specified portions of the two collections and output element-by-element operations for the aligned elements.
         /// </summary>
@@ -51,7 +42,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [PublicAPI, NotNull]
+        [NotNull]
         public virtual IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
         {
             if (collection1 == null)

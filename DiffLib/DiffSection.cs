@@ -6,7 +6,6 @@ namespace DiffLib
     /// <summary>
     /// This struct holds a section of matched or unmatch element portions from the two collectoins.
     /// </summary>
-    [PublicAPI]
     public struct DiffSection : IEquatable<DiffSection>
     {
         /// <summary>
@@ -22,7 +21,6 @@ namespace DiffLib
         /// <param name="lengthInCollection2">
         /// How many elements from the second collection this section contains.
         /// </param>
-        [PublicAPI]
         public DiffSection(bool isMatch, int lengthInCollection1, int lengthInCollection2)
         {
             IsMatch = isMatch;
@@ -38,7 +36,6 @@ namespace DiffLib
         /// <c>true</c> if a match was found between the two collections;
         /// otherwise, <c>false</c>.
         /// </value>
-        [PublicAPI]
         public bool IsMatch
         {
             get;
@@ -47,7 +44,6 @@ namespace DiffLib
         /// <summary>
         /// How many elements from the first collection this section contains.
         /// </summary>
-        [PublicAPI]
         public int LengthInCollection1
         {
             get;
@@ -56,7 +52,6 @@ namespace DiffLib
         /// <summary>
         /// How many elements from the second collection this section contains.
         /// </summary>
-        [PublicAPI]
         public int LengthInCollection2
         {
             get;
@@ -69,7 +64,6 @@ namespace DiffLib
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
         /// <param name="other">An object to compare with this object.</param>
-        [PublicAPI]
         public bool Equals(DiffSection other)
         {
             return IsMatch == other.IsMatch && LengthInCollection1 == other.LengthInCollection1 && LengthInCollection2 == other.LengthInCollection2;
@@ -82,7 +76,6 @@ namespace DiffLib
         /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
         /// </returns>
         /// <param name="obj">Another object to compare to. </param><filterpriority>2</filterpriority>
-        [PublicAPI]
         public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -97,7 +90,6 @@ namespace DiffLib
         /// A 32-bit signed integer that is the hash code for this instance.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        [PublicAPI]
         public override int GetHashCode()
         {
             unchecked
@@ -138,7 +130,7 @@ namespace DiffLib
         /// A <see cref="T:System.String"/> containing a fully qualified type name.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        [PublicAPI, NotNull]
+        [NotNull]
         public override string ToString()
         {
             if (IsMatch)
