@@ -1,6 +1,6 @@
 The examples that are shipped as part of the DiffLib
 [repository][1] requires [LINQPad][2] to run, a free tool made
-by the author of [C# 40 in a Nutshell][3], a [O'Reilly][4]
+by the author of [C# 4.0 in a Nutshell][3], a [O'Reilly][4]
 book about C# 4.0, LINQ and various other topics.
 
 Note that you need [LINQPad][2] version 4.27.1 or higher.

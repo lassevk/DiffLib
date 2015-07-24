@@ -6,7 +6,7 @@ in text files.
 Details:
 
 * Language: C# 6.0
-* Runtime: .NET 3.5 Client Profile
+* Runtime: .NET Portable class library
 
 Repository and project location: [GitHub][1]  
 Maintainer: [Lasse V. Karlsen][2]
