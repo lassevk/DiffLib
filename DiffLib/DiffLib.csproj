@@ -73,7 +73,6 @@
     <Compile Include="AlignmentNode.cs" />
     <Compile Include="BasicInsertDeleteDiffElementAligner.cs" />
     <Compile Include="BasicReplaceInsertDeleteDiffElementAligner.cs" />
-    <Compile Include="CollectionExtensions.cs" />
     <Compile Include="HashcodeOccurance.cs" />
     <Compile Include="LongestCommonSubsectionDiff.cs" />
     <Compile Include="Diff.Static.cs" />
