@@ -53,7 +53,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBinaries|AnyCPU'">
     <OutputPath>bin\ReleaseBinaries\</OutputPath>
     <DefineConstants>TRACE;USE_RELEASE_KEY</DefineConstants>
-    <DocumentationFile>bin\Release\DiffLib.XML</DocumentationFile>
+    <DocumentationFile>bin\ReleaseBinaries\DiffLib.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
