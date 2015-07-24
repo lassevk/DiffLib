@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace DiffLib
@@ -87,6 +86,11 @@ namespace DiffLib
         [PublicAPI, NotNull]
         public IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
         {
+            if (collection1 == null)
+                throw new ArgumentNullException(nameof(collection1));
+            if (collection2 == null)
+                throw new ArgumentNullException(nameof(collection2));
+
             if (length1 > 0 && length2 > 0)
             {
                 var elements = TryAlignSections(collection1, start1, length1, collection2, start2, length2);
@@ -178,15 +182,15 @@ namespace DiffLib
 
                 // Calculate how the results will be if we replace or modify an element
                 var restAfterChange = CalculateBestAlignment(nodes, collection1, lower1 + 1, upper1, collection2, lower2 + 1, upper2);
-                double similarity = _SimilarityFunc(collection1[lower2], collection2[lower2]);
+                double similarity = _SimilarityFunc(collection1[lower1], collection2[lower2]);
                 AlignmentNode resultChange = null;
                 if (similarity >= _ModificationThreshold)
-                    resultChange = new AlignmentNode(DiffOperation.Modify, similarity, restAfterChange.NodeCount + 1, restAfterChange);
+                    resultChange = new AlignmentNode(DiffOperation.Modify, similarity + restAfterInsert.Similarity, restAfterChange.NodeCount + 1, restAfterChange);
 
                 // Then pick the operation that resulted in the best average similarity
-                result = resultInsert;
-                if (resultDelete.AverageSimilarity > result.AverageSimilarity)
-                    result = resultDelete;
+                result = resultDelete;
+                if (resultInsert.AverageSimilarity > result.AverageSimilarity)
+                    result = resultInsert;
                 if (resultChange?.AverageSimilarity > result.AverageSimilarity)
                     result = resultChange;
             }
