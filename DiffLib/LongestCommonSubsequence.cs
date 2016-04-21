@@ -71,6 +71,9 @@ namespace DiffLib
                         position2 = index2;
                         length = matchLength;
                     }
+
+                    if (index1 + length >= upper1)
+                        break;
                 }
             }
 
