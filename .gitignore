@@ -199,5 +199,6 @@ FakesAssemblies/
 nCrunchTemp*
 /Binaries
 /NuGet
-/Binaries.fbl7
-/Binaries.fb7lck
+*.fbl7
+*.fb7lck
+*.fbpInf
