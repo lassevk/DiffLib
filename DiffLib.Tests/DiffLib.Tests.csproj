@@ -56,6 +56,7 @@
     <Compile Include="AlignmentTestCases.cs" />
     <Compile Include="DiffTests.cs" />
     <Compile Include="ElementSimilarityDiffElementAlignerTests.cs" />
+    <Compile Include="Issues\Issue9.cs" />
     <Compile Include="OptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeQuality\QaTestBase.cs" />
