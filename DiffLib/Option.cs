@@ -41,6 +41,11 @@ namespace DiffLib
         }
 
         /// <summary>
+        /// Gets the <see cref="Value"/>  of this <see cref="Option{T}"/>, or the default value for <typeparamref name="T"/> if it has no value.
+        /// </summary>
+        public T GetValueOrDefault() => HasValue ? Value : default(T);
+
+        /// <summary>
         /// Gets whether this <see cref="Option{T}"/> has a value.
         /// </summary>
         public bool HasValue
