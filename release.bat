@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 
 setlocal
 
@@ -24,11 +24,15 @@ if errorlevel 1 goto error
 copy DiffLib\bin\Release\DiffLib*.nupkg .\
 if errorlevel 1 goto error
 
+git checkout "DiffLib\Lasse V. Karlsen.snk"
 exit /B 0
 
 :error
-exit /B 1
+goto exitwitherror
 
 :setup
 echo Requires SIGNINGKEYS environment variable to be set
-exit /B 1
+goto exitwitherror
+
+:exitwitherror
+git checkout "DiffLib\Lasse V. Karlsen.snk"
