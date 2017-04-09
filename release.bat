@@ -2,7 +2,7 @@
 
 setlocal
 
-set PROJECT=DiffLib
+call project.bat
 
 if exist *.nupkg del *.nupkg
 if errorlevel 1 goto error
