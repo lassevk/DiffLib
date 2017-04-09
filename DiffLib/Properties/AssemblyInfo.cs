@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("DiffLib")]
-[assembly: AssemblyDescription("A Diff implementation in C# for .NET 4.0 and above, implemented as a portable class library.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DiffLib")]
-[assembly: AssemblyCopyright("Copyright (C) Lasse V. Karlsen 2015, All rights reserved")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: CLSCompliant(true)]
 #if USE_RELEASE_KEY
 [assembly: InternalsVisibleTo("DiffLib.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001006518e40197a668d30af8fa42f0227fc6d214b45eadfb8b890b39ee370394c25b80cbe2fe19a5415d33dfec6b84909df1c8685966461db6c644aa5da5f2b3c65cd837aed1513bc7ce8a9c9d7d4914ac7dd98b4318c1c112a7a2b9e8cef4540ada875b96a5a406f51175473200ba6d77435053a055c40f8301857d748910cfc2ad")]
 #else
