@@ -13,8 +13,8 @@
     <AssemblyOriginatorKeyFile>Lasse V. Karlsen.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_0,JETBRAINS_ANNOTATIONS</DefineConstants>
+  </PropertyGroup>
 
 </Project>
