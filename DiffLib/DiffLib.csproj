@@ -79,7 +79,7 @@
     <Compile Include="DiffSection.cs" />
     <Compile Include="ElementSimilarity.cs" />
     <Compile Include="ElementSimilarityAligner.cs" />
-    <Compile Include="IDiffMatchAligner.cs" />
+    <Compile Include="IDiffElementAligner.cs" />
     <Compile Include="LongestCommonSubsequence.cs" />
     <Compile Include="Assume.cs" />
     <Compile Include="Option.cs" />
