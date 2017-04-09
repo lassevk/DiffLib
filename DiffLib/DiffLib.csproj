@@ -68,9 +68,18 @@
   <ItemGroup>
     <Compile Include="AlignmentKey.cs" />
     <Compile Include="AlignmentNode.cs" />
-    <Compile Include="BasicInsertDeleteDiffElementAligner.cs" />
-    <Compile Include="BasicReplaceInsertDeleteDiffElementAligner.cs" />
+    <Compile Include="BasicInsertDeleteDiffElementAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BasicReplaceInsertDeleteDiffElementAligner.cs">
+      <DependentUpon>BasicInsertDeleteDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DiffSectionMergeComparer.cs" />
+    <Compile Include="ElementSimilarityAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
     <Compile Include="HashcodeOccurance.cs" />
+    <Compile Include="IMergeConflictResolver.cs" />
     <Compile Include="JetBrainsAnnotations.cs" />
     <Compile Include="LongestCommonSubsectionDiff.cs" />
     <Compile Include="Diff.Static.cs" />
@@ -78,13 +87,28 @@
     <Compile Include="DiffOperation.cs" />
     <Compile Include="DiffSection.cs" />
     <Compile Include="ElementSimilarity.cs" />
-    <Compile Include="ElementSimilarityAligner.cs" />
     <Compile Include="IDiffElementAligner.cs" />
     <Compile Include="LongestCommonSubsequence.cs" />
     <Compile Include="Assume.cs" />
+    <Compile Include="Merge.Static.cs" />
+    <Compile Include="MergeConflictException.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringSimilarityDiffElementAligner.cs" />
+    <Compile Include="StringSimilarityDiffElementAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TakeLeftMergeConflictResolver.cs">
+      <DependentUpon>IMergeConflictResolver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TakeLeftThenRightIfRightDiffersFromLeft.cs">
+      <DependentUpon>IMergeConflictResolver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TakeLeftThenRightMergeConflictResolver.cs">
+      <DependentUpon>IMergeConflictResolver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TakeRightMergeConflictResolver.cs">
+      <DependentUpon>IMergeConflictResolver.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Lasse V. Karlsen.snk">
