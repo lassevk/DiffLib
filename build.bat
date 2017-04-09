@@ -2,7 +2,7 @@
 
 setlocal
 
-set PROJECT=DiffLib
+call project.bat
 
 if exist %PROJECT%\bin rd /s /q %PROJECT%\bin
 if errorlevel 1 goto error
