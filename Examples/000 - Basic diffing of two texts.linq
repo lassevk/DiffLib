@@ -1,5 +1,5 @@
 <Query Kind="Program">
-  <Reference Relative="..\DiffLib\bin\Debug\DiffLib.dll">C:\dev\VS.NET\DiffLib\DiffLib\bin\Debug\DiffLib.dll</Reference>
+  <Reference Relative="..\DiffLib\bin\Debug\netstandard1.0\DiffLib.dll">D:\Dev\VS.NET\DiffLib\DiffLib\bin\Debug\netstandard1.0\DiffLib.dll</Reference>
   <Namespace>DiffLib</Namespace>
 </Query>
 
