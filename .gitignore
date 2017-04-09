@@ -101,6 +101,8 @@ _TeamCity*
 
 # NCrunch
 _NCrunch_*
+*.ncrunchsolution
+*.ncrunchproject
 .*crunch*.local.xml
 
 # MightyMoose
