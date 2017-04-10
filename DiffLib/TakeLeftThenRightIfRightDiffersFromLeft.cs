@@ -30,7 +30,8 @@ namespace DiffLib
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> Resolve(IList<T> commonBase, IList<T> left, IList<T> right)
+        [NotNull, ItemCanBeNull]
+        public IEnumerable<T> Resolve([NotNull] IList<T> commonBase, [NotNull] IList<T> left, [NotNull] IList<T> right)
         {
             foreach (var item in left)
                 yield return item;
