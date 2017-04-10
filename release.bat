@@ -24,7 +24,11 @@ nuget restore
 if errorlevel 1 goto error
 
 set VERSION=%year%.%month%.%day%.%tm%
-msbuild %PROJECT%\%PROJECT%.csproj /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION%
+msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION% /p:DefineConstants="RELEASE;USE_RELEASE_KEY"
+if errorlevel 1 goto error
+
+set TESTDLL=%PROJECT%.Tests\bin\Debug\%PROJECT%.Tests.dll
+if exist "%TESTDLL%" nunit3-console "%TESTDLL%"
 if errorlevel 1 goto error
 
 copy %PROJECT%\bin\Release\%PROJECT%*.nupkg .\
