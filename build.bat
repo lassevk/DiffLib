@@ -10,7 +10,11 @@ if errorlevel 1 goto error
 nuget restore
 if errorlevel 1 goto error
 
-msbuild %PROJECT%\%PROJECT%.csproj /target:Clean,Rebuild /p:Configuration=Debug
+msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Debug
+if errorlevel 1 goto error
+
+set TESTDLL=%PROJECT%.Tests\bin\Debug\%PROJECT%.Tests.dll
+if exist "%TESTDLL%" nunit3-console "%TESTDLL%"
 if errorlevel 1 goto error
 
 exit /B 0
