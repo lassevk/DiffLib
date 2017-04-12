@@ -24,7 +24,7 @@ nuget restore
 if errorlevel 1 goto error
 
 set VERSION=%year%.%month%.%day%.%tm%
-msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="RELEASE;USE_RELEASE_KEY"
+msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION%-beta /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="RELEASE;USE_RELEASE_KEY"
 if errorlevel 1 goto error
 
 set TESTDLL=%PROJECT%.Tests\bin\Debug\%PROJECT%.Tests.dll
