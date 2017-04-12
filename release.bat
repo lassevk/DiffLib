@@ -43,9 +43,9 @@ if "%PUSHYESNO%" == "Y" GOTO PUSH
 exit /B 0
 
 :PUSH
-nuget push %PROJECT%.%VERSION%.nupkg -Source https://www.nuget.org/api/v2/package
+nuget push %PROJECT%.%VERSION%-beta.nupkg -Source https://www.nuget.org/api/v2/package
 if errorlevel 1 goto error
-git tag version/%VERSION%
+git tag version/%VERSION%-beta
 if errorlevel 1 goto error
 exit /B 0
 
