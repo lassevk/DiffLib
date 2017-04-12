@@ -42,17 +42,18 @@ namespace DiffLib.Tests
         //}
 
         [Test]
-        [TestCase("1234567890", "1234567890", "1234567890", "1234567890")]
-        [TestCase("1234567890", "12a4567890", "123456b890", "12a456b890")]
-        [TestCase("1234567890", "123abc4567890", "1234567klm890", "123abc4567klm890")]
-        [TestCase("1234567890", "1234890", "1234567890", "1234890")]
-        [TestCase("1234567890", "1234567890", "1234890", "1234890")]
-        [TestCase("1234567890", "12abc34567890", "1234567890", "12abc34567890")]
-        [TestCase("1234567890", "1234567890", "12abc34567890", "12abc34567890")]
-        [TestCase("1234567890", "12abc34567890", "12klm34567890", "12abcklm34567890")]
-        [TestCase("1234567890", "1234890", "1234890", "1234890")]
-        [TestCase("1234567890", "123abc7890", "1237890", "123abc7890")]
-        [TestCase("1234567890", "123a567890", "123b567890", "123ab567890")]
+        [TestCase("1234567890", "1234567890", "1234567890", "1234567890", TestName = "Nothing changed")]
+        [TestCase("1234567890", "12a4567890", "123456b890", "12a456b890", TestName = "Both sides replaced to same")]
+        [TestCase("1234567890", "123abc4567890", "1234567klm890", "123abc4567klm890", TestName = "Both sides inserted in separate places")]
+        [TestCase("1234567890", "1234890", "1234567890", "1234890", TestName = "Left side deleted")]
+        [TestCase("1234567890", "1234567890", "1234890", "1234890", TestName = "Right side deleted")]
+        [TestCase("1234567890", "1234890", "1234890", "1234890", TestName = "Both sides deleted")]
+        [TestCase("1234567890", "12abc34567890", "1234567890", "12abc34567890", TestName = "Left side inserted")]
+        [TestCase("1234567890", "1234567890", "12abc34567890", "12abc34567890", TestName = "Right side inserted")]
+        [TestCase("1234567890", "12abc34567890", "12klm34567890", "12abcklm34567890", "Both sides inserted at the same place, take left then right")]
+        [TestCase("1234567890", "123abc7890", "1237890", "123abc7890", TestName = "Left side modified, right side deleted, take left side")]
+        [TestCase("1234567890" ,"123567890", "123x567890", "123x567890", TestName = "Left side deleted, right side modified, take left then right")]
+        [TestCase("1234567890", "123a567890", "123b567890", "123ab567890", TestName = "Both side modified, take left then right")]
         public void Perform_TestCases(string commonBase, string left, string right, string expected)
         {
             var output = new string(Merge.Perform(commonBase.ToCharArray(), left.ToCharArray(), right.ToCharArray(), new BasicReplaceInsertDeleteDiffElementAligner<char>(), new TakeLeftThenRightMergeConflictResolver<char>()).ToArray());
