@@ -24,7 +24,7 @@ nuget restore
 if errorlevel 1 goto error
 
 set VERSION=%year%.%month%.%day%.%tm%
-msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION%-beta /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="RELEASE;USE_RELEASE_KEY"
+msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="RELEASE;USE_RELEASE_KEY"
 if errorlevel 1 goto error
 
 set TESTDLL=%PROJECT%.Tests\bin\Debug\%PROJECT%.Tests.dll
@@ -43,9 +43,9 @@ if "%PUSHYESNO%" == "Y" GOTO PUSH
 exit /B 0
 
 :PUSH
-nuget push %PROJECT%.%VERSION%-beta.nupkg -Source https://www.nuget.org/api/v2/package
+nuget push %PROJECT%.%VERSION%%SUFFIX%.nupkg -Source https://www.nuget.org/api/v2/package
 if errorlevel 1 goto error
-git tag version/%VERSION%-beta
+git tag version/%VERSION%%SUFFIX%
 if errorlevel 1 goto error
 exit /B 0
 
