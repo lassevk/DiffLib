@@ -40,6 +40,7 @@ echo=
 echo================================================
 set /P PUSHYESNO=Push package to nuget? [y/N]
 if "%PUSHYESNO%" == "Y" GOTO PUSH
+if "%PUSHYESNO%" == "y" GOTO PUSH
 exit /B 0
 
 :PUSH
@@ -47,6 +48,7 @@ nuget push %PROJECT%.%VERSION%%SUFFIX%.nupkg -Source https://www.nuget.org/api/v
 if errorlevel 1 goto error
 git tag version/%VERSION%%SUFFIX%
 if errorlevel 1 goto error
+start "" "https://www.nuget.org/packages/%PROJECT%/"
 exit /B 0
 
 :error
