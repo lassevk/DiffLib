@@ -27,7 +27,7 @@ set VERSION=%year%.%month%.%day%.%tm%
 msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=Release /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="RELEASE;USE_RELEASE_KEY"
 if errorlevel 1 goto error
 
-set TESTDLL=%PROJECT%.Tests\bin\Debug\%PROJECT%.Tests.dll
+set TESTDLL=%PROJECT%.Tests\bin\Release\%PROJECT%.Tests.dll
 if exist "%TESTDLL%" nunit3-console "%TESTDLL%"
 if errorlevel 1 goto error
 
