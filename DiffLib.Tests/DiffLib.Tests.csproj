@@ -60,6 +60,7 @@
     <Compile Include="DiffTests.cs" />
     <Compile Include="ElementSimilarityDiffElementAlignerTests.cs" />
     <Compile Include="Issues\Issue9.cs" />
+    <Compile Include="ListExtensionsTests.cs" />
     <Compile Include="MergeTests.cs" />
     <Compile Include="OptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +80,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DiffLib\DiffLib.csproj">
