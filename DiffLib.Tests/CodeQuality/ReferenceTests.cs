@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -8,6 +9,7 @@ using NUnit.Framework;
 
 namespace DiffLib.Tests.CodeQuality
 {
+#if DEBUG
     [TestFixture(Category = "QA")]
     public class ReferenceTests : QaTestBase
     {
@@ -80,4 +82,5 @@ namespace DiffLib.Tests.CodeQuality
             Assert.Fail("Property '{0}' of type '{1}' is not tagged with [CanBeNull] or [NotNull]", property.Name, property.DeclaringType.Name);
         }
     }
+#endif
 }
