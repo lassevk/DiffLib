@@ -18,7 +18,7 @@ namespace DiffLib
         private readonly IEqualityComparer<T> _EqualityComparer;
 
         /// <summary>
-        /// Constructs a new instance of <see cref="DiffLib.TakeLeftThenRightIfRightDiffersFromLeft{T}"/> using the specified <paramref name="equalityComparer"/>.
+        /// Constructs a new instance of <see cref="TakeRightThenLeftIfLeftDiffersFromRight{T}"/> using the specified <paramref name="equalityComparer"/>.
         /// </summary>
         /// <param name="equalityComparer">
         /// The <see cref="IEqualityComparer{T}"/> to use when determining if elements of the left side of a conflict matches those on the right side. If
