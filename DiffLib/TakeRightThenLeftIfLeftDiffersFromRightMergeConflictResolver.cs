@@ -13,18 +13,18 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The type of elements in the collections being merged.
     /// </typeparam>
-    public class TakeRightThenLeftIfLeftDiffersFromRight<T> : IMergeConflictResolver<T>
+    public class TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver<T> : IMergeConflictResolver<T>
     {
         private readonly IEqualityComparer<T> _EqualityComparer;
 
         /// <summary>
-        /// Constructs a new instance of <see cref="TakeRightThenLeftIfLeftDiffersFromRight{T}"/> using the specified <paramref name="equalityComparer"/>.
+        /// Constructs a new instance of <see cref="TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver{T}"/> using the specified <paramref name="equalityComparer"/>.
         /// </summary>
         /// <param name="equalityComparer">
         /// The <see cref="IEqualityComparer{T}"/> to use when determining if elements of the left side of a conflict matches those on the right side. If
         /// <c>null</c> then <see cref="EqualityComparer{T}.Default"/> is used.
         /// </param>
-        public TakeRightThenLeftIfLeftDiffersFromRight([CanBeNull] IEqualityComparer<T> equalityComparer = null)
+        public TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver([CanBeNull] IEqualityComparer<T> equalityComparer = null)
         {
             _EqualityComparer = equalityComparer ?? EqualityComparer<T>.Default;
         }
