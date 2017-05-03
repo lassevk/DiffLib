@@ -16,8 +16,8 @@ if errorlevel 1 goto error
 msbuild %PROJECT%.sln /target:Clean,Rebuild /p:Configuration=%CONFIGURATION%
 if errorlevel 1 goto error
 
-set TESTDLL=%PROJECT%.Tests\bin\%CONFIGURATION%\%PROJECT%.Tests.dll
-if exist "%TESTDLL%" nunit3-console "%TESTDLL%"
+set TESTDLL=%CD%\%PROJECT%.Tests\bin\%CONFIGURATION%\%PROJECT%.Tests.dll
+if exist "%TESTDLL%" dotcover.exe analyze /Output="%PROJECT%-CodeCoverage.html" /ReportType="HTML" /TargetExecutable="%DROPBOX%\Tools\nunit\nunit3-console.exe" /TargetArguments="%TESTDLL%"
 if errorlevel 1 goto error
 
 exit /B 0
