@@ -44,11 +44,11 @@ namespace DiffLib.Tests.CodeQuality
         [TestCaseSource(nameof(AllPublicMethodsReturningReference))]
         public void Method_ReturningReference_MustBeTaggedWithNotNullOrCanBeNull(MethodInfo method)
         {
-            if (method.IsDefined(typeof(CanBeNullAttribute), true))
+            if (method.IsDefined(typeof(CanBeNullAttribute), inherit: true))
                 return;
-            if (method.IsDefined(typeof(NotNullAttribute), true))
+            if (method.IsDefined(typeof(NotNullAttribute), inherit: true))
                 return;
-            if (method.IsDefined(typeof(ContractAnnotationAttribute), true))
+            if (method.IsDefined(typeof(ContractAnnotationAttribute), inherit: true))
                 return;
 
             Assert.Fail("Method '{0}' of type '{1}' is not tagged with [CanBeNull] or [NotNull]", method.Name, method.DeclaringType.Name);
@@ -58,11 +58,11 @@ namespace DiffLib.Tests.CodeQuality
         [TestCaseSource(nameof(AllParametersTakingReferences))]
         public void Parameter_TakingReference_MustBeTaggedWithNotNullOrCanBeNull(ParameterInfo parameter)
         {
-            if (parameter.IsDefined(typeof(CanBeNullAttribute), true))
+            if (parameter.IsDefined(typeof(CanBeNullAttribute), inherit: true))
                 return;
-            if (parameter.IsDefined(typeof(NotNullAttribute), true))
+            if (parameter.IsDefined(typeof(NotNullAttribute), inherit: true))
                 return;
-            if (parameter.Member.IsDefined(typeof(ContractAnnotationAttribute), true))
+            if (parameter.Member.IsDefined(typeof(ContractAnnotationAttribute), inherit: true))
                 return;
             if (parameter.ParameterType.IsByRef && parameter.ParameterType.GetElementType().IsValueType)
                 return;
@@ -74,9 +74,9 @@ namespace DiffLib.Tests.CodeQuality
         [TestCaseSource(nameof(AllPropertiesHoldingReferences))]
         public void Property_HoldingReference_MustBeTaggedWithNotNullOrCanBeNull(PropertyInfo property)
         {
-            if (property.IsDefined(typeof(CanBeNullAttribute), true))
+            if (property.IsDefined(typeof(CanBeNullAttribute), inherit: true))
                 return;
-            if (property.IsDefined(typeof(NotNullAttribute), true))
+            if (property.IsDefined(typeof(NotNullAttribute), inherit: true))
                 return;
 
             Assert.Fail("Property '{0}' of type '{1}' is not tagged with [CanBeNull] or [NotNull]", property.Name, property.DeclaringType.Name);
