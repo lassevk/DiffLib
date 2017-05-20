@@ -121,18 +121,18 @@ namespace DiffLib
                         case DiffOperation.Match:
                         case DiffOperation.Replace:
                         case DiffOperation.Modify:
-                            result.Add(new DiffElement<T>(collection1[start1], collection2[start2], bestNode.Operation));
+                            result.Add(new DiffElement<T>(start1, collection1[start1], start2, collection2[start2], bestNode.Operation));
                             start1++;
                             start2++;
                             break;
 
                         case DiffOperation.Insert:
-                            result.Add(new DiffElement<T>(Option<T>.None, collection2[start2], bestNode.Operation));
+                            result.Add(new DiffElement<T>(null, Option<T>.None, start2, collection2[start2], bestNode.Operation));
                             start2++;
                             break;
 
                         case DiffOperation.Delete:
-                            result.Add(new DiffElement<T>(collection1[start1], Option<T>.None, bestNode.Operation));
+                            result.Add(new DiffElement<T>(start1, collection1[start1], null, Option<T>.None, bestNode.Operation));
                             start1++;
                             break;
 

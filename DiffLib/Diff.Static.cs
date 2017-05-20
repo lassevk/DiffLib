@@ -102,7 +102,7 @@ namespace DiffLib
                 {
                     for (int index = 0; index < section.LengthInCollection1; index++)
                     {
-                        yield return new DiffElement<T>(collection1[start1], collection2[start2], DiffOperation.Match);
+                        yield return new DiffElement<T>(start1, collection1[start1], start2, collection2[start2], DiffOperation.Match);
                         start1++;
                         start2++;
                     }
