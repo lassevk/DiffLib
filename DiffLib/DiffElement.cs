@@ -14,6 +14,12 @@ namespace DiffLib
         /// <summary>
         /// Constructs a new instance of <see cref="DiffElement{T}"/>.
         /// </summary>
+        /// <param name="elementIndexFromCollection1">
+        /// Index of <see cref="ElementFromCollection1"/> in <c>Collection1</c>.
+        /// </param>
+        /// <param name="elementIndexFromCollection2">
+        /// Index of <see cref="ElementFromCollection2"/> in <c>Collection2</c>.
+        /// </param>
         /// <param name="elementFromCollection1">
         /// The aligned element from the first collection, or <see cref="Option{T}.None"/> if an element from the second collection could
         /// not be aligned with anything from the first.
@@ -25,12 +31,20 @@ namespace DiffLib
         /// <param name="operation">
         /// A <see cref="DiffOperation"/> specifying how <paramref name="elementFromCollection1"/> corresponds to <paramref name="elementFromCollection2"/>.
         /// </param>
-        public DiffElement(Option<T> elementFromCollection1, Option<T> elementFromCollection2, DiffOperation operation)
+        public DiffElement(int? elementIndexFromCollection1, Option<T> elementFromCollection1, 
+            int? elementIndexFromCollection2, Option<T> elementFromCollection2, DiffOperation operation)
         {
+            ElementIndexFromCollection1 = elementIndexFromCollection1;
             ElementFromCollection1 = elementFromCollection1;
+            ElementIndexFromCollection2 = elementIndexFromCollection2;
             ElementFromCollection2 = elementFromCollection2;
             Operation = operation;
         }
+
+        /// <summary>
+        /// Index of <see cref="ElementFromCollection1"/> in <c>Collection1</c>.
+        /// </summary>
+        public int? ElementIndexFromCollection1 { get; }
 
         /// <summary>
         /// The aligned element from the first collection, or <see cref="Option{T}.None"/> if an element from the second collection could
@@ -40,6 +54,11 @@ namespace DiffLib
         {
             get;
         }
+
+        /// <summary>
+        /// Index of <see cref="ElementFromCollection2"/> in <c>Collection2</c>.
+        /// </summary>
+        public int? ElementIndexFromCollection2 { get; }
 
         /// <summary>
         /// The aligned element from the second collection, or <see cref="Option{T}.None"/> if an element from the first collection could
@@ -67,7 +86,12 @@ namespace DiffLib
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(DiffElement<T> other)
         {
-            return ElementFromCollection1.Equals(other.ElementFromCollection1) && ElementFromCollection2.Equals(other.ElementFromCollection2) && Operation == other.Operation;
+            return 
+                ElementIndexFromCollection1.Equals(other.ElementIndexFromCollection1) &&
+                ElementFromCollection1.Equals(other.ElementFromCollection1) && 
+                ElementIndexFromCollection2.Equals(other.ElementIndexFromCollection2) &&
+                ElementFromCollection2.Equals(other.ElementFromCollection2) &&
+                Operation == other.Operation;
         }
 
         /// <summary>
@@ -119,6 +143,8 @@ namespace DiffLib
             {
                 var hashCode = ElementFromCollection1.GetHashCode();
                 hashCode = (hashCode * 397) ^ ElementFromCollection2.GetHashCode();
+                hashCode = (hashCode * 397) ^ ElementIndexFromCollection1.GetHashCode();
+                hashCode = (hashCode * 397) ^ ElementIndexFromCollection2.GetHashCode();
                 hashCode = (hashCode * 397) ^ (int)Operation;
                 return hashCode;
             }

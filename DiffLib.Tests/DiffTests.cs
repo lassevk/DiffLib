@@ -135,12 +135,12 @@ namespace DiffLib.Tests
 
             CollectionAssert.AreEqual(new[]
             {
-                new DiffElement<string>("Line 1", "Line 1", DiffOperation.Match),
-                new DiffElement<string>(Option<string>.None, null, DiffOperation.Insert),
-                new DiffElement<string>("Line 2", "Line 2", DiffOperation.Match),
-                new DiffElement<string>(null, Option<string>.None, DiffOperation.Delete),
-                new DiffElement<string>("Line 3", Option<string>.None, DiffOperation.Delete),
-                new DiffElement<string>("Line 4", "Line 4", DiffOperation.Match),
+                new DiffElement<string>(0, "Line 1", 0, "Line 1", DiffOperation.Match),
+                new DiffElement<string>(null, Option<string>.None, 1, null, DiffOperation.Insert),
+                new DiffElement<string>(1, "Line 2", 2, "Line 2", DiffOperation.Match),
+                new DiffElement<string>(2, null, null, Option<string>.None, DiffOperation.Delete),
+                new DiffElement<string>(3, "Line 3", null, Option<string>.None, DiffOperation.Delete),
+                new DiffElement<string>(4, "Line 4", 3, "Line 4", DiffOperation.Match),
             }, elements);
         }
     }
