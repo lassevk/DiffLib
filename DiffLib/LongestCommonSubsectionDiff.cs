@@ -24,7 +24,7 @@ namespace DiffLib
 
             if (matchStart > 0)
             {
-                yield return new DiffSection(true, matchStart, matchStart);
+                yield return new DiffSection(isMatch: true, lengthInCollection1: matchStart, lengthInCollection2: matchStart);
                 lower1 += matchStart;
                 lower2 += matchStart;
             }
@@ -41,7 +41,7 @@ namespace DiffLib
                 if (lower1 == upper1 || lower2 == upper2)
                 {
                     // Degenerate case, only one of the collections still have elements
-                    yield return new DiffSection(false, upper1 - lower1, upper2 - lower2);
+                    yield return new DiffSection(isMatch: false, lengthInCollection1: upper1 - lower1, lengthInCollection2: upper2 - lower2);
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace DiffLib
                             yield return section;
 
                         // Output match
-                        yield return new DiffSection(true, length, length);
+                        yield return new DiffSection(isMatch: true, lengthInCollection1: length, lengthInCollection2: length);
 
                         // Recursively apply calculation to portion after common subsequence
                         foreach (var section in Calculate(collection1, position1 + length, upper1, collection2, position2 + length, upper2, comparer, lcs))
@@ -65,13 +65,13 @@ namespace DiffLib
                     else
                     {
                         // Unable to find a match, so just return section as unmatched
-                        yield return new DiffSection(false, upper1 - lower1, upper2 - lower2);
+                        yield return new DiffSection(isMatch: false, lengthInCollection1: upper1 - lower1, lengthInCollection2: upper2 - lower2);
                     }
                 }
             }
 
             if (matchEnd > 0)
-                yield return new DiffSection(true, matchEnd, matchEnd);
+                yield return new DiffSection(isMatch: true, lengthInCollection1: matchEnd, lengthInCollection2: matchEnd);
         }
 
         private static int MatchStart<T>([NotNull, ItemCanBeNull] IList<T> collection1, int lower1, int upper1, [NotNull, ItemCanBeNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
