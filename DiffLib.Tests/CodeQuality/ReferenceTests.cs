@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -10,7 +9,7 @@ using NUnit.Framework;
 namespace DiffLib.Tests.CodeQuality
 {
 #if DEBUG
-    [TestFixture(Category = "QA")]
+    [TestFixture(Category = "QA"), PublicAPI]
     public class ReferenceTests : QaTestBase
     {
         public override IEnumerable<Assembly> AllAssemblies()

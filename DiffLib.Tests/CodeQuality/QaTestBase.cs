@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace DiffLib.Tests.CodeQuality
 {
+    [PublicAPI]
     public abstract class QaTestBase
     {
         [NotNull, ItemNotNull]

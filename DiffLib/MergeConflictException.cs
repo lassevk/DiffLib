@@ -26,30 +26,33 @@ namespace DiffLib
         /// <param name="right">
         /// The right side of the conflict.
         /// </param>
-        public MergeConflictException([CanBeNull] string message, [NotNull] IEnumerable<object> commonBase, [NotNull] IEnumerable<object> left, [NotNull] IEnumerable<object> right)
+        public MergeConflictException([NotNull] string message, [NotNull] IEnumerable<object> commonBase, [NotNull] IEnumerable<object> left, [NotNull] IEnumerable<object> right)
             : base(message)
         {
-            CommonBase = commonBase.ToArray();
-            Left = left.ToArray();
-            Right = right.ToArray();
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+
+            CommonBase = commonBase.ToArray() ?? throw new ArgumentNullException(nameof(commonBase));
+            Left = left.ToArray() ?? throw new ArgumentNullException(nameof(left));
+            Right = right.ToArray() ?? throw new ArgumentNullException(nameof(right));
         }
 
         /// <summary>
         /// The common base of the elements involved in the conflict.
         /// </summary>
-        [NotNull, ItemCanBeNull]
+        [NotNull, ItemCanBeNull, PublicAPI]
         public object[] CommonBase { get; }
 
         /// <summary>
         /// The left side of the conflict.
         /// </summary>
-        [NotNull, ItemCanBeNull]
+        [NotNull, ItemCanBeNull, PublicAPI]
         public object[] Left { get; }
 
         /// <summary>
         /// The right side of the conflict.
         /// </summary>
-        [NotNull, ItemCanBeNull]
+        [NotNull, ItemCanBeNull, PublicAPI]
         public object[] Right { get; }
     }
 }

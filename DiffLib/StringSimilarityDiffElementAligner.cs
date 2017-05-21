@@ -34,8 +34,10 @@ namespace DiffLib
 
         private static double StringSimilarity([CanBeNull] string element1, [CanBeNull] string element2)
         {
-            element1 = (element1 ?? String.Empty);
-            element2 = (element2 ?? String.Empty);
+            element1 = element1 ?? String.Empty;
+            element2 = element2 ?? String.Empty;
+
+            Assume.That(element1 != null && element2 != null);
 
             if (ReferenceEquals(element1, element2))
                 return 1.0;
@@ -45,7 +47,11 @@ namespace DiffLib
             if (element1.Length == 0 || element2.Length == 0)
                 return 0.0;
 
-            var diffSections = Diff.CalculateSections(element1.ToCharArray(), element2.ToCharArray()).ToArray();
+            var element1Array = element1.ToCharArray();
+            var element2Array = element2.ToCharArray();
+            Assume.That(element1Array != null && element2Array != null);
+
+            var diffSections = Diff.CalculateSections(element1Array, element2Array).ToArray();
             int matchLength = diffSections.Where(section => section.IsMatch).Sum(section => section.LengthInCollection1);
             return (matchLength * 2.0) / (element1.Length + element2.Length + 0.0);
         }
@@ -79,8 +85,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [NotNull]
-        public IEnumerable<DiffElement<string>> Align([NotNull] IList<string> collection1, int start1, int length1, [NotNull] IList<string> collection2, int start2, int length2)
+        public IEnumerable<DiffElement<string>> Align(IList<string> collection1, int start1, int length1, IList<string> collection2, int start2, int length2)
         {
             return _Aligner.Align(collection1, start1, length1, collection2, start2, length2);
         }

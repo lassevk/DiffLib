@@ -104,7 +104,7 @@ namespace DiffLib.Tests
         [TestCase("ABC12345678XYZ", "ABCklmnopqrXYZ", "---DDDDDDDDIIIIIIII---", TestName = "Degenerate, bigger match window than limit")]
         public void ElementSimilarityDiffElementAlignerTestCases(string s1, string s2, string expected)
         {
-            ElementSimilarity<char> aligner = delegate(char element1, char element2)
+            double aligner(char element1, char element2)
             {
                 if (element1 == element2)
                     return 1.0;
@@ -113,7 +113,7 @@ namespace DiffLib.Tests
                     return 0.75;
 
                 return 0.0;
-            };
+            }
 
             var sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
             var elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new ElementSimilarityDiffElementAligner<char>(aligner));

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using JetBrains.Annotations;
 
@@ -58,6 +57,7 @@ namespace DiffLib
                 throw new ArgumentNullException(nameof(conflictResolver));
 
             comparer = comparer ?? EqualityComparer<T>.Default;
+            Assume.That(comparer != null);
 
             return new Merge<T>(commonBase, left, right, aligner, conflictResolver, comparer);
 
