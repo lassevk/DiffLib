@@ -1,5 +1,5 @@
 @echo off
 
 set PROJECT=DiffLib
-set SUFFIX=-beta
-set CONFIGURATION=Debug
+set SUFFIX=
+set CONFIGURATION=Release
