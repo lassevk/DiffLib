@@ -50,7 +50,7 @@ namespace DiffLib.Tests
         [TestCase("1234567890", "1234890", "1234890", "1234890", TestName = "Both sides deleted")]
         [TestCase("1234567890", "12abc34567890", "1234567890", "12abc34567890", TestName = "Left side inserted")]
         [TestCase("1234567890", "1234567890", "12abc34567890", "12abc34567890", TestName = "Right side inserted")]
-        [TestCase("1234567890", "12abc34567890", "12klm34567890", "12abcklm34567890", "Both sides inserted at the same place, take left then right")]
+        [TestCase("1234567890", "12abc34567890", "12klm34567890", "12abcklm34567890", TestName = "Both sides inserted at the same place, take left then right")]
         [TestCase("1234567890", "123abc7890", "1237890", "123abc7890", TestName = "Left side modified, right side deleted, take left side")]
         [TestCase("1234567890" ,"123567890", "123x567890", "123x567890", TestName = "Left side deleted, right side modified, take left then right")]
         [TestCase("1234567890", "123a567890", "123b567890", "123ab567890", TestName = "Both side modified, take left then right")]
