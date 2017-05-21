@@ -50,9 +50,9 @@ namespace DiffLib.Tests
 
             CollectionAssert.AreEqual(new[]
             {
-                new DiffElement<int>(1, Option<int>.None, DiffOperation.Delete),
-                new DiffElement<int>(2, Option<int>.None, DiffOperation.Delete),
-                new DiffElement<int>(3, Option<int>.None, DiffOperation.Delete),
+                new DiffElement<int>(0, 1, null, Option<int>.None, DiffOperation.Delete),
+                new DiffElement<int>(1, 2, null, Option<int>.None, DiffOperation.Delete),
+                new DiffElement<int>(2, 3, null, Option<int>.None, DiffOperation.Delete),
             }, elements);
         }
 
@@ -73,9 +73,9 @@ namespace DiffLib.Tests
 
             CollectionAssert.AreEqual(new[]
             {
-                new DiffElement<int>(Option<int>.None, 1, DiffOperation.Insert),
-                new DiffElement<int>(Option<int>.None, 2, DiffOperation.Insert),
-                new DiffElement<int>(Option<int>.None, 3, DiffOperation.Insert),
+                new DiffElement<int>(null, Option<int>.None, 0, 1, DiffOperation.Insert),
+                new DiffElement<int>(null, Option<int>.None, 1, 2, DiffOperation.Insert),
+                new DiffElement<int>(null, Option<int>.None, 2, 3, DiffOperation.Insert),
             }, elements);
         }
     }
