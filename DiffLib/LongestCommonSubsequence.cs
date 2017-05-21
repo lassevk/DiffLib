@@ -43,7 +43,7 @@ namespace DiffLib
                 if (index1 + length >= upper1)
                     break;
 
-                var hashcode = _Collection1[index1]?.GetHashCode() ?? 0;
+                var hashcode = _Collection1[index1]?.GetHashCode(_Comparer) ?? 0;
 
                 HashcodeOccurance occurance;
                 if (!_HashCodes2.TryGetValue(hashcode, out occurance))
@@ -105,7 +105,7 @@ namespace DiffLib
                 _HashCodes2Upper = upper;
 
                 for (int index = lower; index < upper; index++)
-                    AddHashCode2(index, _Collection2[index]?.GetHashCode() ?? 0);
+                    AddHashCode2(index, _Collection2[index]?.GetHashCode(_Comparer) ?? 0);
 
                 return;
             }
@@ -113,12 +113,12 @@ namespace DiffLib
             while (_HashCodes2Lower > lower)
             {
                 _HashCodes2Lower--;
-                AddHashCode2(_HashCodes2Lower, _Collection2[_HashCodes2Lower]?.GetHashCode() ?? 0);
+                AddHashCode2(_HashCodes2Lower, _Collection2[_HashCodes2Lower]?.GetHashCode(_Comparer) ?? 0);
             }
 
             while (_HashCodes2Upper < upper)
             {
-                AddHashCode2(_HashCodes2Upper, _Collection2[_HashCodes2Upper]?.GetHashCode() ?? 0);
+                AddHashCode2(_HashCodes2Upper, _Collection2[_HashCodes2Upper]?.GetHashCode(_Comparer) ?? 0);
                 _HashCodes2Upper++;
             }
         }
