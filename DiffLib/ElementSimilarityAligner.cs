@@ -19,7 +19,7 @@ namespace DiffLib
         // is a recursive piece of code that can quickly balloon out of control, so
         // too big sections will take a long time to process. I will experiment more
         // with this number to see what is feasible.
-        private const int MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
+        private const int _MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd = 15;
 
         [NotNull]
         private readonly ElementSimilarity<T> _SimilarityFunc;
@@ -45,10 +45,7 @@ namespace DiffLib
         /// </exception>
         public ElementSimilarityDiffElementAligner([NotNull] ElementSimilarity<T> similarityFunc, double modificationThreshold = 0.3333)
         {
-            if (similarityFunc == null)
-                throw new ArgumentNullException(nameof(similarityFunc));
-
-            _SimilarityFunc = similarityFunc;
+            _SimilarityFunc = similarityFunc ?? throw new ArgumentNullException(nameof(similarityFunc));
             _ModificationThreshold = modificationThreshold;
         }
 
@@ -81,8 +78,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [NotNull]
-        public IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
+        public IEnumerable<DiffElement<T>> Align(IList<T> collection1, int start1, int length1, IList<T> collection2, int start2, int length2)
         {
             if (collection1 == null)
                 throw new ArgumentNullException(nameof(collection1));
@@ -105,7 +101,7 @@ namespace DiffLib
             // "Optimization", too big input-sets will have to be dropped for now, will revisit this
             // number in the future to see if I can bring it up, or possible that I don't need it,
             // but since this is a recursive solution the combinations could get big fast.
-            if (length1 + length2 > MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
+            if (length1 + length2 > _MaximumChangedSectionSizeBeforePuntingToDeletePlusAdd)
                 return new List<DiffElement<T>>();
 
             var nodes = new Dictionary<AlignmentKey, AlignmentNode>();

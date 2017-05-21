@@ -9,6 +9,8 @@ namespace DiffLib
         public static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer)
         {
             comparer = comparer ?? EqualityComparer<T>.Default;
+            Assume.That(comparer != null);
+
             return Calculate(collection1, 0, collection1.Count, collection2, 0, collection2.Count, comparer, new LongestCommonSubsequence<T>(collection1, collection2, comparer));
         }
 

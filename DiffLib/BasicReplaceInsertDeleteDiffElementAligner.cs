@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+
 using static System.Math;
 
 namespace DiffLib
@@ -45,8 +45,7 @@ namespace DiffLib
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
 
-        [NotNull]
-        public override IEnumerable<DiffElement<T>> Align([NotNull] IList<T> collection1, int start1, int length1, [NotNull] IList<T> collection2, int start2, int length2)
+        public override IEnumerable<DiffElement<T>> Align(IList<T> collection1, int start1, int length1, IList<T> collection2, int start2, int length2)
         {
             int replaceCount = Min(length1, length2);
             for (int index = 0; index < replaceCount; index++)

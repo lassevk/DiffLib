@@ -82,7 +82,10 @@ namespace DiffLib
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(Option<T> other)
         {
-            return EqualityComparer<T>.Default.Equals(_Value, other._Value) && HasValue == other.HasValue;
+            var equalityComparer = EqualityComparer<T>.Default;
+            Assume.That(equalityComparer != null);
+
+            return equalityComparer.Equals(_Value, other._Value) && HasValue == other.HasValue;
         }
 
         /// <summary>
@@ -97,7 +100,10 @@ namespace DiffLib
             if (!HasValue)
                 return false;
 
-            return EqualityComparer<T>.Default.Equals(_Value, other);
+            var equalityComparer = EqualityComparer<T>.Default;
+            Assume.That(equalityComparer != null);
+
+            return equalityComparer.Equals(_Value, other);
         }
 
         /// <summary>
@@ -147,7 +153,10 @@ namespace DiffLib
         {
             unchecked
             {
-                return (EqualityComparer<T>.Default.GetHashCode(_Value) * 397) ^ HasValue.GetHashCode();
+                var equalityComparer = EqualityComparer<T>.Default;
+                Assume.That(equalityComparer != null);
+
+                return (equalityComparer.GetHashCode(_Value) * 397) ^ HasValue.GetHashCode();
             }
         }
 
@@ -161,10 +170,15 @@ namespace DiffLib
         [NotNull]
         public override string ToString()
         {
-            if (!HasValue)
-                return string.Empty;
+            string result;
 
-            return _Value?.ToString() ?? string.Empty;
+            if (HasValue)
+                result = _Value?.ToString() ?? string.Empty;
+            else
+                result = string.Empty;
+
+            Assume.That(result != null);
+            return result;
         }
 
         /// <summary>

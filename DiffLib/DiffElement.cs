@@ -9,6 +9,7 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The type of elements from the two collections compared.
     /// </typeparam>
+    [PublicAPI]
     public struct DiffElement<T> : IEquatable<DiffElement<T>> 
     {
         /// <summary>
@@ -31,6 +32,7 @@ namespace DiffLib
         /// <param name="operation">
         /// A <see cref="DiffOperation"/> specifying how <paramref name="elementFromCollection1"/> corresponds to <paramref name="elementFromCollection2"/>.
         /// </param>
+        [PublicAPI]
         public DiffElement(int? elementIndexFromCollection1, Option<T> elementFromCollection1, 
             int? elementIndexFromCollection2, Option<T> elementFromCollection2, DiffOperation operation)
         {
@@ -44,12 +46,14 @@ namespace DiffLib
         /// <summary>
         /// Index of <see cref="ElementFromCollection1"/> in <c>Collection1</c>.
         /// </summary>
+        [PublicAPI]
         public int? ElementIndexFromCollection1 { get; }
 
         /// <summary>
         /// The aligned element from the first collection, or <see cref="Option{T}.None"/> if an element from the second collection could
         /// not be aligned with anything from the first.
         /// </summary>
+        [PublicAPI]
         public Option<T> ElementFromCollection1
         {
             get;
@@ -58,12 +62,14 @@ namespace DiffLib
         /// <summary>
         /// Index of <see cref="ElementFromCollection2"/> in <c>Collection2</c>.
         /// </summary>
+        [PublicAPI]
         public int? ElementIndexFromCollection2 { get; }
 
         /// <summary>
         /// The aligned element from the second collection, or <see cref="Option{T}.None"/> if an element from the first collection could
         /// not be aligned with anything from the second.
         /// </summary>
+        [PublicAPI]
         public Option<T> ElementFromCollection2
         {
             get;
@@ -72,6 +78,7 @@ namespace DiffLib
         /// <summary>
         /// A <see cref="DiffOperation"/> specifying how <see cref="ElementFromCollection1"/> corresponds to <see cref="ElementFromCollection2"/>.
         /// </summary>
+        [PublicAPI]
         public DiffOperation Operation
         {
             get;
@@ -84,6 +91,7 @@ namespace DiffLib
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
         /// <param name="other">An object to compare with this object.</param>
+        [PublicAPI]
         public bool Equals(DiffElement<T> other)
         {
             return 
@@ -101,6 +109,7 @@ namespace DiffLib
         /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
         /// </returns>
         /// <param name="obj">Another object to compare to. </param><filterpriority>2</filterpriority>
+        [PublicAPI]
         public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -114,6 +123,7 @@ namespace DiffLib
         /// <param name="element"></param>
         /// <param name="other"></param>
         /// <returns></returns>
+        [PublicAPI]
         public static bool operator ==(DiffElement<T> element, DiffElement<T> other)
         {
             return element.Equals(other);
@@ -125,6 +135,7 @@ namespace DiffLib
         /// <param name="element"></param>
         /// <param name="other"></param>
         /// <returns></returns>
+        [PublicAPI]
         public static bool operator !=(DiffElement<T> element, DiffElement<T> other)
         {
             return !element.Equals(other);
@@ -137,6 +148,7 @@ namespace DiffLib
         /// A 32-bit signed integer that is the hash code for this instance.
         /// </returns>
         /// <filterpriority>2</filterpriority>
+        [PublicAPI]
         public override int GetHashCode()
         {
             unchecked
@@ -157,6 +169,7 @@ namespace DiffLib
         /// A <see cref="T:System.String"/> containing a fully qualified type name.
         /// </returns>
         /// <filterpriority>2</filterpriority>
+        [PublicAPI]
         [NotNull]
         public override string ToString()
         {

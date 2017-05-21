@@ -24,6 +24,8 @@ using System;
 using System.Diagnostics;
 
 #pragma warning disable 1591
+// ReSharper disable CheckNamespace
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
