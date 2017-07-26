@@ -41,7 +41,13 @@ if errorlevel 1 goto error
 if errorlevel 1 goto error
 
 set VERSION=%year%.%month%.%day%.%tm%
-"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Clean,Rebuild /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
+"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Clean /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
+if errorlevel 1 goto error
+
+"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Rebuild /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
+if errorlevel 1 goto error
+
+"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Build /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
 if errorlevel 1 goto error
 
 set TESTDLL=%CD%\%PROJECT%.Tests\bin\%CONFIGURATION%\%PROJECT%.Tests.dll
