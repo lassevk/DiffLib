@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffLib", "DiffLib\DiffLib.csproj", "{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffLib", "DiffLib\DiffLib.csproj", "{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffLib.Tests", "DiffLib.Tests\DiffLib.Tests.csproj", "{16F500B7-F4BE-46D4-8443-2E6F653C3508}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{37D01333-8058-4DB9-B8D6-855F42914728}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.editorconfig = .editorconfig
 		DiffLib\DiffLib.nuspec = DiffLib\DiffLib.nuspec
 		EXAMPLES.md = EXAMPLES.md
 		LICENSE.md = LICENSE.md
@@ -23,21 +23,16 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-		ReleaseBinaries|Any CPU = ReleaseBinaries|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.ReleaseBinaries|Any CPU.ActiveCfg = Release|Any CPU
-		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.ReleaseBinaries|Any CPU.Build.0 = Release|Any CPU
 		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.ReleaseBinaries|Any CPU.ActiveCfg = ReleaseBinaries|Any CPU
-		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.ReleaseBinaries|Any CPU.Build.0 = ReleaseBinaries|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
