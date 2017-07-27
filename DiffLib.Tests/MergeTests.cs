@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-
-using JetBrains.Annotations;
 
 using NUnit.Framework;
 
+// ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable PossibleNullReferenceException
 
 namespace DiffLib.Tests
@@ -61,19 +59,6 @@ namespace DiffLib.Tests
         {
             var output = new string(Merge.Perform(commonBase.ToCharArray(), left.ToCharArray(), right.ToCharArray(), new BasicReplaceInsertDeleteDiffElementAligner<char>(), new TakeLeftThenRightMergeConflictResolver<char>()).ToArray());
             Assert.That(output, Is.EqualTo(expected));
-        }
-
-        [NotNull]
-        private List<string> StringToLines(string input)
-        {
-            var reader = new StringReader(input);
-            var result = new List<string>();
-
-            string line;
-            while ((line = reader.ReadLine()) != null)
-                result.Add(line);
-
-            return result;
         }
 
         private class AbortIfConflictResolver<T> : IMergeConflictResolver<T>
