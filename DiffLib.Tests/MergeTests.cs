@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+
+using JetBrains.Annotations;
 
 using NUnit.Framework;
 
@@ -57,6 +61,40 @@ namespace DiffLib.Tests
         {
             var output = new string(Merge.Perform(commonBase.ToCharArray(), left.ToCharArray(), right.ToCharArray(), new BasicReplaceInsertDeleteDiffElementAligner<char>(), new TakeLeftThenRightMergeConflictResolver<char>()).ToArray());
             Assert.That(output, Is.EqualTo(expected));
+        }
+
+        [NotNull]
+        private List<string> StringToLines(string input)
+        {
+            var reader = new StringReader(input);
+            var result = new List<string>();
+
+            string line;
+            while ((line = reader.ReadLine()) != null)
+                result.Add(line);
+
+            return result;
+        }
+
+        private class AbortIfConflictResolver<T> : IMergeConflictResolver<T>
+        {
+            public IEnumerable<T> Resolve(IList<T> commonBase, IList<T> left, IList<T> right)
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        [Test]
+        public void Perform_DistinctAdditions_ShouldNotProduceAConflict()
+        {
+            var common = "{}".ToCharArray();
+            var left = "{a}".ToCharArray();
+            var right = "{} {b}".ToCharArray();
+            var expected = "{a} {b}".ToCharArray();
+
+            var result = Merge.Perform(common, left, right, new DiffOptions { EnablePatienceOptimization = false }, new BasicReplaceInsertDeleteDiffElementAligner<char>(), new AbortIfConflictResolver<char>()).ToList();
+
+            CollectionAssert.AreEqual(expected, result);
         }
     }
 }

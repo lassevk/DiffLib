@@ -5,37 +5,39 @@ namespace DiffLib
 {
     internal static class LongestCommonSubsectionDiff
     {
-        [NotNull]
-        public static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer)
+        [NotNull, PublicAPI]
+        public static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] DiffOptions options, [NotNull] IEqualityComparer<T> comparer)
         {
-            comparer = comparer ?? EqualityComparer<T>.Default;
-            Assume.That(comparer != null);
-
-            return Calculate(collection1, 0, collection1.Count, collection2, 0, collection2.Count, comparer, new LongestCommonSubsequence<T>(collection1, collection2, comparer));
+            return Calculate(collection1, 0, collection1.Count, collection2, 0, collection2.Count, comparer, new LongestCommonSubsequence<T>(collection1, collection2, comparer), options);
         }
 
         [NotNull]
-        private static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, int lower1, int upper1, [NotNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer, [NotNull] LongestCommonSubsequence<T> lcs)
+        private static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, int lower1, int upper1, [NotNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer, [NotNull] LongestCommonSubsequence<T> lcs, [NotNull] DiffOptions options)
         {
             // Short-circuit recursive call when nothing left (usually because match was found at the very start or end of a subsection
             if (lower1 == upper1 && lower2 == upper2)
                 yield break;
 
             // Patience modification, let's find matching elements at both ends and remove those from LCS consideration
-            int matchStart = MatchStart(collection1, lower1, upper1, collection2, lower2, upper2, comparer);
+            int matchEnd = 0;
 
-            if (matchStart > 0)
+            if (options.EnablePatienceOptimization)
             {
-                yield return new DiffSection(isMatch: true, lengthInCollection1: matchStart, lengthInCollection2: matchStart);
-                lower1 += matchStart;
-                lower2 += matchStart;
-            }
+                int matchStart = MatchStart(collection1, lower1, upper1, collection2, lower2, upper2, comparer);
+                if (matchStart > 0)
+                {
+                    yield return new DiffSection(isMatch: true, lengthInCollection1: matchStart, lengthInCollection2: matchStart);
 
-            int matchEnd = MatchEnd(collection1, lower1, upper1, collection2, lower2, upper2, comparer);
-            if (matchEnd > 0)
-            {
-                upper1 -= matchEnd;
-                upper2 -= matchEnd;
+                    lower1 += matchStart;
+                    lower2 += matchStart;
+                }
+
+                matchEnd = MatchEnd(collection1, lower1, upper1, collection2, lower2, upper2, comparer);
+                if (matchEnd > 0)
+                {
+                    upper1 -= matchEnd;
+                    upper2 -= matchEnd;
+                }
             }
 
             if (lower1 < upper1 || lower2 < upper2)
@@ -54,14 +56,14 @@ namespace DiffLib
                     if (lcs.Find(lower1, upper1, lower2, upper2, out position1, out position2, out length))
                     {
                         // Recursively apply calculation to portion before common subsequence
-                        foreach (var section in Calculate(collection1, lower1, position1, collection2, lower2, position2, comparer, lcs))
+                        foreach (var section in Calculate(collection1, lower1, position1, collection2, lower2, position2, comparer, lcs, options))
                             yield return section;
 
                         // Output match
                         yield return new DiffSection(isMatch: true, lengthInCollection1: length, lengthInCollection2: length);
 
                         // Recursively apply calculation to portion after common subsequence
-                        foreach (var section in Calculate(collection1, position1 + length, upper1, collection2, position2 + length, upper2, comparer, lcs))
+                        foreach (var section in Calculate(collection1, position1 + length, upper1, collection2, position2 + length, upper2, comparer, lcs, options))
                             yield return section;
                     }
                     else
