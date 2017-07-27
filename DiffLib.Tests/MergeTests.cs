@@ -12,37 +12,10 @@ namespace DiffLib.Tests
     [TestFixture]
     public class MergeTests
     {
-        //[Test]
-        //public void Perform_AllEmptyCollections_ReturnsEmptyResults()
-        //{
-        //    var output = Merge.Perform(new int[0], new int[0], new int[0], new BasicInsertDeleteDiffElementAligner<int>(), new TakeLeftThenRightMergeConflictResolver<int>());
-        //    CollectionAssert.IsEmpty(output);
-        //}
-
-        //[Test]
-        //public void Perform_EmptyCommonBaseLeftSideInserts_ReturnsLeftSideContent()
-        //{
-        //    var commonBase = new int[0];
-        //    var left = new[] { 1, 2, 3 };
-        //    var right = new int[0];
-
-        //    var output = Merge.Perform(commonBase, left, right, new BasicInsertDeleteDiffElementAligner<int>(), new TakeLeftThenRightMergeConflictResolver<int>());
-        //    CollectionAssert.AreEqual(output, left);
-
-        //}
-
-        //[Test]
-        //public void Perform_EmptyCommonBaseRightSideInserts_ReturnsRightSideContent()
-        //{
-        //    var commonBase = new int[0];
-        //    var left = new int[0];
-        //    var right = new[] { 1, 2, 3 };
-
-        //    var output = Merge.Perform(commonBase, left, right, new BasicInsertDeleteDiffElementAligner<int>(), new TakeLeftThenRightMergeConflictResolver<int>());
-        //    CollectionAssert.AreEqual(output, right);
-        //}
-
         [Test]
+        [TestCase("", "", "", "", TestName = "Nothing to merge")]
+        [TestCase("", "123", "", "123", TestName = "Only left side inserts")]
+        [TestCase("", "", "123", "123", TestName = "Only right side inserts")]
         [TestCase("1234567890", "1234567890", "1234567890", "1234567890", TestName = "Nothing changed")]
         [TestCase("1234567890", "12a4567890", "123456b890", "12a456b890", TestName = "Both sides replaced to same")]
         [TestCase("1234567890", "123abc4567890", "1234567klm890", "123abc4567klm890", TestName = "Both sides inserted in separate places")]
