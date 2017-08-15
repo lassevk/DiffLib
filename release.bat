@@ -17,7 +17,7 @@ if errorlevel 1 goto error
 
 if "%SIGNINGKEYS%" == "" goto setup
 
-set /A year=1%date:~6,4%-100
+set /A year=1%date:~6,4%-10000
 set /A month=1%date:~3,2%-100
 set /A day=1%date:~0,2%-100
 set /A tm=%time:~0,2%%time:~3,2%
