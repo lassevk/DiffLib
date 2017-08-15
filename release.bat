@@ -2,16 +2,12 @@
 
 setlocal
 
-for /f "tokens=*" %%i in ('which msbuild.exe') do set MSBUILD_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which nunit3-console.exe') do set NUNIT_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which dotcover.exe') do set DOTCOVER_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which nuget.exe') do set NUGET_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which git.exe') do set GIT_CONSOLE=%%i
+for /f "tokens=*" %%i in ('where nunit3-console.exe') do set NUNIT_CONSOLE=%%i
+for /f "tokens=*" %%i in ('where dotcover.exe') do set DOTCOVER_CONSOLE=%%i
+for /f "tokens=*" %%i in ('where git.exe') do set GIT_CONSOLE=%%i
 
-if "%MSBUILD_CONSOLE%" == "" goto NO_MSBUILD
 if "%DOTCOVER_CONSOLE%" == "" goto NO_DOTCOVER
 if "%NUNIT_CONSOLE%" == "" goto NO_NUNIT
-if "%NUGET_CONSOLE%" == "" goto NO_NUGET
 if "%GIT_CONSOLE%" == "" goto NO_GIT
 
 call project.bat
@@ -21,9 +17,9 @@ if errorlevel 1 goto error
 
 if "%SIGNINGKEYS%" == "" goto setup
 
-set /A year=%date:~6,4%
-set /A month=%date:~3,2%
-set /A day=%date:~0,2%
+set /A year=1%date:~6,4%-100
+set /A month=1%date:~3,2%-100
+set /A day=1%date:~0,2%-100
 set /A tm=%time:~0,2%%time:~3,2%
 
 copy "%SIGNINGKEYS%\Lasse V. Karlsen Private.snk" "%PROJECT%\Lasse V. Karlsen.snk"
@@ -37,17 +33,11 @@ for /d %%f in (*.*) do (
 )
 if errorlevel 1 goto error
 
-"%NUGET_CONSOLE%" restore
+nuget restore
 if errorlevel 1 goto error
 
 set VERSION=%year%.%month%.%day%.%tm%
-"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Clean /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
-if errorlevel 1 goto error
-
-"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Rebuild /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
-if errorlevel 1 goto error
-
-"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Build /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY"
+msbuild "%PROJECT%.sln" /target:Clean,Rebuild /p:Configuration=%CONFIGURATION% /p:Version=%VERSION%%SUFFIX% /p:AssemblyVersion=%VERSION% /p:FileVersion=%VERSION% /p:DefineConstants="%CONFIGURATION%;USE_RELEASE_KEY" /verbosity:minimal
 if errorlevel 1 goto error
 
 set TESTDLL=%CD%\%PROJECT%.Tests\bin\%CONFIGURATION%\%PROJECT%.Tests.dll
@@ -67,23 +57,15 @@ if "%PUSHYESNO%" == "y" GOTO PUSH
 exit /B 0
 
 :PUSH
-"%NUGET_CONSOLE%" push %PROJECT%.%VERSION%%SUFFIX%.nupkg -Source https://www.nuget.org/api/v2/package
+nuget push %PROJECT%.%VERSION%%SUFFIX%.nupkg -Source https://www.nuget.org/api/v2/package
 if errorlevel 1 goto error
 "%GIT_CONSOLE%" tag version/%VERSION%%SUFFIX%
 if errorlevel 1 goto error
 start "" "https://www.nuget.org/packages/%PROJECT%/"
 exit /B 0
 
-:NO_NUGET
-echo Unable to locate 'nuget.exe', is it on the path?
-goto error
-
 :NO_DOTCOVER
 echo Unable to locate 'dotcover.exe', is it on the path?
-goto error
-
-:NO_MSBUILD
-echo Unable to locate 'msbuild.exe', is it on the path?
 goto error
 
 :NO_NUNIT

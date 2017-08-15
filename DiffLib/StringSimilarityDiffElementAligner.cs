@@ -51,7 +51,7 @@ namespace DiffLib
             var element2Array = element2.ToCharArray();
             Assume.That(element1Array != null && element2Array != null);
 
-            var diffSections = Diff.CalculateSections(element1Array, element2Array).ToArray();
+            var diffSections = Diff.CalculateSections(element1Array, element2Array, new DiffOptions()).ToArray();
             int matchLength = diffSections.Where(section => section.IsMatch).Sum(section => section.LengthInCollection1);
             return (matchLength * 2.0) / (element1.Length + element2.Length + 0.0);
         }

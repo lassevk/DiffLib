@@ -2,15 +2,11 @@
 
 setlocal
 
-for /f "tokens=*" %%i in ('which msbuild.exe') do set MSBUILD_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which nunit3-console.exe') do set NUNIT_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which dotcover.exe') do set DOTCOVER_CONSOLE=%%i
-for /f "tokens=*" %%i in ('which nuget.exe') do set NUGET_CONSOLE=%%i
+for /f "tokens=*" %%i in ('where nunit3-console.exe') do set NUNIT_CONSOLE=%%i
+for /f "tokens=*" %%i in ('where dotcover.exe') do set DOTCOVER_CONSOLE=%%i
 
-if "%MSBUILD_CONSOLE%" == "" goto NO_MSBUILD
 if "%DOTCOVER_CONSOLE%" == "" goto NO_DOTCOVER
 if "%NUNIT_CONSOLE%" == "" goto NO_NUNIT
-if "%NUGET_CONSOLE%" == "" goto NO_NUGET
 
 
 call project.bat
@@ -24,10 +20,10 @@ for /d %%f in (*.*) do (
 )
 if errorlevel 1 goto error
 
-"%NUGET_CONSOLE%" restore "%PROJECT%.sln"
+nuget restore
 if errorlevel 1 goto error
 
-"%MSBUILD_CONSOLE%" "%PROJECT%.sln" /target:Clean,Rebuild /p:Configuration=%CONFIGURATION%
+msbuild "%PROJECT%.sln" /target:Clean,Rebuild /p:Configuration=%CONFIGURATION% /verbosity:minimal
 if errorlevel 1 goto error
 
 set TESTDLL=%CD%\%PROJECT%.Tests\bin\%CONFIGURATION%\%PROJECT%.Tests.dll
@@ -36,16 +32,8 @@ if errorlevel 1 goto error
 
 exit /B 0
 
-:NO_NUGET
-echo Unable to locate 'nuget.exe', is it on the path?
-goto error
-
 :NO_DOTCOVER
 echo Unable to locate 'dotcover.exe', is it on the path?
-goto error
-
-:NO_MSBUILD
-echo Unable to locate 'msbuild.exe', is it on the path?
 goto error
 
 :NO_NUNIT

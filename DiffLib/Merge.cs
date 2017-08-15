@@ -20,7 +20,7 @@ namespace DiffLib
         [NotNull]
         private readonly List<DiffElement<T>> _DiffCommonBaseToRight;
 
-        public Merge([NotNull] IList<T> commonBase, [NotNull] IList<T> left, [NotNull] IList<T> right, [NotNull] IDiffElementAligner<T> aligner, [NotNull] IMergeConflictResolver<T> conflictResolver, [NotNull] IEqualityComparer<T> comparer)
+        public Merge([NotNull] IList<T> commonBase, [NotNull] IList<T> left, [NotNull] IList<T> right, [NotNull] IDiffElementAligner<T> aligner, [NotNull] IMergeConflictResolver<T> conflictResolver, [NotNull] IEqualityComparer<T> comparer, [NotNull] DiffOptions diffOptions)
         {
             if (commonBase == null)
                 throw new ArgumentNullException(nameof(commonBase));
@@ -32,18 +32,20 @@ namespace DiffLib
                 throw new ArgumentNullException(nameof(aligner));
             if (comparer == null)
                 throw new ArgumentNullException(nameof(comparer));
+            if (diffOptions == null)
+                throw new ArgumentNullException(nameof(diffOptions));
 
             _ConflictResolver = conflictResolver ?? throw new ArgumentNullException(nameof(conflictResolver));
 
-            var diffCommonBaseToLeft = Diff.AlignElements(commonBase, left, Diff.CalculateSections(commonBase, left, comparer), aligner).ToList();
+            var diffCommonBaseToLeft = Diff.AlignElements(commonBase, left, Diff.CalculateSections(commonBase, left, diffOptions, comparer), aligner).ToList();
             Assume.That(diffCommonBaseToLeft != null);
             _DiffCommonBaseToLeft = diffCommonBaseToLeft;
 
-            var diffCommonBaseToRight = Diff.AlignElements(commonBase, right, Diff.CalculateSections(commonBase, right, comparer), aligner).ToList();
+            var diffCommonBaseToRight = Diff.AlignElements(commonBase, right, Diff.CalculateSections(commonBase, right, diffOptions, comparer), aligner).ToList();
             Assume.That(diffCommonBaseToRight != null);
             _DiffCommonBaseToRight = diffCommonBaseToRight;
 
-            var mergeSections = Diff.CalculateSections(diffCommonBaseToLeft, diffCommonBaseToRight, new DiffSectionMergeComparer<T>(comparer)).ToList();
+            var mergeSections = Diff.CalculateSections(diffCommonBaseToLeft, diffCommonBaseToRight, diffOptions, new DiffSectionMergeComparer<T>(comparer)).ToList();
             Assume.That(mergeSections != null);
             _MergeSections = mergeSections;
         }

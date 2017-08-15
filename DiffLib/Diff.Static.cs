@@ -7,6 +7,7 @@ namespace DiffLib
     /// <summary>
     /// Static API class for DiffLib.
     /// </summary>
+    [PublicAPI]
     public static class Diff
     {
         /// <summary>
@@ -36,16 +37,54 @@ namespace DiffLib
         [NotNull]
         public static IEnumerable<DiffSection> CalculateSections<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer = null)
         {
+            return CalculateSections(collection1, collection2, new DiffOptions(), comparer);
+        }
+
+        /// <summary>
+        /// Calculate sections of differences from the two collections using the specified comparer.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of elements in the two collections.
+        /// </typeparam>
+        /// <param name="collection1">
+        /// The first collection.
+        /// </param>
+        /// <param name="collection2">
+        /// The second collection.
+        /// </param>
+        /// <param name="options">
+        /// A <see cref="DiffOptions"/> object specifying options to the diff algorithm, or <c>null</c> if defaults should be used.
+        /// </param>
+        /// <param name="comparer">
+        /// The <see cref="IEqualityComparer{T}"/> to use when determining if there is a match between
+        /// <paramref name="collection1"/> and <paramref name="collection2"/>.
+        /// </param>
+        /// <returns>
+        /// A collection of <see cref="DiffSection"/> values, containing the sections found.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <para><paramref name="collection1"/> is <c>null</c>.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="collection2"/> is <c>null</c>.</para>
+        /// </exception>
+        [NotNull]
+        public static IEnumerable<DiffSection> CalculateSections<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] DiffOptions options, [CanBeNull] IEqualityComparer<T> comparer = null)
+        {
             if (collection1 == null)
                 throw new ArgumentNullException(nameof(collection1));
             if (collection2 == null)
                 throw new ArgumentNullException(nameof(collection2));
 
-            return LongestCommonSubsectionDiff.Calculate(collection1, collection2, comparer ?? EqualityComparer<T>.Default);
+            comparer = comparer ?? EqualityComparer<T>.Default;
+            Assume.That(comparer != null);
+
+            options = options ?? new DiffOptions();
+
+            return LongestCommonSubsectionDiff.Calculate(collection1, collection2, options, comparer);
         }
 
         /// <summary>
-        /// Align the sections found by <see cref="CalculateSections{T}"/> by trying to find out, within each section, which elements from one collection line up the best with
+        /// Align the sections found by <see cref="CalculateSections{T}(IList{T},IList{T},DiffOptions,IEqualityComparer{T})"/> by trying to find out, within each section, which elements from one collection line up the best with
         /// elements from the other collection.
         /// </summary>
         /// <typeparam name="T">
@@ -58,7 +97,7 @@ namespace DiffLib
         /// The second collection.
         /// </param>
         /// <param name="diffSections">
-        /// The section values found by <see cref="CalculateSections{T}"/>.
+        /// The section values found by <see cref="CalculateSections{T}(IList{T},IList{T},DiffOptions,IEqualityComparer{T})"/>.
         /// </param>
         /// <param name="aligner">
         /// An alignment strategy, provided through the <see cref="IDiffElementAligner{T}"/> interface.
