@@ -11,21 +11,20 @@ do.
 
 Details:
 
-* Language: C# 7.0
-* Runtime: .NET Standard 1.0
+* Language: C# 12.0
+* Runtimes:
+  * .NET Standard 1.0
+  * .NET Standard 2.0
+  * .NET Standard 2.1
+  * .NET 5
+  * .NET 6
+  * .NET 7
+  * .NET 8
 
 Repository and project location: [GitHub][1]  
 Maintainer: [Lasse V. Karlsen][2]
 
 ---
-
-# GPG Signing
-
-If you want to import my GPG key to verify my commits you can do it
-using one of these commands:
-
-    git cat-file blob pubkey | gpg --import
-    git cat-file blob pubkey | gpg2 --import
 
   [1]: https://github.com/lassevk/DiffLib
   [2]: mailto:lasse@vkarlsen.no
