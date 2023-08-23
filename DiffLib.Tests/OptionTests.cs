@@ -18,7 +18,7 @@ namespace DiffLib.Tests
 
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var x = o.Value;
+                int x = o.Value;
             });
         }
 
@@ -53,7 +53,7 @@ namespace DiffLib.Tests
 
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var x = (int)o;
+                int x = (int)o;
             });
         }
 
@@ -70,7 +70,7 @@ namespace DiffLib.Tests
         {
             var o = default(Option<int>);
 
-            var output = o.Equals(o);
+            bool output = o.Equals(o);
 
             Assert.That(output, Is.True);
         }
@@ -80,7 +80,7 @@ namespace DiffLib.Tests
         {
             var o = new Option<int>(10);
 
-            var output = o.Equals(o);
+            bool output = o.Equals(o);
 
             Assert.That(output, Is.True);
         }
@@ -91,7 +91,7 @@ namespace DiffLib.Tests
             var o1 = default(Option<int>);
             var o2 = default(Option<int>);
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.True);
         }
@@ -102,7 +102,7 @@ namespace DiffLib.Tests
             var o1 = new Option<int>(10);
             var o2 = new Option<int>(10);
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.True);
         }
@@ -113,7 +113,7 @@ namespace DiffLib.Tests
             var o1 = new Option<int>(10);
             var o2 = default(Option<int>);
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.False);
         }
@@ -124,7 +124,7 @@ namespace DiffLib.Tests
             var o1 = default(Option<int>);
             var o2 = new Option<int>(10);
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.False);
         }
@@ -135,7 +135,7 @@ namespace DiffLib.Tests
             var o1 = new Option<int>(10);
             var o2 = new Option<int>(15);
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.False);
         }
@@ -144,9 +144,9 @@ namespace DiffLib.Tests
         public void Equals_ConstructedOptionToSameValue_ReturnsTrue()
         {
             var o1 = new Option<int>(10);
-            var o2 = 10;
+            int o2 = 10;
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.True);
         }
@@ -155,9 +155,9 @@ namespace DiffLib.Tests
         public void Equals_ConstructedOptionToDifferentValue_ReturnsFalse()
         {
             var o1 = new Option<int>(10);
-            var o2 = 15;
+            int o2 = 15;
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.False);
         }
@@ -166,9 +166,9 @@ namespace DiffLib.Tests
         public void Equals_DefaultdOptionToValue_ReturnsFalse()
         {
             var o1 = default(Option<int>);
-            var o2 = 10;
+            int o2 = 10;
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.False);
         }
@@ -178,7 +178,7 @@ namespace DiffLib.Tests
         {
             var o1 = new Option<int>(10);
 
-            var output = o1.Equals("string");
+            bool output = o1.Equals("string");
 
             Assert.That(output, Is.False);
         }
@@ -188,7 +188,7 @@ namespace DiffLib.Tests
         {
             var o1 = new Option<int>(10);
 
-            var output = o1.Equals(null);
+            bool output = o1.Equals(null);
 
             Assert.That(output, Is.False);
         }
@@ -197,9 +197,9 @@ namespace DiffLib.Tests
         public void Equals_ConstructedOptionToBoxedCopyOfItself_ReturnsTrue()
         {
             var o1 = new Option<int>(10);
-            var o2 = (object)o1;
+            object o2 = (object)o1;
 
-            var output = o1.Equals(o2);
+            bool output = o1.Equals(o2);
 
             Assert.That(output, Is.True);
         }
@@ -210,7 +210,7 @@ namespace DiffLib.Tests
             var o = new Option<int>(10);
 
 #pragma warning disable 1718
-            var output = o == o;
+            bool output = o == o;
 #pragma warning restore 1718
             Assert.That(output, Is.True);
         }
@@ -221,7 +221,7 @@ namespace DiffLib.Tests
             var o = new Option<int>(10);
 
 #pragma warning disable 1718
-            var output = o != o;
+            bool output = o != o;
 #pragma warning restore 1718
 
             Assert.That(output, Is.False);
@@ -233,8 +233,8 @@ namespace DiffLib.Tests
             var o1 = new Option<int>(10);
             var o2 = new Option<int>(10);
 
-            var h1 = o1.GetHashCode();
-            var h2 = o2.GetHashCode();
+            int h1 = o1.GetHashCode();
+            int h2 = o2.GetHashCode();
 
             Assert.That(h1, Is.EqualTo(h2));
         }
@@ -245,8 +245,8 @@ namespace DiffLib.Tests
             var o1 = new Option<int>(10);
             var o2 = new Option<int>(15);
 
-            var h1 = o1.GetHashCode();
-            var h2 = o2.GetHashCode();
+            int h1 = o1.GetHashCode();
+            int h2 = o2.GetHashCode();
 
             Assert.That(h1, Is.Not.EqualTo(h2));
         }
@@ -257,8 +257,8 @@ namespace DiffLib.Tests
             var o1 = new Option<int>(0);
             var o2 = default(Option<int>);
 
-            var h1 = o1.GetHashCode();
-            var h2 = o2.GetHashCode();
+            int h1 = o1.GetHashCode();
+            int h2 = o2.GetHashCode();
 
             Assert.That(h1, Is.Not.EqualTo(h2));
         }
@@ -268,7 +268,7 @@ namespace DiffLib.Tests
         {
             var o = new Option<int>(10);
 
-            var s = o.ToString();
+            string s = o.ToString();
 
             Assert.That(s, Is.EqualTo("10"));
         }
@@ -278,7 +278,7 @@ namespace DiffLib.Tests
         {
             var o = new Option<string>(null);
 
-            var s = o.ToString();
+            string s = o.ToString();
 
             Assert.That(s, Is.SameAs(string.Empty));
         }
@@ -288,7 +288,7 @@ namespace DiffLib.Tests
         {
             var o = default(Option<string>);
 
-            var s = o.ToString();
+            string s = o.ToString();
 
             Assert.That(s, Is.SameAs(string.Empty));
         }

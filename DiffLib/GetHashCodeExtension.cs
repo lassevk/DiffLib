@@ -1,15 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace DiffLib
-{
-    internal static class GetHashCodeExtension
-    {
-        internal static int GetHashCode<T>(this T? instance, IEqualityComparer<T> equalityComparer)
-        {
-            if (instance == null)
-                return 0;
+namespace DiffLib;
 
-            return equalityComparer.GetHashCode(instance);
-        }
-    }
+internal static class GetHashCodeExtension
+{
+    internal static int GetHashCode<T>(this T? instance, IEqualityComparer<T> equalityComparer)
+        => instance == null ? 0 : equalityComparer.GetHashCode(instance);
 }

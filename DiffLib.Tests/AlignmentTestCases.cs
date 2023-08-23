@@ -45,9 +45,9 @@ namespace DiffLib.Tests
         [TestCase("ABCDEFGH", "A1B2C3D4E5F6G7H" ,"-I-I-I-I-I-I-I-", TestName = "Degenerate, multiple insertions")]
         public void BasicInsertDeleteDiffElementAlignerTestCases(string s1, string s2, string expected)
         {
-            var sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
-            var elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new BasicInsertDeleteDiffElementAligner<char>());
-            var output = GetElementOperationsAsAString(elements);
+            IEnumerable<DiffSection> sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
+            IEnumerable<DiffElement<char>> elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new BasicInsertDeleteDiffElementAligner<char>());
+            string output = GetElementOperationsAsAString(elements);
 
             Assert.That(output, Is.EqualTo(expected));
         }
@@ -74,9 +74,9 @@ namespace DiffLib.Tests
         [TestCase("ABCDEF", "ABxcyDEF", "--RII---", TestName = "Modify one character in the middle + insert on both sides")]
         public void BasicReplaceInsertDeleteDiffElementAlignerTestCases(string s1, string s2, string expected)
         {
-            var sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
-            var elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new BasicReplaceInsertDeleteDiffElementAligner<char>());
-            var output = GetElementOperationsAsAString(elements);
+            IEnumerable<DiffSection> sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
+            IEnumerable<DiffElement<char>> elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new BasicReplaceInsertDeleteDiffElementAligner<char>());
+            string output = GetElementOperationsAsAString(elements);
 
             Assert.That(output, Is.EqualTo(expected));
         }
@@ -115,9 +115,9 @@ namespace DiffLib.Tests
                 return 0.0;
             }
 
-            var sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
-            var elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new ElementSimilarityDiffElementAligner<char>(aligner));
-            var output = GetElementOperationsAsAString(elements);
+            IEnumerable<DiffSection> sections = Diff.CalculateSections(s1.ToCharArray(), s2.ToCharArray());
+            IEnumerable<DiffElement<char>> elements = Diff.AlignElements(s1.ToCharArray(), s2.ToCharArray(), sections, new ElementSimilarityDiffElementAligner<char>(aligner));
+            string output = GetElementOperationsAsAString(elements);
 
             Assert.That(output, Is.EqualTo(expected));
         }

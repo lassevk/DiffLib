@@ -95,15 +95,15 @@ namespace DiffLib.Tests
         [Test]
         public void Diff_WithNullElements()
         {
-            var collection1 = new[]
-            {
-                "Line 1", "Line 2", null, "Line 3", "Line 4",
-            };
+            string[] collection1 = new[]
+                                   {
+                                       "Line 1", "Line 2", null, "Line 3", "Line 4",
+                                   };
 
-            var collection2 = new[]
-            {
-                "Line 1", null, "Line 2", "Line 4",
-            };
+            string[] collection2 = new[]
+                                   {
+                                       "Line 1", null, "Line 2", "Line 4",
+                                   };
 
             DiffSection[] sections = Diff.CalculateSections(collection1, collection2).ToArray();
 
@@ -120,18 +120,18 @@ namespace DiffLib.Tests
         [Test]
         public void Align_WithNullElements()
         {
-            var collection1 = new[]
-            {
-                "Line 1", "Line 2", null, "Line 3", "Line 4",
-            };
+            string[] collection1 = new[]
+                                   {
+                                       "Line 1", "Line 2", null, "Line 3", "Line 4",
+                                   };
 
-            var collection2 = new[]
-            {
-                "Line 1", null, "Line 2", "Line 4",
-            };
+            string[] collection2 = new[]
+                                   {
+                                       "Line 1", null, "Line 2", "Line 4",
+                                   };
 
             DiffSection[] sections = Diff.CalculateSections(collection1, collection2).ToArray();
-            var elements = Diff.AlignElements(collection1, collection2, sections, new StringSimilarityDiffElementAligner());
+            IEnumerable<DiffElement<string>> elements = Diff.AlignElements(collection1, collection2, sections, new StringSimilarityDiffElementAligner());
 
             CollectionAssert.AreEqual(new[]
             {

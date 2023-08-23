@@ -30,7 +30,7 @@ namespace DiffLib.Tests
         [TestCase("1234567890", "123a567890", "123b567890", "123ab567890", TestName = "Both side modified, take left then right")]
         public void Perform_TestCases(string commonBase, string left, string right, string expected)
         {
-            var output = new string(Merge.Perform(commonBase.ToCharArray(), left.ToCharArray(), right.ToCharArray(), new BasicReplaceInsertDeleteDiffElementAligner<char>(), new TakeLeftThenRightMergeConflictResolver<char>()).ToArray());
+            string output = new string(Merge.Perform(commonBase.ToCharArray(), left.ToCharArray(), right.ToCharArray(), new BasicReplaceInsertDeleteDiffElementAligner<char>(), new TakeLeftThenRightMergeConflictResolver<char>()).ToArray());
             Assert.That(output, Is.EqualTo(expected));
         }
 
@@ -45,10 +45,10 @@ namespace DiffLib.Tests
         [Test]
         public void Perform_DistinctAdditions_ShouldNotProduceAConflict()
         {
-            var common = "{}".ToCharArray();
-            var left = "{a}".ToCharArray();
-            var right = "{} {b}".ToCharArray();
-            var expected = "{a} {b}".ToCharArray();
+            char[] common = "{}".ToCharArray();
+            char[] left = "{a}".ToCharArray();
+            char[] right = "{} {b}".ToCharArray();
+            char[] expected = "{a} {b}".ToCharArray();
 
             var result = Merge.Perform(common, left, right, new DiffOptions { EnablePatienceOptimization = false }, new BasicReplaceInsertDeleteDiffElementAligner<char>(), new AbortIfConflictResolver<char>()).ToList();
 
