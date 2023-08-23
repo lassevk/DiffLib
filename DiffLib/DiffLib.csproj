@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0;net5.0;net6.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
     <Description>A Diff implementation for .NET Standard 1.0 and up, written in C#.</Description>
     <Copyright>Copyright (C) Lasse V. Karlsen 2015-2017, All rights reserved</Copyright>
     <PackageProjectUrl>https://github.com/lassevk/DiffLib</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lassevk/DiffLib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseUrl>https://github.com/lassevk/DiffLib/blob/master/LICENSE.md</PackageLicenseUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>Lasse V. Karlsen.snk</AssemblyOriginatorKeyFile>
@@ -16,6 +15,7 @@
     <Version>1.0.0</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_0,JETBRAINS_ANNOTATIONS</DefineConstants>
