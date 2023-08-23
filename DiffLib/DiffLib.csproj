@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;net35;net45;net46;net47</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
     <Description>A Diff implementation for .NET Standard 1.0 and up, written in C#.</Description>
     <Copyright>Copyright (C) Lasse V. Karlsen 2015-2017, All rights reserved</Copyright>
     <PackageProjectUrl>https://github.com/lassevk/DiffLib</PackageProjectUrl>
@@ -18,18 +17,18 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_0,JETBRAINS_ANNOTATIONS</DefineConstants>
     <DocumentationFile>bin\Debug\netstandard1.0\DiffLib.xml</DocumentationFile>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard1.0\DiffLib.xml</DocumentationFile>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
-
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
+  </ItemGroup>
 </Project>
