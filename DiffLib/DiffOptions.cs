@@ -1,13 +1,8 @@
-﻿using System;
-
-using JetBrains.Annotations;
-
-namespace DiffLib
+﻿namespace DiffLib
 {
     /// <summary>
     /// This class is used to specify options to the diff algorithm.
     /// </summary>
-    [PublicAPI]
     public class DiffOptions
     {
         /// <summary>

@@ -22,7 +22,7 @@ namespace DiffLib
 
         public bool Equals(AlignmentKey other) => Position1 == other.Position1 && Position2 == other.Position2;
 
-        public override bool Equals(object obj) => !ReferenceEquals(null, obj) && (obj is AlignmentKey && Equals((AlignmentKey)obj));
+        public override bool Equals(object? obj) => obj is AlignmentKey key && this.Equals(key);
 
         public override int GetHashCode() => unchecked((Position1 * 397) ^ Position2);
     }

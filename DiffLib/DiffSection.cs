@@ -1,5 +1,4 @@
 using System;
-using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -76,11 +75,11 @@ namespace DiffLib
         /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
         /// </returns>
         /// <param name="obj">Another object to compare to. </param><filterpriority>2</filterpriority>
-        public override bool Equals([CanBeNull] object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
                 return false;
-            return obj is DiffSection && Equals((DiffSection)obj);
+            return obj is DiffSection section && Equals(section);
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace DiffLib
         {
             unchecked
             {
-                var hashCode = IsMatch.GetHashCode();
+                int hashCode = IsMatch.GetHashCode();
                 hashCode = (hashCode * 397) ^ LengthInCollection1;
                 hashCode = (hashCode * 397) ^ LengthInCollection2;
                 return hashCode;
@@ -108,9 +107,7 @@ namespace DiffLib
         /// <param name="section2"></param>
         /// <returns></returns>
         public static bool operator ==(DiffSection section1, DiffSection section2)
-        {
-            return section1.Equals(section2);
-        }
+            => section1.Equals(section2);
 
         /// <summary>
         /// Implements the inequality operator.
@@ -119,9 +116,7 @@ namespace DiffLib
         /// <param name="section2"></param>
         /// <returns></returns>
         public static bool operator !=(DiffSection section1, DiffSection section2)
-        {
-            return !section1.Equals(section2);
-        }
+            => !section1.Equals(section2);
 
         /// <summary>
         /// Returns the fully qualified type name of this instance.
@@ -130,7 +125,6 @@ namespace DiffLib
         /// A <see cref="T:System.String"/> containing a fully qualified type name.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        [NotNull]
         public override string ToString()
         {
             if (IsMatch)

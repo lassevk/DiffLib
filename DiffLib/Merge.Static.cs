@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using JetBrains.Annotations;
-
 namespace DiffLib
 {
     /// <summary>
     /// Static API class for the merge portion of DiffLib.
     /// </summary>
-    [PublicAPI]
     public static class Merge
     {
         /// <summary>
@@ -43,8 +40,7 @@ namespace DiffLib
         /// <exception cref="MergeConflictException">
         /// The <paramref name="conflictResolver"/> threw a <see cref="MergeConflictException"/> to indicate a failure to resolve a conflict.
         /// </exception>
-        [NotNull, ItemCanBeNull]
-        public static IEnumerable<T> Perform<T>([NotNull] IList<T> commonBase, [NotNull] IList<T> left, [NotNull] IList<T> right, [NotNull] IDiffElementAligner<T> aligner, [NotNull] IMergeConflictResolver<T> conflictResolver, [CanBeNull] IEqualityComparer<T> comparer = null)
+        public static IEnumerable<T?> Perform<T>(IList<T?> commonBase, IList<T?> left, IList<T?> right, IDiffElementAligner<T?> aligner, IMergeConflictResolver<T?> conflictResolver, IEqualityComparer<T?>? comparer = null)
         {
             return Perform(commonBase, left, right, new DiffOptions(), aligner, conflictResolver, comparer);
         }
@@ -84,8 +80,7 @@ namespace DiffLib
         /// <exception cref="MergeConflictException">
         /// The <paramref name="conflictResolver"/> threw a <see cref="MergeConflictException"/> to indicate a failure to resolve a conflict.
         /// </exception>
-        [NotNull, ItemCanBeNull]
-        public static IEnumerable<T> Perform<T>([NotNull] IList<T> commonBase, [NotNull] IList<T> left, [NotNull] IList<T> right, [CanBeNull] DiffOptions diffOptions, [NotNull] IDiffElementAligner<T> aligner, [NotNull] IMergeConflictResolver<T> conflictResolver, [CanBeNull] IEqualityComparer<T> comparer = null)
+        public static IEnumerable<T?> Perform<T>(IList<T?> commonBase, IList<T?> left, IList<T?> right, DiffOptions? diffOptions, IDiffElementAligner<T?> aligner, IMergeConflictResolver<T?> conflictResolver, IEqualityComparer<T?>? comparer = null)
         {
             if (commonBase == null)
                 throw new ArgumentNullException(nameof(commonBase));
@@ -99,11 +94,9 @@ namespace DiffLib
                 throw new ArgumentNullException(nameof(conflictResolver));
 
             diffOptions = diffOptions ?? new DiffOptions();
-            comparer = comparer ?? EqualityComparer<T>.Default;
-            Assume.That(comparer != null);
+            comparer = comparer ?? EqualityComparer<T?>.Default;
 
             return new Merge<T>(commonBase, left, right, aligner, conflictResolver, comparer, diffOptions);
-
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -11,7 +10,7 @@ namespace DiffLib
     /// <typeparam name="T"></typeparam>
     public struct Option<T> : IEquatable<Option<T>>, IEquatable<T>
     {
-        private readonly T _Value;
+        private readonly T? _Value;
 
         /// <summary>
         /// Constructs a new instance of <see cref="Option{T}"/> with the specified value.
@@ -19,7 +18,7 @@ namespace DiffLib
         /// <param name="value">
         /// The value of this <see cref="Option{T}"/>.
         /// </param>
-        public Option([CanBeNull] T value)
+        public Option(T? value)
         {
             _Value = value;
             HasValue = true;
@@ -28,8 +27,7 @@ namespace DiffLib
         /// <summary>
         /// Gets the value of this <see cref="Option{T}"/>.
         /// </summary>
-        [CanBeNull]
-        public T Value
+        public T? Value
         {
             get
             {
@@ -43,7 +41,7 @@ namespace DiffLib
         /// <summary>
         /// Gets the <see cref="Value"/>  of this <see cref="Option{T}"/>, or the default value for <typeparamref name="T"/> if it has no value.
         /// </summary>
-        public T GetValueOrDefault() => HasValue ? Value : default(T);
+        public T? GetValueOrDefault() => HasValue ? Value : default(T);
 
         /// <summary>
         /// Gets whether this <see cref="Option{T}"/> has a value.
@@ -58,7 +56,7 @@ namespace DiffLib
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static implicit operator Option<T>(T value)
+        public static implicit operator Option<T>(T? value)
         {
             return new Option<T>(value);
         }
@@ -68,7 +66,7 @@ namespace DiffLib
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        public static explicit operator T(Option<T> option)
+        public static explicit operator T?(Option<T> option)
         {
             return option.Value;
         }
@@ -82,8 +80,7 @@ namespace DiffLib
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(Option<T> other)
         {
-            var equalityComparer = EqualityComparer<T>.Default;
-            Assume.That(equalityComparer != null);
+            EqualityComparer<T?> equalityComparer = EqualityComparer<T?>.Default;
 
             return equalityComparer.Equals(_Value, other._Value) && HasValue == other.HasValue;
         }
@@ -95,13 +92,12 @@ namespace DiffLib
         /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
         /// <param name="other">An object to compare with this object.</param>
-        public bool Equals(T other)
+        public bool Equals(T? other)
         {
             if (!HasValue)
                 return false;
 
-            var equalityComparer = EqualityComparer<T>.Default;
-            Assume.That(equalityComparer != null);
+            EqualityComparer<T?> equalityComparer = EqualityComparer<T?>.Default;
 
             return equalityComparer.Equals(_Value, other);
         }
@@ -113,11 +109,11 @@ namespace DiffLib
         /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
         /// </returns>
         /// <param name="obj">Another object to compare to. </param><filterpriority>2</filterpriority>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
                 return false;
-            return obj is Option<T> && Equals((Option<T>)obj);
+            return obj is Option<T> option && Equals(option);
         }
 
         /// <summary>
@@ -127,9 +123,7 @@ namespace DiffLib
         /// <param name="other"></param>
         /// <returns></returns>
         public static bool operator ==(Option<T> option, Option<T> other)
-        {
-            return option.Equals(other);
-        }
+            => option.Equals(other);
 
         /// <summary>
         /// Implements inequality operator.
@@ -138,9 +132,7 @@ namespace DiffLib
         /// <param name="other"></param>
         /// <returns></returns>
         public static bool operator !=(Option<T> option, Option<T> other)
-        {
-            return !option.Equals(other);
-        }
+            => !option.Equals(other);
 
         /// <summary>
         /// Returns the hash code for this instance.
@@ -153,10 +145,9 @@ namespace DiffLib
         {
             unchecked
             {
-                var equalityComparer = EqualityComparer<T>.Default;
-                Assume.That(equalityComparer != null);
+                EqualityComparer<T?> equalityComparer = EqualityComparer<T?>.Default;
 
-                return (equalityComparer.GetHashCode(_Value) * 397) ^ HasValue.GetHashCode();
+                return (_Value is null ? 0 : equalityComparer.GetHashCode(_Value) * 397) ^ HasValue.GetHashCode();
             }
         }
 
@@ -167,7 +158,6 @@ namespace DiffLib
         /// A <see cref="T:System.String"/> containing a fully qualified type name.
         /// </returns>
         /// <filterpriority>2</filterpriority>
-        [NotNull]
         public override string ToString()
         {
             string result;
@@ -177,7 +167,6 @@ namespace DiffLib
             else
                 result = string.Empty;
 
-            Assume.That(result != null);
             return result;
         }
 

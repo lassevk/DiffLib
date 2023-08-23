@@ -2,7 +2,7 @@
 {
     internal class HashcodeOccurance
     {
-        public HashcodeOccurance(int position, HashcodeOccurance next)
+        public HashcodeOccurance(int position, HashcodeOccurance? next)
         {
             Position = position;
             Next = next;
@@ -13,7 +13,7 @@
             get;
         }
 
-        public HashcodeOccurance Next
+        public HashcodeOccurance? Next
         {
             get;
             set;

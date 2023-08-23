@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -16,7 +15,6 @@ namespace DiffLib
     /// </remarks>
     public class StringSimilarityDiffElementAligner : IDiffElementAligner<string>
     {
-        [NotNull]
         private readonly IDiffElementAligner<string> _Aligner;
 
         /// <summary>
@@ -32,12 +30,10 @@ namespace DiffLib
             _Aligner = new ElementSimilarityDiffElementAligner<string>(StringSimilarity, modificationThreshold);
         }
 
-        private static double StringSimilarity([CanBeNull] string element1, [CanBeNull] string element2)
+        private static double StringSimilarity(string? element1, string? element2)
         {
-            element1 = element1 ?? String.Empty;
-            element2 = element2 ?? String.Empty;
-
-            Assume.That(element1 != null && element2 != null);
+            element1 ??= String.Empty;
+            element2 ??= String.Empty;
 
             if (ReferenceEquals(element1, element2))
                 return 1.0;
@@ -49,7 +45,6 @@ namespace DiffLib
 
             var element1Array = element1.ToCharArray();
             var element2Array = element2.ToCharArray();
-            Assume.That(element1Array != null && element2Array != null);
 
             var diffSections = Diff.CalculateSections(element1Array, element2Array, new DiffOptions()).ToArray();
             int matchLength = diffSections.Where(section => section.IsMatch).Sum(section => section.LengthInCollection1);
@@ -85,9 +80,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        public IEnumerable<DiffElement<string>> Align(IList<string> collection1, int start1, int length1, IList<string> collection2, int start2, int length2)
-        {
-            return _Aligner.Align(collection1, start1, length1, collection2, start2, length2);
-        }
+        public IEnumerable<DiffElement<string?>> Align(IList<string?> collection1, int start1, int length1, IList<string?> collection2, int start2, int length2)
+            => _Aligner.Align(collection1, start1, length1, collection2, start2, length2);
     }
 }

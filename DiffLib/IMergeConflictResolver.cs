@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using JetBrains.Annotations;
+﻿using System.Collections.Generic;
 
 namespace DiffLib
 {
@@ -12,7 +9,6 @@ namespace DiffLib
     /// <typeparam name="T">
     /// The type of elements in the collections being merged.
     /// </typeparam>
-    [PublicAPI]
     public interface IMergeConflictResolver<T>
     {
         /// <summary>
@@ -42,7 +38,6 @@ namespace DiffLib
         /// <para>The cases the resolved will be asked to handle are modify vs. modify (both sides modified, both common, left and right will have content),
         /// modify vs. delete (one side modified, the other deleted, common and the side that modified will have data, the other side will be empty).</para>
         /// </remarks>
-        [NotNull, ItemCanBeNull, PublicAPI]
-        IEnumerable<T> Resolve([NotNull, ItemCanBeNull] IList<T> commonBase, [NotNull, ItemCanBeNull] IList<T> left, [NotNull, ItemCanBeNull] IList<T> right);
+        IEnumerable<T?> Resolve(IList<T?> commonBase, IList<T?> left, IList<T?> right);
     }
 }

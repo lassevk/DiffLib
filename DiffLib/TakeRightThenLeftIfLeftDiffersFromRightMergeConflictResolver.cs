@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using JetBrains.Annotations;
 
 namespace DiffLib
 {
@@ -15,7 +12,7 @@ namespace DiffLib
     /// </typeparam>
     public class TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver<T> : IMergeConflictResolver<T>
     {
-        private readonly IEqualityComparer<T> _EqualityComparer;
+        private readonly IEqualityComparer<T?> _EqualityComparer;
 
         /// <summary>
         /// Constructs a new instance of <see cref="TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver{T}"/> using the specified <paramref name="equalityComparer"/>.
@@ -24,13 +21,13 @@ namespace DiffLib
         /// The <see cref="IEqualityComparer{T}"/> to use when determining if elements of the left side of a conflict matches those on the right side. If
         /// <c>null</c> then <see cref="EqualityComparer{T}.Default"/> is used.
         /// </param>
-        public TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver([CanBeNull] IEqualityComparer<T> equalityComparer = null)
+        public TakeRightThenLeftIfLeftDiffersFromRightMergeConflictResolver(IEqualityComparer<T?>? equalityComparer = null)
         {
-            _EqualityComparer = equalityComparer ?? EqualityComparer<T>.Default;
+            _EqualityComparer = equalityComparer ?? EqualityComparer<T?>.Default;
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> Resolve(IList<T> commonBase, IList<T> left, IList<T> right)
+        public IEnumerable<T?> Resolve(IList<T?> commonBase, IList<T?> left, IList<T?> right)
         {
             foreach (var item in right)
                 yield return item;

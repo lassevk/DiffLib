@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using JetBrains.Annotations;
-
 namespace DiffLib
 {
     /// <summary>
@@ -26,7 +24,7 @@ namespace DiffLib
         /// <param name="right">
         /// The right side of the conflict.
         /// </param>
-        public MergeConflictException([NotNull] string message, [NotNull] IEnumerable<object> commonBase, [NotNull] IEnumerable<object> left, [NotNull] IEnumerable<object> right)
+        public MergeConflictException(string message, IEnumerable<object?> commonBase, IEnumerable<object?> left, IEnumerable<object?> right)
             : base(message)
         {
             if (message == null)
@@ -40,19 +38,16 @@ namespace DiffLib
         /// <summary>
         /// The common base of the elements involved in the conflict.
         /// </summary>
-        [NotNull, ItemCanBeNull, PublicAPI]
-        public object[] CommonBase { get; }
+        public object?[] CommonBase { get; }
 
         /// <summary>
         /// The left side of the conflict.
         /// </summary>
-        [NotNull, ItemCanBeNull, PublicAPI]
-        public object[] Left { get; }
+        public object?[] Left { get; }
 
         /// <summary>
         /// The right side of the conflict.
         /// </summary>
-        [NotNull, ItemCanBeNull, PublicAPI]
-        public object[] Right { get; }
+        public object?[] Right { get; }
     }
 }
