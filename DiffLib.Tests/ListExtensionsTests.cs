@@ -14,15 +14,11 @@ namespace DiffLib.Tests
     {
         [Test]
         public void Mutate_NullTarget_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => ListExtensions.MutateToBeLike(null, new int[0]));
-        }
+            => Assert.Throws<ArgumentNullException>(() => ListExtensions.MutateToBeLike(null, Array.Empty<int>()));
 
         [Test]
         public void Mutate_NullSource_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => ListExtensions.MutateToBeLike(new int[0], null));
-        }
+            => Assert.Throws<ArgumentNullException>(() => ListExtensions.MutateToBeLike(Array.Empty<int>(), null));
 
         [Test]
         [TestCase("123456789", "123456789")]
@@ -37,7 +33,7 @@ namespace DiffLib.Tests
         public void Mutate_TestCases(string target, string source)
         {
             var targetChars = target.ToCharArray().ToList();
-            var sourceChars = source.ToCharArray();
+            char[] sourceChars = source.ToCharArray();
 
             targetChars.MutateToBeLike(sourceChars);
 

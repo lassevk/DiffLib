@@ -46,7 +46,7 @@ namespace DiffLib.Tests
             };
             IList<int> collection2 = new List<int>();
 
-            var elements = aligner.Align(collection1, 0, collection1.Count, collection2, 0, collection2.Count).ToArray();
+            DiffElement<int>[] elements = aligner.Align(collection1, 0, collection1.Count, collection2, 0, collection2.Count).ToArray();
 
             CollectionAssert.AreEqual(new[]
             {
@@ -69,7 +69,7 @@ namespace DiffLib.Tests
                 3
             };
 
-            var elements = aligner.Align(collection1, 0, collection1.Count, collection2, 0, collection2.Count).ToArray();
+            DiffElement<int>[] elements = aligner.Align(collection1, 0, collection1.Count, collection2, 0, collection2.Count).ToArray();
 
             CollectionAssert.AreEqual(new[]
             {

@@ -27,23 +27,23 @@ namespace DiffLib.Tests
         [Test]
         public void Align_NoDifferences_ReturnsPerfectlyAlignedElements()
         {
-            var c1 = new[]
-            {
-                "Line 1",
-                "Line 2",
-                "Line 3"
-            };
+            string[] c1 = new[]
+                          {
+                              "Line 1",
+                              "Line 2",
+                              "Line 3"
+                          };
 
-            var c2 = new[]
-            {
-                "Line 1",
-                "Line 2",
-                "Line 3"
-            };
+            string[] c2 = new[]
+                          {
+                              "Line 1",
+                              "Line 2",
+                              "Line 3"
+                          };
 
             var aligner = new StringSimilarityDiffElementAligner();
 
-            var elements = aligner.Align(c1, 0, c1.Length, c2, 0, c2.Length).ToArray();
+            DiffElement<string>[] elements = aligner.Align(c1, 0, c1.Length, c2, 0, c2.Length).ToArray();
 
             CollectionAssert.AreEqual(new[]
             {
@@ -56,25 +56,25 @@ namespace DiffLib.Tests
         [Test]
         public void Align_MinorDifferencesInMiddleLine_ReturnsPerfectlyAlignedElements()
         {
-            var c1 = new[]
-            {
-                "Line 1",
-                "Line 2",
-                null,
-                "Line 3"
-            };
+            string[] c1 = new[]
+                          {
+                              "Line 1",
+                              "Line 2",
+                              null,
+                              "Line 3"
+                          };
 
-            var c2 = new[]
-            {
-                "Line 1",
-                "Line+2",
-                null,
-                "Line 3"
-            };
+            string[] c2 = new[]
+                          {
+                              "Line 1",
+                              "Line+2",
+                              null,
+                              "Line 3"
+                          };
 
             var aligner = new StringSimilarityDiffElementAligner();
 
-            var elements = aligner.Align(c1, 0, c1.Length, c2, 0, c2.Length).ToArray();
+            DiffElement<string>[] elements = aligner.Align(c1, 0, c1.Length, c2, 0, c2.Length).ToArray();
 
             CollectionAssert.AreEqual(new[]
             {
@@ -88,23 +88,23 @@ namespace DiffLib.Tests
         [Test]
         public void Align_MajorDifferencesInMiddleLine_ReturnsPerfectlyAlignedElements()
         {
-            var c1 = new[]
-            {
-                "Line 1",
-                "Line 2",
-                "Line 3"
-            };
+            string[] c1 = new[]
+                          {
+                              "Line 1",
+                              "Line 2",
+                              "Line 3"
+                          };
 
-            var c2 = new[]
-            {
-                "Line 1",
-                "Something else",
-                "Line 3"
-            };
+            string[] c2 = new[]
+                          {
+                              "Line 1",
+                              "Something else",
+                              "Line 3"
+                          };
 
             var aligner = new StringSimilarityDiffElementAligner();
 
-            var elements = aligner.Align(c1, 0, c1.Length, c2, 0, c2.Length).ToArray();
+            DiffElement<string>[] elements = aligner.Align(c1, 0, c1.Length, c2, 0, c2.Length).ToArray();
 
             CollectionAssert.AreEqual(new[]
             {

@@ -1,22 +1,21 @@
-﻿namespace DiffLib
+﻿namespace DiffLib;
+
+internal class HashcodeOccurance
 {
-    internal class HashcodeOccurance
+    public HashcodeOccurance(int position, HashcodeOccurance? next)
     {
-        public HashcodeOccurance(int position, HashcodeOccurance? next)
-        {
-            Position = position;
-            Next = next;
-        }
+        Position = position;
+        Next = next;
+    }
 
-        public int Position
-        {
-            get;
-        }
+    public int Position
+    {
+        get;
+    }
 
-        public HashcodeOccurance? Next
-        {
-            get;
-            set;
-        }
+    public HashcodeOccurance? Next
+    {
+        get;
+        set;
     }
 }

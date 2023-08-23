@@ -38,8 +38,8 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(position1, position2);
             var key2 = new AlignmentKey(position3, position4);
 
-            var hashcode1 = key1.GetHashCode();
-            var hashcode2 = key2.GetHashCode();
+            int hashcode1 = key1.GetHashCode();
+            int hashcode2 = key2.GetHashCode();
 
             Assert.That(hashcode1, Is.Not.EqualTo(hashcode2));
         }
@@ -50,8 +50,8 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(10, 20);
             var key2 = new AlignmentKey(10, 20);
 
-            var hashcode1 = key1.GetHashCode();
-            var hashcode2 = key2.GetHashCode();
+            int hashcode1 = key1.GetHashCode();
+            int hashcode2 = key2.GetHashCode();
 
             Assert.That(hashcode1, Is.EqualTo(hashcode2));
         }
@@ -65,7 +65,7 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(position1, position2);
             var key2 = new AlignmentKey(position3, position4);
 
-            var output = key1.Equals(key2);
+            bool output = key1.Equals(key2);
 
             Assert.That(output, Is.False);
         }
@@ -76,7 +76,7 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(10, 20);
             var key2 = new AlignmentKey(10, 20);
 
-            var output = key1.Equals(key2);
+            bool output = key1.Equals(key2);
 
             Assert.That(output, Is.True);
         }
@@ -90,7 +90,7 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(position1, position2);
             var key2 = new AlignmentKey(position3, position4);
 
-            var output = key1.Equals((object)key2);
+            bool output = key1.Equals((object)key2);
 
             Assert.That(output, Is.False);
         }
@@ -101,7 +101,7 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(10, 20);
             var key2 = new AlignmentKey(10, 20);
 
-            var output = key1.Equals((object)key2);
+            bool output = key1.Equals((object)key2);
 
             Assert.That(output, Is.True);
         }
@@ -111,7 +111,7 @@ namespace DiffLib.Tests
         {
             var key1 = new AlignmentKey(10, 20);
 
-            var output = key1.Equals(null);
+            bool output = key1.Equals(null);
 
             Assert.That(output, Is.False);
         }
@@ -122,7 +122,7 @@ namespace DiffLib.Tests
             var key1 = new AlignmentKey(10, 20);
 
             // ReSharper disable once SuspiciousTypeConversion.Global
-            var output = key1.Equals("string");
+            bool output = key1.Equals("string");
 
             Assert.That(output, Is.False);
         }
