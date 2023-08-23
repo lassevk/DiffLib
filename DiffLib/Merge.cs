@@ -115,7 +115,11 @@ internal class Merge<T> : IEnumerable<T?>
                     case DiffOperation.Insert:
                         break;
                     case DiffOperation.Delete:
+#if NETSTANDARD1_0
+                        return new T[0];
+#else
                         return Array.Empty<T>();
+#endif
                     case DiffOperation.Replace:
                     case DiffOperation.Modify:
                         return new[] { rightSide };
@@ -132,11 +136,19 @@ internal class Merge<T> : IEnumerable<T?>
                 switch (rightOp)
                 {
                     case DiffOperation.Match:
+#if NETSTANDARD1_0
+                        return new T[0];
+#else
                         return Array.Empty<T>();
+#endif
                     case DiffOperation.Insert:
                         break;
                     case DiffOperation.Delete:
+#if NETSTANDARD1_0
+                        return new T[0];
+#else
                         return Array.Empty<T>();
+#endif
                     case DiffOperation.Replace:
                     case DiffOperation.Modify:
                         return _ConflictResolver.Resolve(new[] { commonBase }, new T[0], new[] { rightSide });

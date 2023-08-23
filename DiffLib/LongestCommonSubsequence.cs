@@ -49,10 +49,8 @@ internal class LongestCommonSubsequence<T>
                     continue;
 
                 // Don't bother with this if it doesn't match at the Nth element
-                // ReSharper disable AssignNullToNotNullAttribute
                 if (!_Comparer.Equals(_Collection1[index1 + length], _Collection2[index2 + length]))
                     continue;
-                // ReSharper restore AssignNullToNotNullAttribute
 
                 int matchLength = CountSimilarElements(index1, upper1, index2, upper2);
                 if (matchLength > length)
