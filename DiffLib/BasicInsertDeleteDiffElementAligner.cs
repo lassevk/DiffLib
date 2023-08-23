@@ -41,7 +41,7 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        public virtual IEnumerable<DiffElement<T>> Align(IList<T> collection1, int start1, int length1, IList<T> collection2, int start2, int length2)
+        public virtual IEnumerable<DiffElement<T?>> Align(IList<T?> collection1, int start1, int length1, IList<T?> collection2, int start2, int length2)
         {
             if (collection1 == null)
                 throw new ArgumentNullException(nameof(collection1));
@@ -49,10 +49,10 @@ namespace DiffLib
                 throw new ArgumentNullException(nameof(collection2));
 
             for (int index = 0; index < length1; index++)
-                yield return new DiffElement<T>(start1 + index, collection1[start1 + index], null, Option<T>.None, DiffOperation.Delete);
+                yield return new DiffElement<T?>(start1 + index, collection1[start1 + index], null, Option<T?>.None, DiffOperation.Delete);
 
             for (int index = 0; index < length2; index++)
-                yield return new DiffElement<T>(null, Option<T>.None, start2 + index, collection2[start2 + index], DiffOperation.Insert);
+                yield return new DiffElement<T?>(null, Option<T?>.None, start2 + index, collection2[start2 + index], DiffOperation.Insert);
         }
     }
 }

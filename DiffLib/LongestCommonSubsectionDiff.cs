@@ -1,18 +1,13 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace DiffLib
 {
     internal static class LongestCommonSubsectionDiff
     {
-        [NotNull, PublicAPI]
-        public static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] DiffOptions options, [NotNull] IEqualityComparer<T> comparer)
-        {
-            return Calculate(collection1, 0, collection1.Count, collection2, 0, collection2.Count, comparer, new LongestCommonSubsequence<T>(collection1, collection2, comparer), options);
-        }
+        public static IEnumerable<DiffSection> Calculate<T>(IList<T?> collection1, IList<T?> collection2, DiffOptions options, IEqualityComparer<T?> comparer)
+            => Calculate(collection1, 0, collection1.Count, collection2, 0, collection2.Count, comparer, new LongestCommonSubsequence<T>(collection1, collection2, comparer), options);
 
-        [NotNull]
-        private static IEnumerable<DiffSection> Calculate<T>([NotNull] IList<T> collection1, int lower1, int upper1, [NotNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer, [NotNull] LongestCommonSubsequence<T> lcs, [NotNull] DiffOptions options)
+        private static IEnumerable<DiffSection> Calculate<T>(IList<T?> collection1, int lower1, int upper1, IList<T?> collection2, int lower2, int upper2, IEqualityComparer<T?> comparer, LongestCommonSubsequence<T> lcs, DiffOptions options)
         {
             // Short-circuit recursive call when nothing left (usually because match was found at the very start or end of a subsection
             if (lower1 == upper1 && lower2 == upper2)
@@ -78,7 +73,7 @@ namespace DiffLib
                 yield return new DiffSection(isMatch: true, lengthInCollection1: matchEnd, lengthInCollection2: matchEnd);
         }
 
-        private static int MatchStart<T>([NotNull, ItemCanBeNull] IList<T> collection1, int lower1, int upper1, [NotNull, ItemCanBeNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
+        private static int MatchStart<T>(IList<T?> collection1, int lower1, int upper1, IList<T?> collection2, int lower2, int upper2, IEqualityComparer<T?> comparer)
         {
             int count = 0;
 
@@ -94,7 +89,7 @@ namespace DiffLib
             return count;
         }
 
-        private static int MatchEnd<T>([NotNull, ItemCanBeNull] IList<T> collection1, int lower1, int upper1, [NotNull, ItemCanBeNull] IList<T> collection2, int lower2, int upper2, [NotNull] IEqualityComparer<T> comparer)
+        private static int MatchEnd<T>(IList<T?> collection1, int lower1, int upper1, IList<T?> collection2, int lower2, int upper2, IEqualityComparer<T?> comparer)
         {
             int count = 0;
 

@@ -3,24 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using JetBrains.Annotations;
-
 namespace DiffLib
 {
-    internal class Merge<T> : IEnumerable<T>
+    internal class Merge<T> : IEnumerable<T?>
     {
-        [NotNull]
-        private readonly IMergeConflictResolver<T> _ConflictResolver;
-        [NotNull]
+        private readonly IMergeConflictResolver<T?> _ConflictResolver;
         private readonly List<DiffSection> _MergeSections;
+        private readonly List<DiffElement<T?>> _DiffCommonBaseToLeft;
+        private readonly List<DiffElement<T?>> _DiffCommonBaseToRight;
 
-        [NotNull]
-        private readonly List<DiffElement<T>> _DiffCommonBaseToLeft;
-
-        [NotNull]
-        private readonly List<DiffElement<T>> _DiffCommonBaseToRight;
-
-        public Merge([NotNull] IList<T> commonBase, [NotNull] IList<T> left, [NotNull] IList<T> right, [NotNull] IDiffElementAligner<T> aligner, [NotNull] IMergeConflictResolver<T> conflictResolver, [NotNull] IEqualityComparer<T> comparer, [NotNull] DiffOptions diffOptions)
+        public Merge(IList<T?> commonBase, IList<T?> left, IList<T?> right, IDiffElementAligner<T?> aligner, IMergeConflictResolver<T?> conflictResolver, IEqualityComparer<T?> comparer, DiffOptions diffOptions)
         {
             if (commonBase == null)
                 throw new ArgumentNullException(nameof(commonBase));
@@ -38,19 +30,16 @@ namespace DiffLib
             _ConflictResolver = conflictResolver ?? throw new ArgumentNullException(nameof(conflictResolver));
 
             var diffCommonBaseToLeft = Diff.AlignElements(commonBase, left, Diff.CalculateSections(commonBase, left, diffOptions, comparer), aligner).ToList();
-            Assume.That(diffCommonBaseToLeft != null);
             _DiffCommonBaseToLeft = diffCommonBaseToLeft;
 
             var diffCommonBaseToRight = Diff.AlignElements(commonBase, right, Diff.CalculateSections(commonBase, right, diffOptions, comparer), aligner).ToList();
-            Assume.That(diffCommonBaseToRight != null);
             _DiffCommonBaseToRight = diffCommonBaseToRight;
 
-            var mergeSections = Diff.CalculateSections(diffCommonBaseToLeft, diffCommonBaseToRight, diffOptions, new DiffSectionMergeComparer<T>(comparer)).ToList();
-            Assume.That(mergeSections != null);
+            var mergeSections = Diff.CalculateSections(diffCommonBaseToLeft!, diffCommonBaseToRight!, diffOptions, new DiffSectionMergeComparer<T>(comparer)).ToList();
             _MergeSections = mergeSections;
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<T?> GetEnumerator()
         {
             int leftIndex = 0;
             int rightIndex = 0;
@@ -73,8 +62,7 @@ namespace DiffLib
             }
         }
 
-        [NotNull, ItemCanBeNull]
-        private IEnumerable<T> ProcessNonMatchingElementsFromBothSides(DiffSection section, int rightIndex, int leftIndex)
+        private IEnumerable<T?> ProcessNonMatchingElementsFromBothSides(DiffSection section, int rightIndex, int leftIndex)
         {
             if (section.LengthInCollection1 == 0)
             {
@@ -90,40 +78,38 @@ namespace DiffLib
             }
             else
             {
-                var leftSide = new List<T>();
+                var leftSide = new List<T?>();
                 for (int index = 0; index < section.LengthInCollection1; index++)
                     leftSide.Add(_DiffCommonBaseToLeft[leftIndex + index].ElementFromCollection2.Value);
 
-                var rightSide = new List<T>();
+                var rightSide = new List<T?>();
                 for (int index = 0; index < section.LengthInCollection2; index++)
                     rightSide.Add(_DiffCommonBaseToRight[rightIndex + index].ElementFromCollection2.Value);
 
-                foreach (var item in _ConflictResolver.Resolve(new List<T>(), leftSide, rightSide))
+                foreach (var item in _ConflictResolver.Resolve(new List<T?>(), leftSide, rightSide))
                     yield return item;
             }
         }
 
-        [NotNull, ItemCanBeNull]
-        private IEnumerable<T> ResolveMatchingElementFromBothSides(int leftIndex, int rightIndex)
+        private IEnumerable<T?> ResolveMatchingElementFromBothSides(int leftIndex, int rightIndex)
         {
-            var commonBase = _DiffCommonBaseToLeft[leftIndex].ElementFromCollection1.GetValueOrDefault();
+            T? commonBase = _DiffCommonBaseToLeft[leftIndex].ElementFromCollection1.GetValueOrDefault();
 
-            var leftOp = _DiffCommonBaseToLeft[leftIndex].Operation;
+            DiffOperation leftOp = _DiffCommonBaseToLeft[leftIndex].Operation;
             if (leftOp == DiffOperation.Replace)
                 leftOp = DiffOperation.Modify;
-            var leftSide = _DiffCommonBaseToLeft[leftIndex].ElementFromCollection2.GetValueOrDefault();
+            T? leftSide = _DiffCommonBaseToLeft[leftIndex].ElementFromCollection2.GetValueOrDefault();
 
-            var rightOp = _DiffCommonBaseToRight[rightIndex].Operation;
+            DiffOperation rightOp = _DiffCommonBaseToRight[rightIndex].Operation;
             if (rightOp == DiffOperation.Replace)
                 rightOp = DiffOperation.Modify;
-            var rightSide = _DiffCommonBaseToRight[rightIndex].ElementFromCollection2.GetValueOrDefault();
+            T? rightSide = _DiffCommonBaseToRight[rightIndex].ElementFromCollection2.GetValueOrDefault();
 
-            IEnumerable<T> resolution = GetResolution(commonBase, leftOp, leftSide, rightOp, rightSide);
+            IEnumerable<T?> resolution = GetResolution(commonBase, leftOp, leftSide, rightOp, rightSide);
             return resolution;
         }
 
-        [NotNull]
-        private IEnumerable<T> GetResolution([CanBeNull] T commonBase, DiffOperation leftOp, [CanBeNull] T leftSide, DiffOperation rightOp, [CanBeNull] T rightSide)
+        private IEnumerable<T?> GetResolution(T? commonBase, DiffOperation leftOp, T? leftSide, DiffOperation rightOp, T? rightSide)
         {
             switch (leftOp)
             {
@@ -135,7 +121,7 @@ namespace DiffLib
                         case DiffOperation.Insert:
                             break;
                         case DiffOperation.Delete:
-                            return new T[0];
+                            return Array.Empty<T>();
                         case DiffOperation.Replace:
                         case DiffOperation.Modify:
                             return new[] { rightSide };
@@ -152,11 +138,11 @@ namespace DiffLib
                     switch (rightOp)
                     {
                         case DiffOperation.Match:
-                            return new T[0];
+                            return Array.Empty<T>();
                         case DiffOperation.Insert:
                             break;
                         case DiffOperation.Delete:
-                            return new T[0];
+                            return Array.Empty<T>();
                         case DiffOperation.Replace:
                         case DiffOperation.Modify:
                             return _ConflictResolver.Resolve(new[] { commonBase }, new T[0], new[] { rightSide });
@@ -186,7 +172,7 @@ namespace DiffLib
                     break;
             }
 
-            throw new MergeConflictException($"Unable to process {leftOp} vs. {rightOp}", new object[] { commonBase }, new object[] { leftSide }, new object[] { rightSide });
+            throw new MergeConflictException($"Unable to process {leftOp} vs. {rightOp}", new object?[] { commonBase }, new object?[] { leftSide }, new object?[] { rightSide });
         }
 
         IEnumerator IEnumerable.GetEnumerator()

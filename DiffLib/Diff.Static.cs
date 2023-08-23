@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace DiffLib
 {
     /// <summary>
     /// Static API class for DiffLib.
     /// </summary>
-    [PublicAPI]
     public static class Diff
     {
         /// <summary>
@@ -34,11 +32,8 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [NotNull]
-        public static IEnumerable<DiffSection> CalculateSections<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] IEqualityComparer<T> comparer = null)
-        {
-            return CalculateSections(collection1, collection2, new DiffOptions(), comparer);
-        }
+        public static IEnumerable<DiffSection> CalculateSections<T>(IList<T?> collection1, IList<T?> collection2, IEqualityComparer<T?>? comparer = null)
+            => CalculateSections(collection1, collection2, new DiffOptions(), comparer);
 
         /// <summary>
         /// Calculate sections of differences from the two collections using the specified comparer.
@@ -67,18 +62,13 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="collection2"/> is <c>null</c>.</para>
         /// </exception>
-        [NotNull]
-        public static IEnumerable<DiffSection> CalculateSections<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [CanBeNull] DiffOptions options, [CanBeNull] IEqualityComparer<T> comparer = null)
+        public static IEnumerable<DiffSection> CalculateSections<T>(IList<T?> collection1, IList<T?> collection2, DiffOptions? options, IEqualityComparer<T?>? comparer = null)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException(nameof(collection1));
-            if (collection2 == null)
-                throw new ArgumentNullException(nameof(collection2));
+            _ = collection1 ?? throw new ArgumentNullException(nameof(collection1));
+            _ = collection2 ?? throw new ArgumentNullException(nameof(collection2));
 
-            comparer = comparer ?? EqualityComparer<T>.Default;
-            Assume.That(comparer != null);
-
-            options = options ?? new DiffOptions();
+            comparer ??= EqualityComparer<T?>.Default;
+            options ??= new DiffOptions();
 
             return LongestCommonSubsectionDiff.Calculate(collection1, collection2, options, comparer);
         }
@@ -114,41 +104,35 @@ namespace DiffLib
         /// <para>- or -</para>
         /// <para><paramref name="aligner"/> is <c>null</c>.</para>
         /// </exception>
-        [NotNull]
-        public static IEnumerable<DiffElement<T>> AlignElements<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] IEnumerable<DiffSection> diffSections, [NotNull] IDiffElementAligner<T> aligner)
+        public static IEnumerable<DiffElement<T?>> AlignElements<T>(IList<T?> collection1, IList<T?> collection2, IEnumerable<DiffSection> diffSections, IDiffElementAligner<T?> aligner)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException(nameof(collection1));
-            if (collection2 == null)
-                throw new ArgumentNullException(nameof(collection2));
-            if (diffSections == null)
-                throw new ArgumentNullException(nameof(diffSections));
-            if (aligner == null)
-                throw new ArgumentNullException(nameof(aligner));
+            _ = collection1 ?? throw new ArgumentNullException(nameof(collection1));
+            _ = collection2 ?? throw new ArgumentNullException(nameof(collection2));
+            _ = diffSections ?? throw new ArgumentNullException(nameof(diffSections));
+            _ = aligner ?? throw new ArgumentNullException(nameof(aligner));
 
             return AlignElementsImplementation(collection1, collection2, diffSections, aligner);
         }
 
-        [NotNull]
-        private static IEnumerable<DiffElement<T>> AlignElementsImplementation<T>([NotNull] IList<T> collection1, [NotNull] IList<T> collection2, [NotNull] IEnumerable<DiffSection> diffSections, [NotNull] IDiffElementAligner<T> aligner)
+        private static IEnumerable<DiffElement<T?>> AlignElementsImplementation<T>(IList<T?> collection1, IList<T?> collection2, IEnumerable<DiffSection> diffSections, IDiffElementAligner<T?> aligner)
         {
             int start1 = 0;
             int start2 = 0;
 
-            foreach (var section in diffSections)
+            foreach (DiffSection section in diffSections)
             {
                 if (section.IsMatch)
                 {
                     for (int index = 0; index < section.LengthInCollection1; index++)
                     {
-                        yield return new DiffElement<T>(start1, collection1[start1], start2, collection2[start2], DiffOperation.Match);
+                        yield return new DiffElement<T?>(start1, collection1[start1], start2, collection2[start2], DiffOperation.Match);
                         start1++;
                         start2++;
                     }
                 }
                 else
                 {
-                    foreach (var element in aligner.Align(collection1, start1, section.LengthInCollection1, collection2, start2, section.LengthInCollection2))
+                    foreach (DiffElement<T?> element in aligner.Align(collection1, start1, section.LengthInCollection1, collection2, start2, section.LengthInCollection2))
                         yield return element;
 
                     start1 += section.LengthInCollection1;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DiffLib
 {
@@ -12,12 +11,12 @@ namespace DiffLib
     public class TakeLeftThenRightMergeConflictResolver<T> : IMergeConflictResolver<T>
     {
         /// <inheritdoc />
-        public IEnumerable<T> Resolve(IList<T> commonBase, IList<T> left, IList<T> right)
+        public IEnumerable<T?> Resolve(IList<T?> commonBase, IList<T?> left, IList<T?> right)
         {
-            foreach (var item in left)
+            foreach (T? item in left)
                 yield return item;
 
-            foreach (var item in right)
+            foreach (T? item in right)
                 yield return item;
         }
     }

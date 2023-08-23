@@ -1,10 +1,8 @@
-using JetBrains.Annotations;
-
 namespace DiffLib
 {
     internal class AlignmentNode
     {
-        public AlignmentNode(DiffOperation operation, double similarity, int nodeCount, [CanBeNull] AlignmentNode next)
+        public AlignmentNode(DiffOperation operation, double similarity, int nodeCount, AlignmentNode? next)
         {
             Operation = operation;
             Similarity = similarity;
@@ -29,8 +27,7 @@ namespace DiffLib
             get;
         }
 
-        [CanBeNull]
-        public AlignmentNode Next
+        public AlignmentNode? Next
         {
             get;
         }

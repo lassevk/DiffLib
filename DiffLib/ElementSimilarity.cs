@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace DiffLib
 {
     /// <summary>
@@ -20,5 +18,5 @@ namespace DiffLib
     /// not similar at all, and 1.0 means the equivalent of equality. Values below zero or above one
     /// will result in undefined behavior.
     /// </returns>
-    public delegate double ElementSimilarity<in T>([CanBeNull] T element1, [CanBeNull] T element2);
+    public delegate double ElementSimilarity<in T>(T? element1, T? element2);
 }
