@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0;net7.0;net8.0;netstandard2.0;netstandard2.1;netstandard1.0</TargetFrameworks>
+    <TargetFramework>net9.0</TargetFramework>
     <Description>A Diff implementation for .NET Standard 1.0 and up, written in C#.</Description>
     <Copyright>Copyright (C) Lasse V. Karlsen 2015-2017, All rights reserved</Copyright>
     <PackageProjectUrl>https://github.com/lassevk/DiffLib</PackageProjectUrl>
