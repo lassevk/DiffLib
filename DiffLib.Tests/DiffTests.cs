@@ -81,15 +81,15 @@ namespace DiffLib.Tests
 
             CollectionAssert.AreEqual(diff, new[]
             {
-                new DiffSection(isMatch: true, lengthInCollection1: 9, lengthInCollection2: 9), // same        "This is a"
-                new DiffSection(isMatch: false, lengthInCollection1: 0, lengthInCollection2: 6), // add        "nother"
-                new DiffSection(isMatch: true, lengthInCollection1: 13, lengthInCollection2: 13), // same      " test of the "
-                new DiffSection(isMatch: false, lengthInCollection1: 4, lengthInCollection2: 4), // replace    "same" with "diff"
-                new DiffSection(isMatch: true, lengthInCollection1: 27, lengthInCollection2: 27), // same      " implementation, with some "
-                new DiffSection(isMatch: false, lengthInCollection1: 0, lengthInCollection2: 5), // add        "more "
-                new DiffSection(isMatch: true, lengthInCollection1: 4, lengthInCollection2: 4), // same        "text"
-                new DiffSection(isMatch: false, lengthInCollection1: 16, lengthInCollection2: 0), // delete    " that is deleted"
-                new DiffSection(isMatch: true, lengthInCollection1: 1, lengthInCollection2: 1), // same        "."
+                new DiffSection(true, 9, 9), // same        "This is a"
+                new DiffSection(false, 0, 6), // add        "nother"
+                new DiffSection(true, 13, 13), // same      " test of the "
+                new DiffSection(false, 4, 4), // replace    "same" with "diff"
+                new DiffSection(true, 27, 27), // same      " implementation, with some "
+                new DiffSection(false, 0, 5), // add        "more "
+                new DiffSection(true, 4, 4), // same        "text"
+                new DiffSection(false, 16, 0), // delete    " that is deleted"
+                new DiffSection(true, 1, 1), // same        "."
             });
         }
 
@@ -110,11 +110,11 @@ namespace DiffLib.Tests
 
             CollectionAssert.AreEqual(sections, new[]
             {
-                new DiffSection(isMatch: true, lengthInCollection1: 1, lengthInCollection2: 1),
-                new DiffSection(isMatch: false, lengthInCollection1: 0, lengthInCollection2: 1),
-                new DiffSection(isMatch: true, lengthInCollection1: 1, lengthInCollection2: 1),
-                new DiffSection(isMatch: false, lengthInCollection1: 2, lengthInCollection2: 0),
-                new DiffSection(isMatch: true, lengthInCollection1: 1, lengthInCollection2: 1),
+                new DiffSection(true, 1, 1),
+                new DiffSection(false, 0, 1),
+                new DiffSection(true, 1, 1),
+                new DiffSection(false, 2, 0),
+                new DiffSection(true, 1, 1),
             });
         }
 
