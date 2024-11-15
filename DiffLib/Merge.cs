@@ -111,18 +111,14 @@ internal class Merge<T> : IEnumerable<T?>
                 switch (rightOp)
                 {
                     case DiffOperation.Match:
-                        return new[] { leftSide };
+                        return [leftSide];
                     case DiffOperation.Insert:
                         break;
                     case DiffOperation.Delete:
-#if NETSTANDARD1_0
-                        return new T[0];
-#else
-                        return Array.Empty<T>();
-#endif
+                        return [];
                     case DiffOperation.Replace:
                     case DiffOperation.Modify:
-                        return new[] { rightSide };
+                        return [rightSide];
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rightOp), rightOp, null);
                 }
@@ -136,22 +132,13 @@ internal class Merge<T> : IEnumerable<T?>
                 switch (rightOp)
                 {
                     case DiffOperation.Match:
-#if NETSTANDARD1_0
-                        return new T[0];
-#else
-                        return Array.Empty<T>();
-#endif
+                    case DiffOperation.Delete:
+                        return [];
                     case DiffOperation.Insert:
                         break;
-                    case DiffOperation.Delete:
-#if NETSTANDARD1_0
-                        return new T[0];
-#else
-                        return Array.Empty<T>();
-#endif
                     case DiffOperation.Replace:
                     case DiffOperation.Modify:
-                        return _ConflictResolver.Resolve(new[] { commonBase }, new T[0], new[] { rightSide });
+                        return _ConflictResolver.Resolve([commonBase], [], [rightSide]);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rightOp), rightOp, null);
                 }
@@ -163,14 +150,14 @@ internal class Merge<T> : IEnumerable<T?>
                 switch (rightOp)
                 {
                     case DiffOperation.Match:
-                        return new[] { leftSide };
+                        return [leftSide];
                     case DiffOperation.Insert:
                         break;
                     case DiffOperation.Delete:
-                        return _ConflictResolver.Resolve(new[] { commonBase }, new[] { leftSide }, new T[0]);
+                        return _ConflictResolver.Resolve([commonBase], [leftSide], []);
                     case DiffOperation.Replace:
                     case DiffOperation.Modify:
-                        return _ConflictResolver.Resolve(new[] { commonBase }, new[] { leftSide }, new[] { rightSide });
+                        return _ConflictResolver.Resolve([commonBase], [leftSide], [rightSide]);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rightOp), rightOp, null);
                 }
@@ -178,7 +165,7 @@ internal class Merge<T> : IEnumerable<T?>
                 break;
         }
 
-        throw new MergeConflictException($"Unable to process {leftOp} vs. {rightOp}", new object?[] { commonBase }, new object?[] { leftSide }, new object?[] { rightSide });
+        throw new MergeConflictException($"Unable to process {leftOp} vs. {rightOp}", [commonBase], [leftSide], [rightSide]);
     }
 
     IEnumerator IEnumerable.GetEnumerator()

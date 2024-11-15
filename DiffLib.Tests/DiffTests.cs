@@ -96,15 +96,15 @@ namespace DiffLib.Tests
         [Test]
         public void Diff_WithNullElements()
         {
-            string[] collection1 = new[]
-                                   {
-                                       "Line 1", "Line 2", null, "Line 3", "Line 4",
-                                   };
+            string[] collection1 =
+            [
+                "Line 1", "Line 2", null, "Line 3", "Line 4"
+            ];
 
-            string[] collection2 = new[]
-                                   {
-                                       "Line 1", null, "Line 2", "Line 4",
-                                   };
+            string[] collection2 =
+            [
+                "Line 1", null, "Line 2", "Line 4"
+            ];
 
             DiffSection[] sections = Diff.CalculateSections(collection1, collection2).ToArray();
 
@@ -121,15 +121,15 @@ namespace DiffLib.Tests
         [Test]
         public void Align_WithNullElements()
         {
-            string[] collection1 = new[]
-                                   {
-                                       "Line 1", "Line 2", null, "Line 3", "Line 4",
-                                   };
+            string[] collection1 =
+            [
+                "Line 1", "Line 2", null, "Line 3", "Line 4"
+            ];
 
-            string[] collection2 = new[]
-                                   {
-                                       "Line 1", null, "Line 2", "Line 4",
-                                   };
+            string[] collection2 =
+            [
+                "Line 1", null, "Line 2", "Line 4"
+            ];
 
             DiffSection[] sections = Diff.CalculateSections(collection1, collection2).ToArray();
             IEnumerable<DiffElement<string>> elements = Diff.AlignElements(collection1, collection2, sections, new StringSimilarityDiffElementAligner());

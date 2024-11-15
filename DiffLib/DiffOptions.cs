@@ -12,16 +12,5 @@ public class DiffOptions
     /// For more information about the patience optimization, see this question on Stack Overflow:
     /// https://stackoverflow.com/questions/4045017/what-is-git-diff-patience-for
     /// </remarks>
-#if NETSTANDARD1_0
-    public bool EnablePatienceOptimization { get; set; } = true;
-#endif
-#if NETSTANDARD2_0
-    public bool EnablePatienceOptimization { get; set; } = true;
-#endif
-#if NETSTANDARD2_1
-    public bool EnablePatienceOptimization { get; set; } = true;
-#endif
-#if !NETSTANDARD1_0 && !NETSTANDARD2_0 && !NETSTANDARD2_1
     public bool EnablePatienceOptimization { get; init; } = true;
-#endif
 }

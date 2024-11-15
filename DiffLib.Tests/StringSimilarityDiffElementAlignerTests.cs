@@ -28,19 +28,19 @@ namespace DiffLib.Tests
         [Test]
         public void Align_NoDifferences_ReturnsPerfectlyAlignedElements()
         {
-            string[] c1 = new[]
-                          {
-                              "Line 1",
+            string[] c1 =
+            [
+                "Line 1",
                               "Line 2",
                               "Line 3"
-                          };
+            ];
 
-            string[] c2 = new[]
-                          {
-                              "Line 1",
+            string[] c2 =
+            [
+                "Line 1",
                               "Line 2",
                               "Line 3"
-                          };
+            ];
 
             var aligner = new StringSimilarityDiffElementAligner();
 
@@ -57,21 +57,21 @@ namespace DiffLib.Tests
         [Test]
         public void Align_MinorDifferencesInMiddleLine_ReturnsPerfectlyAlignedElements()
         {
-            string[] c1 = new[]
-                          {
-                              "Line 1",
+            string[] c1 =
+            [
+                "Line 1",
                               "Line 2",
                               null,
                               "Line 3"
-                          };
+            ];
 
-            string[] c2 = new[]
-                          {
-                              "Line 1",
+            string[] c2 =
+            [
+                "Line 1",
                               "Line+2",
                               null,
                               "Line 3"
-                          };
+            ];
 
             var aligner = new StringSimilarityDiffElementAligner();
 
@@ -89,19 +89,19 @@ namespace DiffLib.Tests
         [Test]
         public void Align_MajorDifferencesInMiddleLine_ReturnsPerfectlyAlignedElements()
         {
-            string[] c1 = new[]
-                          {
-                              "Line 1",
+            string[] c1 =
+            [
+                "Line 1",
                               "Line 2",
                               "Line 3"
-                          };
+            ];
 
-            string[] c2 = new[]
-                          {
-                              "Line 1",
+            string[] c2 =
+            [
+                "Line 1",
                               "Something else",
                               "Line 3"
-                          };
+            ];
 
             var aligner = new StringSimilarityDiffElementAligner();
 
