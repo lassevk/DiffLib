@@ -1,4 +1,4 @@
-    Copyright (c) 2010-2023, Lasse V. Karlsen
+    Copyright (c) 2010-2025, Lasse V. Karlsen
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without modification,

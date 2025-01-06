@@ -1,0 +1,26 @@
+name: Build and run tests
+
+on:
+  push
+
+env:
+  DOTNET_SDK_VERSION: '8.0.x'
+  DOTNET_TFM: 'net8.0'
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: Setup DotNet ${{ env.DOTNET_SDK_VERSION }} Environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
+
+      - name: 'Build .NET Projects'
+        shell: pwsh
+        run: |
+          dotnet build --configuration Release
+          dotnet test --configuration Release

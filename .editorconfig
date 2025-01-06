@@ -1,275 +1,161 @@
 root = true
 
 [*]
-
-# "this.x" ?
-dotnet_style_qualification_for_field = true
-dotnet_style_qualification_for_property = true
-dotnet_style_qualification_for_method = true
-dotnet_style_qualification_for_event = true
-
-# Blank Lines
-resharper_keep_blank_lines_in_declarations = 1
-resharper_remove_blank_lines_near_braces_in_declarations = true
-resharper_keep_blank_lines_in_code = 1
-resharper_remove_blank_lines_near_braces_in_code = true
-resharper_blank_lines_around_namespace = 1
-resharper_blank_lines_inside_namespace = 0
-resharper_blank_lines_around_type = 1
-resharper_blank_lines_inside_type = 0
-resharper_blank_lines_around_field = 1
-resharper_blank_lines_around_single_line_field = 0
-resharper_blank_lines_around_property = 1
-resharper_blank_lines_around_single_line_property = 0
-resharper_blank_lines_around_auto_property = 1
-resharper_blank_lines_around_single_line_auto_property = 0
-resharper_blank_lines_around_invocable = 1
-resharper_blank_lines_around_single_line_invocable = 0
-resharper_blank_lines_around_local_method = 1
-resharper_blank_lines_around_single_line_local_method = 0
-resharper_blank_lines_around_region = 1
-resharper_blank_lines_inside_region = 1
-resharper_blank_lines_between_using_groups = 1
-resharper_blank_lines_after_using_list = 1
-resharper_blank_lines_after_start_comment = 0
-resharper_blank_lines_before_single_line_comment = 1
-resharper_blank_lines_after_control_transfer_statements = 1
-
-# Braces
-resharper_brace_style = next_line
-resharper_empty_block_style = multiline
-
-# Line breaks
-resharper_keep_user_linebreaks = true
-resharper_simple_embedded_statement_style = line_break
-resharper_simple_case_statement_style = line_break
-resharper_simple_embedded_block_style = line_break
-new_line_before_else = true
-resharper_new_line_before_while = true
-new_line_before_catch = true
-new_line_before_finally = true
-max_line_length = off
-resharper_wrap_parameters_style = wrap_if_long
-resharper_wrap_before_declaration_lpar = false
-resharper_wrap_after_declaration_lpar = false
-resharper_wrap_arguments_style = wrap_if_long
-resharper_wrap_before_invocation_lpar = false
-resharper_wrap_after_invocation_lpar = false
-resharper_wrap_before_comma = false
-resharper_wrap_after_dot_in_method_calls = true
-resharper_wrap_chained_method_calls = true
-resharper_wrap_before_extends_colon = false
-resharper_wrap_extends_list_style = wrap_if_long
-resharper_wrap_for_stmt_header_style = chop_if_long
-resharper_wrap_before_ternary_opsigns = true
-resharper_wrap_ternary_expr_style = chop_if_long
-resharper_wrap_multiple_declaration_style = chop_if_long
-resharper_wrap_linq_expressions = chop_if_long
-resharper_wrap_before_binary_opsign = true
-resharper_wrap_chained_binary_expressions = chop_if_long
-resharper_force_chop_compound_if_expression = false
-resharper_force_chop_compound_while_expression = false
-resharper_force_chop_compound_do_expression = false
-resharper_wrap_multiple_type_parameer_constraints_style = chop_always
-resharper_wrap_object_and_collection_initializer_style = chop_if_long
-resharper_wrap_array_initializer_style = chop_if_long
-resharper_wrap_before_first_type_parameter_constraint = true
-resharper_wrap_before_type_parameter_langle = false
-resharper_csharp_place_abstract_accessorholder_on_single_line = true
-resharper_csharp_place_simple_accessor_on_single_line = true
-resharper_csharp_place_simple_accessorholder_on_single_line = false
-resharper_csharp_place_accessor_with_attrs_holder_on_single_line = false
-resharper_csharp_place_simple_method_on_single_line = false
-resharper_csharp_place_simple_anonymousmethod_on_single_line = true
-resharper_csharp_place_simple_initializer_on_single_line = true
-resharper_place_abstract_accessorholder_on_single_line = true
-resharper_place_accessor_with_attrs_holder_on_single_line = false
-resharper_place_simple_method_on_single_line = false
-resharper_place_simple_anonymousmethod_on_single_line = true
-resharper_place_type_attribute_on_same_line = false
-resharper_place_method_attribute_on_same_line = false
-resharper_place_accessorholder_attribute_on_same_line = false
-resharper_place_simple_accessor_attribute_on_same_line = false
-resharper_place_complex_accessor_attribute_on_same_line = false
-resharper_place_field_attribute_on_same_line = false
-resharper_place_constructor_initializer_on_same_line = false
-resharper_place_type_constraints_on_same_line = false
-resharper_allow_comment_after_lbrace = false
-
-# Other
-resharper_continuous_indent_multiplier = 1
-indent_switch_labels = true
-resharper_indent_nested_usings_stmt = false
-resharper_indent_nested_fixed_stmt = false
-resharper_indent_nested_lock_stmt = false
-resharper_indent_nested_for_stmt = true
-resharper_indent_nested_foreach_stmt = true
-resharper_indent_nested_while_stmt = true
-resharper_indent_type_constraints = true
-resharper_stick_comment = false
-resharper_indent_method_decl_pars = inside
-resharper_indent_invocation_pars = inside
-resharper_indent_statement_pars = outside_and_inside
-resharper_indent_typeparam_angles = outside_and_inside
-resharper_indent_typearg_angles = outside_and_inside
-resharper_indent_pars = outside_and_inside
-resharper_align_multiline_parameter = true
-resharper_align_first_arg_by_paren = true
-resharper_align_multiline_argument = true
-resharper_align_multiline_extends_list = true
-resharper_align_multiline_expression = true
-resharper_align_multiline_binary_expressions_chain = true
-resharper_align_multiline_calls_chain = true
-resharper_align_multiline_array_and_object_initializer = true
-resharper_indent_anonymous_method_block = false
-resharper_align_multiline_for_stmt = true
-resharper_align_multiple_declaration = true
-resharper_align_multline_type_parameter_list = true
-resharper_align_multline_type_parameter_constrains = true
-resharper_align_linq_query = true
-resharper_special_else_if_treatment = true
+tab_width = 4
+indent_size = 4
+indent_style = space
+charset = utf-8
+trim_trailing_whitespace = true
 insert_final_newline = false
 
-# Spaces
-resharper_space_before_method_call_parentheses = false
-resharper_space_before_empty_method_call_parentheses = false
-resharper_space_before_method_parentheses = false
-resharper_space_before_empty_method_parentheses = false
-resharper_space_before_array_access_brackets = false
-resharper_space_before_if_parentheses = true
-resharper_space_before_while_parentheses = true
-resharper_space_before_catch_parentheses = true
-resharper_space_before_switch_parentheses = true
-resharper_space_before_for_parentheses = true
-resharper_space_before_foreach_parentheses = true
-resharper_space_before_using_parentheses = true
-resharper_space_before_lock_parentheses = true
-resharper_space_before_typeof_parentheses = false
-resharper_space_before_default_parentheses = false
-resharper_space_before_checked_parentheses = false
-resharper_space_before_fixed_parentheses = true
-resharper_space_before_sizeof_parentheses = false
-resharper_space_before_nameof_parentheses = false
-resharper_space_before_type_parameter_angle = false
-resharper_space_before_type_argument_angle = false
-resharper_space_around_binary_operator = true
-resharper_space_around_member_access_operator = false
-resharper_space_after_logical_not_op = false
-resharper_space_after_unary_minus_op = false
-resharper_space_after_unary_plus_op = false
-resharper_space_after_ampersand_op = false
-resharper_space_after_asterik_op = false
-resharper_space_within_parentheses = false
-space_between_method_declaration_parameter_list_parentheses = false
-space_between_method_declaration_empty_parameter_list_parentheses = false
-space_between_method_call_parameter_list_parentheses = false
-space_between_method_call_empty_parameter_list_parentheses = false
-resharper_space_within_array_access_brackets = false
-resharper_space_between_typecast_parentheses = false
-resharper_space_between_parentheses_of_control_flow_statements = false
-resharper_space_within_typeof_parentheses = false
-resharper_space_within_default_parentheses = false
-resharper_space_within_checked_parentheses = false
-resharper_space_within_sizeof_parentheses = false
-resharper_space_within_nameof_parentheses = false
-resharper_space_within_type_parameter_angles = false
-resharper_space_within_type_argument_angles = false
-resharper_space_before_ternary_quest = true
-resharper_space_after_ternary_quest = true
-resharper_space_before_ternary_colon = true
-resharper_space_after_ternary_colon = true
-space_after_cast = false
-resharper_space_near_postfix_and_prefix_op = false
-space_before_comma = false
-space_after_comma = true
-space_before_semicolon_in_for_statement = false
-space_after_semicolon_in_for_statement = true
-resharper_space_before_attribute_colon = false
-resharper_space_after_attribute_colon = true
-space_before_colon_in_inheritance_clause = true
-space_after_colon_in_inheritance_clause = true
-resharper_space_around_lambda_arrow = true
-resharper_space_before_singleline_accessorholder = true
-resharper_space_in_singleline_accessorholder = true
-resharper_space_between_accessors_in_singleline_property = true
-resharper_space_between_attribute_sections = false
-resharper_space_withing_empty_braces = true
-resharper_space_in_singleline_method = true
-resharper_space_in_singleline_anonymous_method = true
-resharper_space_within_attribute_brackets = false
-resharper_space_before_array_rank_brackets = false
-resharper_space_within_array_rank_brackets = false
-resharper_space_within_array_rank_empty_brackets = false
-resharper_space_within_single_line_array_initializer_braces = true
-resharper_space_before_pointer_asterik_declaration = false
-resharper_space_before_semicolon = false
-resharper_space_before_colon_in_case = false
-resharper_space_before_nullable_mark = false
-resharper_space_before_type_parameter_constraint_colon = true
-resharper_space_after_type_parameter_constraint_colon = false
-resharper_space_around_alias_eq = true
-resharper_space_before_trailing_comment = true
-resharper_space_after_operator_keyword = true
-
 [*.cs]
-# Tabs and indentation
+# Microsoft .NET properties
+csharp_preferred_modifier_order = public, private, protected, internal, file, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, required:suggestion
+csharp_style_prefer_utf8_string_literals = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+dotnet_naming_rule.local_functions_rule.import_to_resharper = as_predefined
+dotnet_naming_rule.local_functions_rule.severity = warning
+dotnet_naming_rule.local_functions_rule.style = lower_camel_case_style
+dotnet_naming_rule.local_functions_rule.symbols = local_functions_symbols
+dotnet_naming_rule.private_constants_rule.import_to_resharper = as_predefined
+dotnet_naming_rule.private_constants_rule.severity = warning
+dotnet_naming_rule.private_constants_rule.style = lower_camel_case_style_1
+dotnet_naming_rule.private_constants_rule.symbols = private_constants_symbols
+dotnet_naming_rule.private_static_readonly_rule.import_to_resharper = as_predefined
+dotnet_naming_rule.private_static_readonly_rule.severity = warning
+dotnet_naming_rule.private_static_readonly_rule.style = lower_camel_case_style_1
+dotnet_naming_rule.private_static_readonly_rule.symbols = private_static_readonly_symbols
+dotnet_naming_style.lower_camel_case_style.capitalization = camel_case
+dotnet_naming_style.lower_camel_case_style_1.capitalization = camel_case
+dotnet_naming_style.lower_camel_case_style_1.required_prefix = _
+dotnet_naming_symbols.local_functions_symbols.applicable_accessibilities = *
+dotnet_naming_symbols.local_functions_symbols.applicable_kinds = local_function
+dotnet_naming_symbols.private_constants_symbols.applicable_accessibilities = private
+dotnet_naming_symbols.private_constants_symbols.applicable_kinds = field
+dotnet_naming_symbols.private_constants_symbols.required_modifiers = const
+dotnet_naming_symbols.private_static_readonly_symbols.applicable_accessibilities = private
+dotnet_naming_symbols.private_static_readonly_symbols.applicable_kinds = field
+dotnet_naming_symbols.private_static_readonly_symbols.required_modifiers = static,readonly
+dotnet_separate_import_directive_groups = true
+dotnet_style_parentheses_in_arithmetic_binary_operators = never_if_unnecessary:suggestion
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_relational_binary_operators = never_if_unnecessary:suggestion
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_predefined_type_for_member_access = true:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+
+# ReSharper properties
+resharper_align_linq_query = true
+resharper_align_multiline_binary_expressions_chain = true
+resharper_align_multiline_statement_conditions = false
+resharper_blank_lines_after_control_transfer_statements = 1
+resharper_blank_lines_after_multiline_statements = 1
+resharper_blank_lines_around_block_case_section = 1
+resharper_blank_lines_around_multiline_case_section = 1
+resharper_blank_lines_around_single_line_local_method = 1
+resharper_blank_lines_before_single_line_comment = 1
+resharper_braces_for_for = always
+resharper_braces_for_foreach = always
+resharper_braces_for_ifelse = always
+resharper_braces_for_while = always
+resharper_braces_redundant = false
+resharper_csharp_empty_block_style = multiline
+resharper_csharp_indent_invocation_pars = outside_and_inside
+resharper_csharp_indent_method_decl_pars = outside_and_inside
+resharper_csharp_indent_statement_pars = outside_and_inside
+resharper_csharp_int_align_comments = true
+resharper_csharp_keep_blank_lines_in_code = 1
+resharper_csharp_keep_blank_lines_in_declarations = 1
+resharper_csharp_max_line_length = 200
+resharper_csharp_outdent_commas = true
+resharper_csharp_outdent_dots = true
+resharper_csharp_place_type_constraints_on_same_line = false
+resharper_csharp_stick_comment = false
+resharper_csharp_wrap_after_declaration_lpar = true
+resharper_csharp_wrap_before_binary_opsign = true
+resharper_csharp_wrap_multiple_declaration_style = chop_always
+resharper_csharp_wrap_multiple_type_parameter_constraints_style = chop_always
+resharper_for_built_in_types = use_explicit_type
+resharper_indent_braces_inside_statement_conditions = false
+resharper_indent_nested_foreach_stmt = true
+resharper_indent_nested_for_stmt = true
+resharper_indent_nested_while_stmt = true
+resharper_indent_pars = outside_and_inside
+resharper_indent_preprocessor_region = no_indent
+resharper_indent_typearg_angles = outside_and_inside
+resharper_indent_typeparam_angles = outside_and_inside
+resharper_int_align_nested_ternary = true
+resharper_int_align_switch_expressions = true
+resharper_keep_existing_arrangement = false
+resharper_local_function_body = expression_body
+resharper_method_or_operator_body = expression_body
+resharper_outdent_binary_ops = true
+resharper_outdent_binary_pattern_ops = true
+resharper_outdent_statement_labels = true
+resharper_place_accessorholder_attribute_on_same_line = false
+resharper_place_accessor_attribute_on_same_line = false
+resharper_place_constructor_initializer_on_same_line = false
+resharper_place_field_attribute_on_same_line = false
+resharper_place_simple_accessor_on_single_line = false
+resharper_place_simple_anonymousmethod_on_single_line = false
+resharper_place_simple_embedded_statement_on_same_line = false
+resharper_place_simple_initializer_on_single_line = false
+resharper_prefer_separate_deconstructed_variables_declaration = true
+resharper_trailing_comma_in_multiline_lists = true
+resharper_use_indent_from_vs = false
+resharper_wrap_before_arrow_with_expressions = true
+resharper_wrap_before_eq = true
+resharper_wrap_before_extends_colon = true
+resharper_wrap_before_linq_expression = true
+resharper_wrap_before_primary_constructor_declaration_rpar = true
+
+# ReSharper inspection severities
+resharper_arrange_attributes_highlighting = suggestion
+resharper_arrange_constructor_or_destructor_body_highlighting = suggestion
+resharper_arrange_local_function_body_highlighting = suggestion
+resharper_arrange_method_or_operator_body_highlighting = suggestion
+resharper_arrange_namespace_body_highlighting = suggestion
+resharper_arrange_null_checking_pattern_highlighting = suggestion
+resharper_arrange_static_member_qualifier_highlighting = suggestion
+resharper_arrange_trailing_comma_in_multiline_lists_highlighting = suggestion
+resharper_arrange_trailing_comma_in_singleline_lists_highlighting = suggestion
+resharper_comment_typo_highlighting = none
+resharper_convert_to_primary_constructor_highlighting = none
+resharper_enforce_do_while_statement_braces_highlighting = suggestion
+resharper_enforce_fixed_statement_braces_highlighting = suggestion
+resharper_enforce_foreach_statement_braces_highlighting = suggestion
+resharper_enforce_for_statement_braces_highlighting = suggestion
+resharper_enforce_if_statement_braces_highlighting = suggestion
+resharper_enforce_lock_statement_braces_highlighting = suggestion
+resharper_enforce_using_statement_braces_highlighting = suggestion
+resharper_enforce_while_statement_braces_highlighting = suggestion
+resharper_identifier_typo_highlighting = none
+resharper_markup_attribute_typo_highlighting = none
+resharper_markup_text_typo_highlighting = none
+resharper_redundant_base_qualifier_highlighting = warning
+resharper_remove_redundant_braces_highlighting = suggestion
+resharper_simplify_linq_expression_use_all_highlighting = none
+resharper_string_literal_typo_highlighting = none
+resharper_suggest_discard_declaration_var_style_highlighting = suggestion
+resharper_web_config_module_not_resolved_highlighting = warning
+resharper_web_config_type_not_resolved_highlighting = warning
+resharper_web_config_wrong_module_highlighting = warning
+
+[*.{xml,js,css,json,yml}]
+tab_width = 2
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+[*.{appxmanifest,asax,ascx,aspx,axaml,build,cg,cginc,compute,cs,cshtml,dtd,fx,fxh,hlsl,hlsli,hlslinc,master,nuspec,paml,razor,resw,resx,skin,usf,ush,vb,xaml,xamlx,xoml,xsd}]
 indent_style = space
 indent_size = 4
 tab_width = 4
-
-# true = prefer C# keywords instead of .NET types for built-in primitive types (int, string, etc.)
-dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
-
-# false = prefer the .NET types, thus "Int32.Parse" instead of "int.Parse"
-dotnet_style_predefined_type_for_member_access = false:suggestion
-
-# true = prefer to use object-initializers
-dotnet_style_object_initializer = true:suggestion
-dotnet_style_collection_initializer = true:suggestion
-
-# true = require tuple member names
-dotnet_style_explicit_tuple_names = true:warning
-
-# true = prefer "x ?? y" instead of "x != null ? x : y"
-dotnet_style_coalesce_expression = true:suggestion
-
-# true = prefer "o?.ToString()" instead of "o != null ? o.ToString() : null"
-dotnet_style_null_propagation = true:suggestion
-
-# false = prefer "int x = 5" instead of "var x = 5"
-csharp_style_var_for_built_in_types = false:suggestion
-
-# true = prefer "var x = " when the type of x is apparent (usually because RHS specifies type directly)
-csharp_style_var_when_type_is_apparent = true:suggestion
-
-# false = prefer not to use "var" unless one of the above says otherwise
-csharp_style_var_elsewhere = false:suggestion
-
-# true = prefer expression bodied methods (when possible)
-csharp_style_expression_bodied_methods = true:suggestion
-csharp_style_expression_bodied_constructors = false:suggestion
-csharp_style_expression_bodied_operators = true:suggestion
-csharp_style_expression_bodied_properties = true:suggestion
-csharp_style_expression_bodied_indexers = true:suggestion
-
-# false = prefer older style get { ... } and set { ... } when accessors are necessary
-csharp_style_expression_bodied_accessors = false:suggestion
-
-# true = prefer new syntax for pattern matching when possible
-csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
-csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
-
-# true = prefer new inline variable declarations if possible
-csharp_style_inlined_variable_declaration = true:suggestion
-
-# true = prefer new throw syntax when possible
-csharp_style_throw_expression = true:suggestion
-
-# true = prefer "func?.Invoke()" instead of "if (func != null) func();"
-csharp_style_conditional_delegate_call = true:suggestion
-
-[*.xml, *.js, *.css]
-# Tabs and indentation
-indent_style = space
-indent_size = 2
-tab_width = 2

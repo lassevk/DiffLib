@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Description>A Diff implementation for .NET Standard 1.0 and up, written in C#.</Description>
-    <Copyright>Copyright (C) Lasse V. Karlsen 2015-2017, All rights reserved</Copyright>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <Description>A Diff implementation for .NET 8.0 and up, written in C#.</Description>
+    <Copyright>Copyright (C) Lasse V. Karlsen 2015-$([System.DateTime]::Today.ToString('yyyy')), All rights reserved</Copyright>
     <PackageProjectUrl>https://github.com/lassevk/DiffLib</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lassevk/DiffLib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>Lasse V. Karlsen.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>../../DiffLib.snk</AssemblyOriginatorKeyFile>
     <Authors>Lasse V. Karlsen</Authors>
     <Company />
     <Product>DiffLib</Product>
@@ -20,12 +20,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DocumentationFile>bin\Debug\netstandard1.0\DiffLib.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\DiffLib.xml</DocumentationFile>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.0\DiffLib.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\DiffLib.xml</DocumentationFile>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>

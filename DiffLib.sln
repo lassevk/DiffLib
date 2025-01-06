@@ -3,20 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffLib", "DiffLib\DiffLib.csproj", "{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffLib.Tests", "DiffLib.Tests\DiffLib.Tests.csproj", "{16F500B7-F4BE-46D4-8443-2E6F653C3508}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{37D01333-8058-4DB9-B8D6-855F42914728}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{11A185C5-0DA8-48F5-8BD0-4961FA29CB0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{124B9942-F502-4596-9278-758C84A7FC9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{0236F1FE-E34C-4DD4-85A4-1C0143A7769C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{D451BF82-2C29-4AAC-BEFF-DE69A5577F65}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
-		EXAMPLES.md = EXAMPLES.md
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 		SIGNING.md = SIGNING.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{5D9E9DA4-23E4-4BC7-B4FD-51922FF7426A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffLib", "src\DiffLib\DiffLib.csproj", "{01B8E736-593D-4423-A538-2D65222A3351}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffLib.Tests", "tests\DiffLib.Tests\DiffLib.Tests.csproj", "{645564EF-8F7C-410D-A936-A3A8449CD4EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDiff", "examples\BasicDiff\BasicDiff.csproj", "{D6A72AA7-3467-457F-ADCC-284568A757D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,16 +37,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59577DB1-D790-4925-ABB0-9F2B6DC24DFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16F500B7-F4BE-46D4-8443-2E6F653C3508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B8E736-593D-4423-A538-2D65222A3351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B8E736-593D-4423-A538-2D65222A3351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B8E736-593D-4423-A538-2D65222A3351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B8E736-593D-4423-A538-2D65222A3351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{645564EF-8F7C-410D-A936-A3A8449CD4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{645564EF-8F7C-410D-A936-A3A8449CD4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{645564EF-8F7C-410D-A936-A3A8449CD4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{645564EF-8F7C-410D-A936-A3A8449CD4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A72AA7-3467-457F-ADCC-284568A757D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A72AA7-3467-457F-ADCC-284568A757D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A72AA7-3467-457F-ADCC-284568A757D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A72AA7-3467-457F-ADCC-284568A757D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{11A185C5-0DA8-48F5-8BD0-4961FA29CB0D} = {37D01333-8058-4DB9-B8D6-855F42914728}
+		{124B9942-F502-4596-9278-758C84A7FC9C} = {37D01333-8058-4DB9-B8D6-855F42914728}
+		{0236F1FE-E34C-4DD4-85A4-1C0143A7769C} = {37D01333-8058-4DB9-B8D6-855F42914728}
+		{D451BF82-2C29-4AAC-BEFF-DE69A5577F65} = {37D01333-8058-4DB9-B8D6-855F42914728}
+		{5D9E9DA4-23E4-4BC7-B4FD-51922FF7426A} = {37D01333-8058-4DB9-B8D6-855F42914728}
+		{01B8E736-593D-4423-A538-2D65222A3351} = {11A185C5-0DA8-48F5-8BD0-4961FA29CB0D}
+		{645564EF-8F7C-410D-A936-A3A8449CD4EA} = {124B9942-F502-4596-9278-758C84A7FC9C}
+		{D6A72AA7-3467-457F-ADCC-284568A757D8} = {0236F1FE-E34C-4DD4-85A4-1C0143A7769C}
 	EndGlobalSection
 EndGlobal

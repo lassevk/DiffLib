@@ -8,7 +8,7 @@ namespace DiffLib;
 /// and is used for situations where you may or may not have a value.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public struct Option<T> : IEquatable<Option<T>>, IEquatable<T>
+public readonly struct Option<T> : IEquatable<Option<T>>, IEquatable<T>
 {
     private readonly T? _Value;
 
@@ -56,20 +56,14 @@ public struct Option<T> : IEquatable<Option<T>>, IEquatable<T>
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static implicit operator Option<T>(T? value)
-    {
-        return new Option<T>(value);
-    }
+    public static implicit operator Option<T>(T? value) => new(value);
 
     /// <summary>
     /// Implements inequality operator.
     /// </summary>
     /// <param name="option"></param>
     /// <returns></returns>
-    public static explicit operator T?(Option<T> option)
-    {
-        return option.Value;
-    }
+    public static explicit operator T?(Option<T> option) => option.Value;
 
     /// <summary>
     /// Indicates whether the current object is equal to another object of the same type.

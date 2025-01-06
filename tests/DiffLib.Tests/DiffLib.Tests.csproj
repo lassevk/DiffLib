@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+      <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
@@ -13,7 +13,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\DiffLib\Lasse V. Karlsen.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>../../DiffLib.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBinaries|AnyCPU'">
     <OutputPath>bin\ReleaseBinaries\</OutputPath>
@@ -22,12 +22,12 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\DiffLib\Lasse V. Karlsen.snk">
-      <Link>Lasse V. Karlsen.snk</Link>
+    <None Include="../../DiffLib.snk">
+      <Link>DiffLib.snk</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DiffLib\DiffLib.csproj" />
+    <ProjectReference Include="../../src/DiffLib/DiffLib.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
