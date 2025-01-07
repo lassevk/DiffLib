@@ -31,6 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffLib.Tests", "tests\Diff
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDiff", "examples\BasicDiff\BasicDiff.csproj", "{D6A72AA7-3467-457F-ADCC-284568A757D8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{12D3878C-1E55-4A78-AF77-A4E920693D70}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,5 +67,6 @@ Global
 		{01B8E736-593D-4423-A538-2D65222A3351} = {11A185C5-0DA8-48F5-8BD0-4961FA29CB0D}
 		{645564EF-8F7C-410D-A936-A3A8449CD4EA} = {124B9942-F502-4596-9278-758C84A7FC9C}
 		{D6A72AA7-3467-457F-ADCC-284568A757D8} = {0236F1FE-E34C-4DD4-85A4-1C0143A7769C}
+		{12D3878C-1E55-4A78-AF77-A4E920693D70} = {37D01333-8058-4DB9-B8D6-855F42914728}
 	EndGlobalSection
 EndGlobal
