@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DiffLib;
 
 /// <summary>
 /// This class is used to specify options to the diff algorithm.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record struct DiffOptions()
 {
     private readonly int _ContextSize = 1;

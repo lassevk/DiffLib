@@ -291,4 +291,24 @@ public class OptionTests
 
         Assert.That(s, Is.SameAs(string.Empty));
     }
+
+    [Test]
+    public void GetValueOrDefault_WithValue_ReturnsValue()
+    {
+        var o = new Option<int>(10);
+        
+        int output = o.GetValueOrDefault();
+        
+        Assert.That(output, Is.EqualTo(10));
+    }
+
+    [Test]
+    public void GetValueOrDefault_WithoutValue_ReturnsDefault()
+    {
+        var o = default(Option<int>);
+        
+        int output = o.GetValueOrDefault();
+        
+        Assert.That(output, Is.EqualTo(0));
+    }
 }
