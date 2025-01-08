@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DiffLib;
 
@@ -8,7 +9,8 @@ namespace DiffLib;
 /// <typeparam name="T">
 /// The type of elements from the two collections compared.
 /// </typeparam>
-public readonly struct DiffElement<T> : IEquatable<DiffElement<T>> 
+[ExcludeFromCodeCoverage]
+public readonly struct DiffElement<T> : IEquatable<DiffElement<T>>
 {
     /// <summary>
     /// Constructs a new instance of <see cref="DiffElement{T}"/>.
@@ -30,7 +32,7 @@ public readonly struct DiffElement<T> : IEquatable<DiffElement<T>>
     /// <param name="operation">
     /// A <see cref="DiffOperation"/> specifying how <paramref name="elementFromCollection1"/> corresponds to <paramref name="elementFromCollection2"/>.
     /// </param>
-    public DiffElement(int? elementIndexFromCollection1, Option<T> elementFromCollection1, 
+    public DiffElement(int? elementIndexFromCollection1, Option<T> elementFromCollection1,
                        int? elementIndexFromCollection2, Option<T> elementFromCollection2, DiffOperation operation)
     {
         ElementIndexFromCollection1 = elementIndexFromCollection1;
@@ -82,7 +84,7 @@ public readonly struct DiffElement<T> : IEquatable<DiffElement<T>>
     /// <param name="other">An object to compare with this object.</param>
     public bool Equals(DiffElement<T> other) =>
         ElementIndexFromCollection1.Equals(other.ElementIndexFromCollection1) &&
-        ElementFromCollection1.Equals(other.ElementFromCollection1) && 
+        ElementFromCollection1.Equals(other.ElementFromCollection1) &&
         ElementIndexFromCollection2.Equals(other.ElementIndexFromCollection2) &&
         ElementFromCollection2.Equals(other.ElementFromCollection2) &&
         Operation == other.Operation;

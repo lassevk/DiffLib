@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DiffLib;
 
 /// <summary>
 /// This struct holds a section of matched or unmatch element portions from the two collectoins.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public readonly record struct DiffSection(bool IsMatch, int LengthInCollection1, int LengthInCollection2)
 {
     /// <summary>

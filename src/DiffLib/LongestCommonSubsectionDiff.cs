@@ -44,7 +44,7 @@ internal static class LongestCommonSubsectionDiff
             }
             else
             {
-                if (lcs.Find(lower1, upper1, lower2, upper2, out int position1, out int position2, out int length))
+                if (lcs.Find(lower1, upper1, lower2, upper2, out int position1, out int position2, out int length, options.ContextSize))
                 {
                     // Recursively apply calculation to portion before common subsequence
                     foreach (DiffSection section in Calculate(collection1, lower1, position1, collection2, lower2, position2, comparer, lcs, options))

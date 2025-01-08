@@ -3,7 +3,8 @@
 const string left = "This is a test of a basic diff operation.";
 const string right = "This is a test of a simple diff operation.";
 
-IEnumerable<DiffSection> sections = Diff.CalculateSections(left.ToCharArray(), right.ToCharArray());
+IEnumerable<DiffSection> sections = Diff.CalculateSections(left.ToCharArray(), right.ToCharArray(),
+        new DiffOptions { ContextSize = 3 });
 
 ReadOnlySpan<char> leftS = left.AsSpan();
 ReadOnlySpan<char> rightS = right.AsSpan();

@@ -70,11 +70,11 @@ public static class Diff
         comparer ??= EqualityComparer<T?>.Default;
         options ??= new DiffOptions();
 
-        return LongestCommonSubsectionDiff.Calculate(collection1, collection2, options, comparer);
+        return LongestCommonSubsectionDiff.Calculate(collection1, collection2, options.Value, comparer);
     }
 
     /// <summary>
-    /// Align the sections found by <see cref="CalculateSections{T}(IList{T},IList{T},DiffOptions,IEqualityComparer{T})"/> by trying to find out, within each section, which elements from one collection line up the best with
+    /// Align the sections found by <see cref="CalculateSections{T}(IList{T},IList{T},DiffOptions?,IEqualityComparer{T})"/> by trying to find out, within each section, which elements from one collection line up the best with
     /// elements from the other collection.
     /// </summary>
     /// <typeparam name="T">
@@ -87,7 +87,7 @@ public static class Diff
     /// The second collection.
     /// </param>
     /// <param name="diffSections">
-    /// The section values found by <see cref="CalculateSections{T}(IList{T},IList{T},DiffOptions,IEqualityComparer{T})"/>.
+    /// The section values found by <see cref="CalculateSections{T}(IList{T},IList{T},DiffOptions?,IEqualityComparer{T})"/>.
     /// </param>
     /// <param name="aligner">
     /// An alignment strategy, provided through the <see cref="IDiffElementAligner{T}"/> interface.

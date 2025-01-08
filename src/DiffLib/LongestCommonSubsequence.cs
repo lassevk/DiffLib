@@ -21,7 +21,7 @@ internal class LongestCommonSubsequence<T>
         _Comparer = comparer;
     }
 
-    public bool Find(int lower1, int upper1, int lower2, int upper2, out int position1, out int position2, out int length)
+    public bool Find(int lower1, int upper1, int lower2, int upper2, out int position1, out int position2, out int length, int contextSize)
     {
         position1 = 0;
         position2 = 0;
@@ -53,7 +53,7 @@ internal class LongestCommonSubsequence<T>
                     continue;
 
                 int matchLength = CountSimilarElements(index1, upper1, index2, upper2);
-                if (matchLength > length)
+                if (matchLength > length && matchLength >= contextSize)
                 {
                     position1 = index1;
                     position2 = index2;
