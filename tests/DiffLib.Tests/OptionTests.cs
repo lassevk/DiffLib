@@ -6,291 +6,289 @@ using NUnit.Framework;
 // ReSharper disable EqualExpressionComparison
 // ReSharper disable SuspiciousTypeConversion.Global
 
-namespace DiffLib.Tests
+namespace DiffLib.Tests;
+
+public class OptionTests
 {
-    [TestFixture]
-    public class OptionTests
+    [Test]
+    public void Value_WithDefaultValue_ThrowsInvalidOperationException()
     {
-        [Test]
-        public void Value_WithDefaultValue_ThrowsInvalidOperationException()
+        var o = default(Option<int>);
+
+        Assert.Throws<InvalidOperationException>(() =>
         {
-            var o = default(Option<int>);
+            int x = o.Value;
+        });
+    }
 
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                int x = o.Value;
-            });
-        }
+    [Test]
+    public void Value_ConstructedOption_ReturnsValue()
+    {
+        var o = new Option<int>(10);
 
-        [Test]
-        public void Value_ConstructedOption_ReturnsValue()
+        Assert.That(o.Value, Is.EqualTo(10));
+    }
+
+    [Test]
+    public void HasValue_WithDefaultValue_IsFalse()
+    {
+        var o = default(Option<int>);
+
+        Assert.That(o.HasValue, Is.False);
+    }
+
+    [Test]
+    public void HasValue_ConstructedOption_IsTrue()
+    {
+        var o = new Option<int>(10);
+
+        Assert.That(o.HasValue, Is.True);
+    }
+
+    [Test]
+    public void CastFromOptionToValue_WithDefaultValue_ThrowsInvalidOperationException()
+    {
+        var o = default(Option<int>);
+
+        Assert.Throws<InvalidOperationException>(() =>
         {
-            var o = new Option<int>(10);
+            int x = (int)o;
+        });
+    }
 
-            Assert.That(o.Value, Is.EqualTo(10));
-        }
+    [Test]
+    public void CastFromOptionToValue_ConstructedOption_ReturnsValue()
+    {
+        var o = new Option<int>(10);
 
-        [Test]
-        public void HasValue_WithDefaultValue_IsFalse()
-        {
-            var o = default(Option<int>);
+        Assert.That((int)o, Is.EqualTo(10));
+    }
 
-            Assert.That(o.HasValue, Is.False);
-        }
+    [Test]
+    public void Equals_DefaultOptionToItself_ReturnsTrue()
+    {
+        var o = default(Option<int>);
 
-        [Test]
-        public void HasValue_ConstructedOption_IsTrue()
-        {
-            var o = new Option<int>(10);
+        bool output = o.Equals(o);
 
-            Assert.That(o.HasValue, Is.True);
-        }
+        Assert.That(output, Is.True);
+    }
 
-        [Test]
-        public void CastFromOptionToValue_WithDefaultValue_ThrowsInvalidOperationException()
-        {
-            var o = default(Option<int>);
+    [Test]
+    public void Equals_ConstructedOptionToItself_ReturnsTrue()
+    {
+        var o = new Option<int>(10);
 
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                int x = (int)o;
-            });
-        }
+        bool output = o.Equals(o);
 
-        [Test]
-        public void CastFromOptionToValue_ConstructedOption_ReturnsValue()
-        {
-            var o = new Option<int>(10);
+        Assert.That(output, Is.True);
+    }
 
-            Assert.That((int)o, Is.EqualTo(10));
-        }
+    [Test]
+    public void Equals_DefaultOptionToOtherWithSameValue_ReturnsTrue()
+    {
+        var o1 = default(Option<int>);
+        var o2 = default(Option<int>);
 
-        [Test]
-        public void Equals_DefaultOptionToItself_ReturnsTrue()
-        {
-            var o = default(Option<int>);
+        bool output = o1.Equals(o2);
 
-            bool output = o.Equals(o);
+        Assert.That(output, Is.True);
+    }
 
-            Assert.That(output, Is.True);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToOtherWithSameValue_ReturnsTrue()
+    {
+        var o1 = new Option<int>(10);
+        var o2 = new Option<int>(10);
 
-        [Test]
-        public void Equals_ConstructedOptionToItself_ReturnsTrue()
-        {
-            var o = new Option<int>(10);
+        bool output = o1.Equals(o2);
 
-            bool output = o.Equals(o);
+        Assert.That(output, Is.True);
+    }
 
-            Assert.That(output, Is.True);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToDefaultOption_ReturnsFalse()
+    {
+        var o1 = new Option<int>(10);
+        var o2 = default(Option<int>);
 
-        [Test]
-        public void Equals_DefaultOptionToOtherWithSameValue_ReturnsTrue()
-        {
-            var o1 = default(Option<int>);
-            var o2 = default(Option<int>);
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.True);
-        }
+    [Test]
+    public void Equals_DefaultOptionToConstructedOption_ReturnsFalse()
+    {
+        var o1 = default(Option<int>);
+        var o2 = new Option<int>(10);
 
-        [Test]
-        public void Equals_ConstructedOptionToOtherWithSameValue_ReturnsTrue()
-        {
-            var o1 = new Option<int>(10);
-            var o2 = new Option<int>(10);
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.True);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToOtherWithDifferentValue_ReturnsFalse()
+    {
+        var o1 = new Option<int>(10);
+        var o2 = new Option<int>(15);
 
-        [Test]
-        public void Equals_ConstructedOptionToDefaultOption_ReturnsFalse()
-        {
-            var o1 = new Option<int>(10);
-            var o2 = default(Option<int>);
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.False);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToSameValue_ReturnsTrue()
+    {
+        var o1 = new Option<int>(10);
+        int o2 = 10;
 
-        [Test]
-        public void Equals_DefaultOptionToConstructedOption_ReturnsFalse()
-        {
-            var o1 = default(Option<int>);
-            var o2 = new Option<int>(10);
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.True);
+    }
 
-            Assert.That(output, Is.False);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToDifferentValue_ReturnsFalse()
+    {
+        var o1 = new Option<int>(10);
+        int o2 = 15;
 
-        [Test]
-        public void Equals_ConstructedOptionToOtherWithDifferentValue_ReturnsFalse()
-        {
-            var o1 = new Option<int>(10);
-            var o2 = new Option<int>(15);
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.False);
-        }
+    [Test]
+    public void Equals_DefaultdOptionToValue_ReturnsFalse()
+    {
+        var o1 = default(Option<int>);
+        int o2 = 10;
 
-        [Test]
-        public void Equals_ConstructedOptionToSameValue_ReturnsTrue()
-        {
-            var o1 = new Option<int>(10);
-            int o2 = 10;
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.True);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToString_ReturnsFalse()
+    {
+        var o1 = new Option<int>(10);
 
-        [Test]
-        public void Equals_ConstructedOptionToDifferentValue_ReturnsFalse()
-        {
-            var o1 = new Option<int>(10);
-            int o2 = 15;
+        bool output = o1.Equals("string");
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.False);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToNull_ReturnsFalse()
+    {
+        var o1 = new Option<int>(10);
 
-        [Test]
-        public void Equals_DefaultdOptionToValue_ReturnsFalse()
-        {
-            var o1 = default(Option<int>);
-            int o2 = 10;
+        bool output = o1.Equals(null);
 
-            bool output = o1.Equals(o2);
+        Assert.That(output, Is.False);
+    }
 
-            Assert.That(output, Is.False);
-        }
+    [Test]
+    public void Equals_ConstructedOptionToBoxedCopyOfItself_ReturnsTrue()
+    {
+        var o1 = new Option<int>(10);
+        object o2 = (object)o1;
 
-        [Test]
-        public void Equals_ConstructedOptionToString_ReturnsFalse()
-        {
-            var o1 = new Option<int>(10);
+        bool output = o1.Equals(o2);
 
-            bool output = o1.Equals("string");
+        Assert.That(output, Is.True);
+    }
 
-            Assert.That(output, Is.False);
-        }
-
-        [Test]
-        public void Equals_ConstructedOptionToNull_ReturnsFalse()
-        {
-            var o1 = new Option<int>(10);
-
-            bool output = o1.Equals(null);
-
-            Assert.That(output, Is.False);
-        }
-
-        [Test]
-        public void Equals_ConstructedOptionToBoxedCopyOfItself_ReturnsTrue()
-        {
-            var o1 = new Option<int>(10);
-            object o2 = (object)o1;
-
-            bool output = o1.Equals(o2);
-
-            Assert.That(output, Is.True);
-        }
-
-        [Test]
-        public void EqualityOperator_ConstructedOptionToItself_ReturnsTrue()
-        {
-            var o = new Option<int>(10);
+    [Test]
+    public void EqualityOperator_ConstructedOptionToItself_ReturnsTrue()
+    {
+        var o = new Option<int>(10);
 
 #pragma warning disable 1718
-            bool output = o == o;
+        bool output = o == o;
 #pragma warning restore 1718
-            Assert.That(output, Is.True);
-        }
+        Assert.That(output, Is.True);
+    }
 
-        [Test]
-        public void InequalityOperators_ConstructedOptionToItself_ReturnsFalse()
-        {
-            var o = new Option<int>(10);
+    [Test]
+    public void InequalityOperators_ConstructedOptionToItself_ReturnsFalse()
+    {
+        var o = new Option<int>(10);
 
 #pragma warning disable 1718
-            bool output = o != o;
+        bool output = o != o;
 #pragma warning restore 1718
 
-            Assert.That(output, Is.False);
-        }
+        Assert.That(output, Is.False);
+    }
 
-        [Test]
-        public void GetHashCode_OfTwoConstructedOptionsWithSameValue_ReturnsTheSameValue()
-        {
-            var o1 = new Option<int>(10);
-            var o2 = new Option<int>(10);
+    [Test]
+    public void GetHashCode_OfTwoConstructedOptionsWithSameValue_ReturnsTheSameValue()
+    {
+        var o1 = new Option<int>(10);
+        var o2 = new Option<int>(10);
 
-            int h1 = o1.GetHashCode();
-            int h2 = o2.GetHashCode();
+        int h1 = o1.GetHashCode();
+        int h2 = o2.GetHashCode();
 
-            Assert.That(h1, Is.EqualTo(h2));
-        }
+        Assert.That(h1, Is.EqualTo(h2));
+    }
 
-        [Test]
-        public void GetHashCode_OfTwoConstructedOptionsWithDifferentValues_ReturnsDifferentValues()
-        {
-            var o1 = new Option<int>(10);
-            var o2 = new Option<int>(15);
+    [Test]
+    public void GetHashCode_OfTwoConstructedOptionsWithDifferentValues_ReturnsDifferentValues()
+    {
+        var o1 = new Option<int>(10);
+        var o2 = new Option<int>(15);
 
-            int h1 = o1.GetHashCode();
-            int h2 = o2.GetHashCode();
+        int h1 = o1.GetHashCode();
+        int h2 = o2.GetHashCode();
 
-            Assert.That(h1, Is.Not.EqualTo(h2));
-        }
+        Assert.That(h1, Is.Not.EqualTo(h2));
+    }
 
-        [Test]
-        public void GetHashCode_OfConstructedOptionWithValueZeroAndDefaultOption_ReturnsDifferentValues()
-        {
-            var o1 = new Option<int>(0);
-            var o2 = default(Option<int>);
+    [Test]
+    public void GetHashCode_OfConstructedOptionWithValueZeroAndDefaultOption_ReturnsDifferentValues()
+    {
+        var o1 = new Option<int>(0);
+        var o2 = default(Option<int>);
 
-            int h1 = o1.GetHashCode();
-            int h2 = o2.GetHashCode();
+        int h1 = o1.GetHashCode();
+        int h2 = o2.GetHashCode();
 
-            Assert.That(h1, Is.Not.EqualTo(h2));
-        }
+        Assert.That(h1, Is.Not.EqualTo(h2));
+    }
 
-        [Test]
-        public void ToString_OfConstructedOption_ReturnsStringWithValue()
-        {
-            var o = new Option<int>(10);
+    [Test]
+    public void ToString_OfConstructedOption_ReturnsStringWithValue()
+    {
+        var o = new Option<int>(10);
 
-            string s = o.ToString();
+        string s = o.ToString();
 
-            Assert.That(s, Is.EqualTo("10"));
-        }
+        Assert.That(s, Is.EqualTo("10"));
+    }
 
-        [Test]
-        public void ToString_OfConstructedOptionHoldingNullReference_ReturnsEmptyString()
-        {
-            var o = new Option<string>(null);
+    [Test]
+    public void ToString_OfConstructedOptionHoldingNullReference_ReturnsEmptyString()
+    {
+        var o = new Option<string>(null);
 
-            string s = o.ToString();
+        string s = o.ToString();
 
-            Assert.That(s, Is.SameAs(string.Empty));
-        }
+        Assert.That(s, Is.SameAs(string.Empty));
+    }
 
-        [Test]
-        public void ToString_OfDefaultOption_ReturnsEmptyString()
-        {
-            var o = default(Option<string>);
+    [Test]
+    public void ToString_OfDefaultOption_ReturnsEmptyString()
+    {
+        var o = default(Option<string>);
 
-            string s = o.ToString();
+        string s = o.ToString();
 
-            Assert.That(s, Is.SameAs(string.Empty));
-        }
+        Assert.That(s, Is.SameAs(string.Empty));
     }
 }
