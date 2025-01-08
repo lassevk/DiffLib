@@ -34,6 +34,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{12D3878C-1E55-4A78-AF77-A4E920693D70}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\publish.yml = .github\workflows\publish.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContextSize", "examples\ContextSize\ContextSize.csproj", "{9B78D873-8AF8-4398-96CE-DFA6250CFC66}"
