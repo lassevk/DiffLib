@@ -24,6 +24,8 @@ jobs:
         run: |
           dotnet build --configuration Release
           dotnet test --configuration Release -p:CollectCoverage=true -p:CoverletOutputFormat=opencover --no-restore --verbosity normal
+          
+          dir -recurse
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
