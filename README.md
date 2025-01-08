@@ -1,3 +1,10 @@
+DiffLib
+===
+
+[![build](https://github.com/lassevk/DiffLib/actions/workflows/build.yml/badge.svg)](https://github.com/lassevk/DiffLib/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/lassevk/DiffLib/graph/badge.svg?token=N58US136E7)](https://codecov.io/gh/lassevk/DiffLib)
+[![codeql](https://github.com/lassevk/DiffLib/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/lassevk/DiffLib/actions/workflows/github-code-scanning/codeql)
+
 This project contains code that will do Diff generation, comparing
 two collections of any type and outputting the differences between
 the two, including an attempt to align up differences, specifically
