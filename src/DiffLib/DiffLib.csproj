@@ -1,59 +1,61 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-    <Description>A Diff implementation for .NET 8.0 and up, written in C#.</Description>
-    <Copyright>Copyright (C) Lasse V. Karlsen 2015-$([System.DateTime]::Today.ToString('yyyy')), All rights reserved</Copyright>
-    <PackageProjectUrl>https://github.com/lassevk/DiffLib</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/lassevk/DiffLib.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>../../DiffLib.snk</AssemblyOriginatorKeyFile>
-    <Authors>Lasse V. Karlsen</Authors>
-    <Company />
-    <Product>DiffLib</Product>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DocumentationFile>bin\Debug\DiffLib.xml</DocumentationFile>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <TreatSpecificWarningsAsErrors />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\DiffLib.xml</DocumentationFile>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <TreatSpecificWarningsAsErrors />
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MinVer" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Alignment\StringSimilarityDiffElementAligner.cs">
-      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Alignment\ElementSimilarityAligner.cs">
-      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Alignment\BasicReplaceInsertDeleteDiffElementAligner.cs">
-      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Alignment\BasicInsertDeleteDiffElementAligner.cs">
-      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Alignment\ElementSimilarity.cs">
-      <DependentUpon>ElementSimilarityAligner.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <Description>A Diff implementation for .NET 8.0 and up, written in C#.</Description>
+        <Copyright>Copyright (C) Lasse V. Karlsen 2015-$([System.DateTime]::Today.ToString('yyyy')), All rights reserved</Copyright>
+        <PackageProjectUrl>https://github.com/lassevk/DiffLib</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/lassevk/DiffLib.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">True</GeneratePackageOnBuild>
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>../../DiffLib.snk</AssemblyOriginatorKeyFile>
+        <Authors>Lasse V. Karlsen</Authors>
+        <Product>DiffLib</Product>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+        <DocumentationFile>bin\Debug\DiffLib.xml</DocumentationFile>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <TreatSpecificWarningsAsErrors />
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DocumentationFile>bin\Release\DiffLib.xml</DocumentationFile>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <TreatSpecificWarningsAsErrors />
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MinVer" Version="6.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Alignment\StringSimilarityDiffElementAligner.cs">
+            <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Alignment\ElementSimilarityAligner.cs">
+            <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Alignment\BasicReplaceInsertDeleteDiffElementAligner.cs">
+            <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Alignment\BasicInsertDeleteDiffElementAligner.cs">
+            <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Alignment\ElementSimilarity.cs">
+            <DependentUpon>ElementSimilarityAligner.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <None Include="..\..\README.md" Pack="true" PackagePath="$(PackageReadmeFile)"/>
+        <None Include="..\..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+    </ItemGroup>
 </Project>

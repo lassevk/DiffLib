@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup DotNet ${{ env.DOTNET_SDK_VERSION }} Environment
         uses: actions/setup-dotnet@v3
@@ -23,4 +23,10 @@ jobs:
         shell: pwsh
         run: |
           dotnet build --configuration Release
-          dotnet test --configuration Release
+          dotnet test --configuration Release -p:CollectCoverage=true -p:CoverletOutputFormat=opencover --no-restore --verbosity normal
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: lassevk/difflib

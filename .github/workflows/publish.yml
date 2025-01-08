@@ -12,20 +12,24 @@ env:
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v4
 
       - name: Setup DotNet ${{ env.DOTNET_SDK_VERSION }} Environment
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
 
-      - name: 'Build .NET Projects'
+      - name: Build .NET Projects
         shell: pwsh
         run: |
           dotnet build --configuration Release
           dotnet test --configuration Release
 
-          dir -recurse *.nupkg
+      - name: Publish NuGet package
+        run: |
+          foreach ($file in Get-ChildItem -Recurse -Path . -Filter *.nupkg) {
+            dotnet nuget push $file --api-key "${{ secrets.NUGET_PAT }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }
