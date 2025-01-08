@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DiffLib;
+namespace DiffLib.Alignment;
 
 /// <summary>
 /// This interface is used by <see cref="Diff.AlignElements{T}"/> to specify the alignment strategy/implementation to use.

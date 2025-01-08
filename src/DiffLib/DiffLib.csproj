@@ -39,4 +39,21 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Alignment\StringSimilarityDiffElementAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Alignment\ElementSimilarityAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Alignment\BasicReplaceInsertDeleteDiffElementAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Alignment\BasicInsertDeleteDiffElementAligner.cs">
+      <DependentUpon>IDiffElementAligner.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Alignment\ElementSimilarity.cs">
+      <DependentUpon>ElementSimilarityAligner.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

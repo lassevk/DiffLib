@@ -1,4 +1,7 @@
 ﻿using System;
+
+using DiffLib.Alignment;
+
 using NUnit.Framework;
 
 // ReSharper disable ObjectCreationAsStatement

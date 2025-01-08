@@ -1,4 +1,4 @@
-namespace DiffLib;
+namespace DiffLib.Alignment;
 
 /// <summary>
 /// This delegate is used by <see cref="ElementSimilarityDiffElementAligner{T}"/> to work out just how similar

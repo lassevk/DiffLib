@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using static System.Math;
 
-namespace DiffLib;
+namespace DiffLib.Alignment;
 
 /// <summary>
 /// This class can be used as a parameter to <see cref="Diff.AlignElements{T}"/>.

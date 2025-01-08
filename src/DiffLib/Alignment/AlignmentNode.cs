@@ -1,4 +1,4 @@
-namespace DiffLib;
+namespace DiffLib.Alignment;
 
 internal class AlignmentNode
 {

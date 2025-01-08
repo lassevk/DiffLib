@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using DiffLib.Alignment;
+
+using NUnit.Framework;
 
 // ReSharper disable PossibleNullReferenceException
 

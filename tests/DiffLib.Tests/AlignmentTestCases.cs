@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using DiffLib.Alignment;
+
 using NUnit.Framework;
 
 // ReSharper disable AssignNullToNotNullAttribute

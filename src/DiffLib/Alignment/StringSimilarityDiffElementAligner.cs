@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DiffLib;
+namespace DiffLib.Alignment;
 
 /// <summary>
 /// This class implements a <see cref="IDiffElementAligner{T}"/> strategy that will try

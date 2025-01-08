@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using DiffLib.Alignment;
+
 namespace DiffLib;
 
 /// <summary>
